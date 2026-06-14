@@ -7,7 +7,8 @@ const SIZE_CLASS: Record<Size, string> = {
   sm: 'text-xl sm:text-2xl',
   md: 'text-2xl sm:text-3xl',
   lg: 'text-4xl sm:text-5xl',
-  xl: 'text-5xl sm:text-6xl lg:text-7xl',
+  // mobile kept small so the full wordmark never overflows a phone screen
+  xl: 'text-[1.75rem] sm:text-5xl lg:text-7xl',
 }
 
 // Wider tracking at larger sizes — luxury fashion-house convention.
@@ -15,14 +16,23 @@ const TRACKING: Record<Size, string> = {
   sm: '0.16em',
   md: '0.2em',
   lg: '0.26em',
-  xl: '0.32em',
+  xl: '0.3em',
 }
 
 const TAGLINE_CLASS: Record<Size, string> = {
   sm: 'text-[8px] tracking-[0.28em] mt-0.5',
   md: 'text-[9px] tracking-[0.3em] mt-1',
   lg: 'text-[10px] sm:text-[11px] tracking-[0.34em] mt-2',
-  xl: 'text-xs sm:text-sm tracking-[0.4em] mt-3',
+  xl: 'text-[10px] sm:text-sm tracking-[0.34em] sm:tracking-[0.4em] mt-2.5',
+}
+
+// optical-centering compensation for each tagline's trailing letter-spacing,
+// so the tagline's glyphs stay centered under the wordmark on every screen
+const TAGLINE_TRACK: Record<Size, string> = {
+  sm: '0.28em',
+  md: '0.3em',
+  lg: '0.34em',
+  xl: '0.4em',
 }
 
 const SPARKLE_SIZE: Record<Size, number> = { sm: 9, md: 11, lg: 14, xl: 18 }
@@ -71,7 +81,10 @@ export default function Wordmark({
       </span>
 
       {tagline && (
-        <span className={cn('font-sans uppercase text-[var(--brand-gold)] font-medium', TAGLINE_CLASS[size])}>
+        <span
+          className={cn('font-sans uppercase text-[var(--brand-gold)] font-medium', TAGLINE_CLASS[size])}
+          style={{ paddingLeft: TAGLINE_TRACK[size] }}
+        >
           Women&apos;s &amp; Kids Clothing Store
         </span>
       )}

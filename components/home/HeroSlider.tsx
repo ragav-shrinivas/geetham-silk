@@ -175,14 +175,14 @@ export default function HeroSlider({ slides, durationMs }: { slides: HeroSlide[]
               initial={reduced ? false : { opacity: 0, y: 22 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.9, ease: LUXE, delay: 0.15 }}
-              className="mb-6 flex items-center justify-center gap-4"
+              className="mb-4 sm:mb-6 flex items-center justify-center gap-3 sm:gap-4"
             >
-              <span className="h-px w-10 bg-gradient-to-r from-transparent to-[var(--brand-gold)]" />
-              <span className="text-[11px] tracking-[0.45em] uppercase text-[var(--brand-gold)] font-medium">Geethams Silks</span>
-              <span className="h-px w-10 bg-gradient-to-l from-transparent to-[var(--brand-gold)]" />
+              <span className="h-px w-8 sm:w-10 bg-gradient-to-r from-transparent to-[var(--brand-gold)]" />
+              <span className="text-[10px] sm:text-[11px] tracking-[0.4em] sm:tracking-[0.45em] uppercase text-[var(--brand-gold)] font-medium">Geethams Silks</span>
+              <span className="h-px w-8 sm:w-10 bg-gradient-to-l from-transparent to-[var(--brand-gold)]" />
             </motion.div>
 
-            <h1 className="font-serif font-light leading-[1.05] tracking-tight text-4xl sm:text-6xl lg:text-7xl">
+            <h1 className="font-serif font-light leading-[1.08] sm:leading-[1.05] tracking-tight text-[2rem] sm:text-6xl lg:text-7xl">
               <span className="line-mask">
                 <motion.span
                   initial={reduced ? false : { y: '115%' }}
@@ -200,7 +200,7 @@ export default function HeroSlider({ slides, durationMs }: { slides: HeroSlide[]
                 initial={reduced ? false : { opacity: 0, y: 24 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.9, ease: LUXE, delay: 0.5 }}
-                className="mt-7 text-sm sm:text-lg text-white/80 max-w-xl mx-auto leading-relaxed tracking-wide"
+                className="mt-3.5 sm:mt-7 text-[13px] sm:text-lg text-white/75 sm:text-white/80 max-w-xs sm:max-w-xl mx-auto leading-relaxed tracking-wide"
               >
                 {slide.subtitle}
               </motion.p>
@@ -210,7 +210,7 @@ export default function HeroSlider({ slides, durationMs }: { slides: HeroSlide[]
               initial={reduced ? false : { opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.9, ease: LUXE, delay: 0.65 }}
-              className="mt-10 flex flex-col sm:flex-row gap-4 justify-center items-center"
+              className="mt-7 sm:mt-10 flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center"
             >
               {slide.cta_primary_label && (
                 <Cta href={slide.cta_primary_link} label={slide.cta_primary_label} primary />
@@ -330,8 +330,8 @@ function Cta({ href, label, primary = false }: { href: string | null; label: str
   const external = isWhatsApp || /^https?:\/\//.test(target)
 
   const cls = primary
-    ? 'group inline-flex items-center gap-3 bg-white text-[var(--brand-charcoal)] text-xs tracking-[0.2em] uppercase px-9 py-4 hover:bg-[var(--brand-gold)] hover:text-white transition-all duration-500 shadow-xl'
-    : 'group inline-flex items-center gap-3 border border-white/50 text-white text-xs tracking-[0.2em] uppercase px-9 py-4 hover:bg-white hover:text-[var(--brand-charcoal)] transition-all duration-500 backdrop-blur-sm'
+    ? 'group inline-flex items-center gap-3 bg-white text-[var(--brand-charcoal)] text-[11px] sm:text-xs tracking-[0.2em] uppercase px-7 sm:px-9 py-3.5 sm:py-4 hover:bg-[var(--brand-gold)] hover:text-white transition-all duration-500 shadow-xl'
+    : 'group inline-flex items-center gap-3 border border-white/50 text-white text-[11px] sm:text-xs tracking-[0.2em] uppercase px-7 sm:px-9 py-3.5 sm:py-4 hover:bg-white hover:text-[var(--brand-charcoal)] transition-all duration-500 backdrop-blur-sm'
 
   const inner = (
     <>

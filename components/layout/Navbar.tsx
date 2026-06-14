@@ -54,10 +54,18 @@ export default function Navbar() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className={cn('flex items-center justify-between transition-all duration-500', scrolled ? 'h-16 lg:h-[72px]' : 'h-[72px] lg:h-24')}>
-          {/* Logo */}
-          <Link href="/" className="flex-shrink-0" aria-label="Geethams Silks — home">
-            <Wordmark size={scrolled ? 'sm' : 'md'} />
-          </Link>
+          {/* Logo — hidden over the hero, reveals once the white bar appears on scroll */}
+          <motion.div
+            initial={false}
+            animate={{ opacity: scrolled ? 1 : 0, y: scrolled ? 0 : -8 }}
+            transition={{ duration: 0.45, ease: LUXE }}
+            className={cn('flex-shrink-0', !scrolled && 'pointer-events-none')}
+            aria-hidden={!scrolled}
+          >
+            <Link href="/" aria-label="Geethams Silks — home" tabIndex={scrolled ? 0 : -1}>
+              <Wordmark size="sm" />
+            </Link>
+          </motion.div>
 
           {/* Desktop Nav */}
           <nav className="hidden lg:flex items-center gap-9">
