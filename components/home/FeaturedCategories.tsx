@@ -3,13 +3,17 @@ import { RevealGroup, RevealItem } from '@/components/common/Reveal'
 import SectionHeading from '@/components/common/SectionHeading'
 import CategoryCard from '@/components/home/CategoryCard'
 
-// `scale` normalises each model's visual height — Sarees (wider crop) is the
-// 1.0 reference; the narrower cutouts are scaled down to match its presence.
+// Each cutout has a different aspect ratio (saree 0.70 → width-filling & large;
+// kurta 0.30 → tall & narrow), so a single scale can't balance them. Values are
+// tuned per image AND per breakpoint (the card is taller/narrower on phones):
+//  - `scale`       → desktop presence (Sarees is the visual reference)
+//  - `scaleMobile` → phone presence (standing cutouts need a little more height
+//                    to balance the wide, seated saree composition)
 const CARDS = [
-  { title: 'Sarees', slug: 'sarees', image: '/saree.png', scale: 1 },
-  { title: "Women's Wear", slug: 'womens-wear', image: '/womenwear.png', scale: 0.8 },
-  { title: 'Kids Wear', slug: 'kids-wear', image: '/kidswear.png', scale: 0.8 },
-  { title: 'Kurtas', slug: 'kurtas', image: '/kurta.png', scale: 0.8 },
+  { title: 'Sarees', slug: 'sarees', image: '/saree.png', scale: 1, scaleMobile: 0.9, objectPosition: '50% 100%' },
+  { title: "Women's Wear", slug: 'womens-wear', image: '/womenwear.png', scale: 0.82, scaleMobile: 0.92, objectPosition: '50% 100%' },
+  { title: 'Kids Wear', slug: 'kids-wear', image: '/kidswear.png', scale: 0.84, scaleMobile: 0.93, objectPosition: '50% 100%' },
+  { title: 'Kurtas', slug: 'kurtas', image: '/kurta.png', scale: 0.86, scaleMobile: 0.95, objectPosition: '50% 100%' },
 ]
 
 export default function FeaturedCategories() {
@@ -36,7 +40,7 @@ export default function FeaturedCategories() {
               distance={60}
               className="snap-center shrink-0 w-[80%] sm:w-auto"
             >
-              <CategoryCard image={c.image} title={c.title} href={`/shop?category=${c.slug}`} index={i} scale={c.scale} priority={i === 0} />
+              <CategoryCard image={c.image} title={c.title} href={`/shop?category=${c.slug}`} index={i} scale={c.scale} scaleMobile={c.scaleMobile} objectPosition={c.objectPosition} priority={i === 0} />
             </RevealItem>
           ))}
         </RevealGroup>

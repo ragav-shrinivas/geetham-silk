@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState, useCallback } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { motion, useReducedMotion } from 'framer-motion'
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import { ArrowRight, MessageCircle, MapPin, ArrowUpRight, ChevronLeft, ChevronRight } from 'lucide-react'
 import { SITE } from '@/lib/constants'
 import { LUXE } from '@/lib/motion'
@@ -13,16 +13,20 @@ function waHref() {
 }
 
 /**
- * Mobile-only hero carousel.
+ * Mobile-only hero carousel (< md).
  *
- * Why a separate component: the hero source images are all landscape (~16:9).
- * The desktop hero crops them into a full-screen portrait frame with object-cover,
- * which on a phone slices the models/composition off the sides. Here we instead
- * present each slide as a premium app-style banner card — a blurred cinematic
- * backdrop fills the frame while the *full* sharp image stays visible (no aggressive
- * crop) — and reveal a sliver of the next slide so swiping is obvious.
+ * Layer separation (this is deliberate — see ISSUE 1):
+ *   1. Background media  — a horizontal scroll-snap track of IMAGE-ONLY cards
+ *      that slide/peek. This is the only layer that moves horizontally.
+ *   2. Overlay           — a fixed gradient for text legibility (no movement).
+ *   3. Content           — a fixed, centered layer (eyebrow / title / subtitle /
+ *      buttons) anchored to the section, NOT inside the scroll track, so the
+ *      buttons never drift with the image. It's pointer-events-none so swipes
+ *      pass through to the track; only the buttons themselves are interactive.
  *
- * Desktop (md+) never renders this; the original <section> handles those breakpoints.
+ * Source images are landscape (~16:9); each card shows the FULL image
+ * (object-contain over a blurred backdrop) so nothing is cropped off the sides.
+ * Desktop (md+) renders the original <section> instead.
  */
 export default function HeroSliderMobile({ slides, duration }: { slides: HeroSlide[]; duration: number }) {
   const count = slides.length
@@ -30,7 +34,6 @@ export default function HeroSliderMobile({ slides, duration }: { slides: HeroSli
   const [current, setCurrent] = useState(0)
   const reduced = useReducedMotion()
 
-  // Pause autoplay briefly while the user is touching / dragging the track.
   const interacting = useRef(false)
   const resumeTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
 
@@ -43,7 +46,7 @@ export default function HeroSliderMobile({ slides, duration }: { slides: HeroSli
     track.scrollTo({ left: child.offsetLeft, behavior: smooth && !reduced ? 'smooth' : 'auto' })
   }, [count, reduced])
 
-  // Derive the active slide from the scroll position (drives dots + dimming).
+  // Derive the active slide from scroll position (drives content + dots).
   useEffect(() => {
     const track = trackRef.current
     if (!track) return
@@ -67,7 +70,7 @@ export default function HeroSliderMobile({ slides, duration }: { slides: HeroSli
     return () => { track.removeEventListener('scroll', onScroll); cancelAnimationFrame(raf) }
   }, [])
 
-  // Autoplay — re-arms whenever the active slide settles; skips while interacting.
+  // Autoplay — re-arms when the active slide settles; skips while interacting.
   useEffect(() => {
     if (count <= 1) return
     const id = setTimeout(() => {
@@ -85,8 +88,11 @@ export default function HeroSliderMobile({ slides, duration }: { slides: HeroSli
     resumeTimer.current = setTimeout(() => { interacting.current = false }, 1400)
   }
 
+  const active = slides[current] ?? slides[0]
+
   return (
-    <section className="relative md:hidden w-full bg-[var(--brand-charcoal)] overflow-hidden">
+    <section className="relative md:hidden w-full h-[68vh] min-h-[440px] max-h-[720px] overflow-hidden bg-[var(--brand-charcoal)]">
+      {/* ───────── LAYER 1 · Background media (the only thing that slides) ───────── */}
       <div
         ref={trackRef}
         onPointerDown={pause}
@@ -94,23 +100,19 @@ export default function HeroSliderMobile({ slides, duration }: { slides: HeroSli
         onPointerCancel={resume}
         onTouchStart={pause}
         onTouchEnd={resume}
-        className="no-scrollbar flex snap-x snap-mandatory overflow-x-auto overscroll-x-contain gap-3 px-[7vw] py-4"
+        className="no-scrollbar absolute inset-0 z-0 flex snap-x snap-mandatory overflow-x-auto overscroll-x-contain gap-3 px-[7vw]"
         style={{ scrollPaddingInline: '7vw' }}
       >
-        {slides.map((slide, i) => {
-          const active = i === current
-          return (
+        {slides.map((slide, i) => (
+          <div key={slide.id} className="snap-center shrink-0 w-[86vw] h-full py-4">
             <div
-              key={slide.id}
-              className="snap-center shrink-0 w-[86vw] h-[72vh] min-h-[470px] max-h-[760px]"
+              className={`relative h-full w-full overflow-hidden rounded-[1.75rem] ring-1 ring-white/10 shadow-2xl transition-opacity duration-700 ${
+                i === current ? 'opacity-100' : 'opacity-60'
+              }`}
             >
-              <article
-                className={`relative h-full w-full overflow-hidden rounded-[1.75rem] ring-1 ring-white/10 shadow-2xl transition-[opacity,transform] duration-700 ease-out ${
-                  active ? 'opacity-100 scale-100' : 'opacity-65 scale-[0.965]'
-                }`}
-              >
-                {/* Cinematic backdrop — blurred fill so the frame is never empty */}
-                {slide.media_url && (
+              {slide.media_url && (
+                <>
+                  {/* blurred cinematic fill so the frame is never empty */}
                   <Image
                     src={slide.media_url}
                     alt=""
@@ -119,69 +121,72 @@ export default function HeroSliderMobile({ slides, duration }: { slides: HeroSli
                     sizes="90vw"
                     className="object-cover scale-125 blur-2xl opacity-50"
                   />
-                )}
-
-                {/* Sharp image — full composition preserved, anchored toward the top */}
-                {slide.media_url ? (
+                  {/* full, uncropped composition */}
                   <Image
                     src={slide.media_url}
                     alt={slide.title ?? 'Geethams Silks'}
                     fill
                     priority={i === 0}
                     sizes="90vw"
-                    className={`object-contain object-top ${active && !reduced ? 'animate-kenburns' : ''}`}
+                    className={`object-contain object-top ${i === current && !reduced ? 'animate-kenburns' : ''}`}
                   />
-                ) : (
-                  <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, #2b2320 0%, #5e3b41 45%, #b8986a 100%)' }} />
-                )}
-
-                {/* Grading + readability gradient anchored to the lower copy zone */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/92 via-black/35 to-black/15" />
-                <div
-                  className="absolute inset-0 mix-blend-soft-light"
-                  style={{ background: 'linear-gradient(160deg, rgba(201,116,122,0.22) 0%, transparent 42%, rgba(184,152,106,0.18) 100%)' }}
-                />
-
-                {/* Copy */}
-                <div className="absolute inset-x-0 bottom-0 px-6 pb-12 pt-10 text-center text-white">
-                  <motion.div
-                    initial={false}
-                    animate={active ? { opacity: 1, y: 0 } : { opacity: 0.85, y: 6 }}
-                    transition={{ duration: 0.6, ease: LUXE }}
-                  >
-                    <div className="mb-4 flex items-center justify-center gap-3">
-                      <span className="h-px w-7 bg-gradient-to-r from-transparent to-[var(--brand-gold)]" />
-                      <span className="text-[10px] tracking-[0.4em] uppercase text-[var(--brand-gold)] font-medium">Geethams Silks</span>
-                      <span className="h-px w-7 bg-gradient-to-l from-transparent to-[var(--brand-gold)]" />
-                    </div>
-
-                    <h1 className="font-serif font-light leading-[1.08] tracking-tight text-[clamp(1.85rem,8vw,2.6rem)]">
-                      {slide.title}
-                    </h1>
-
-                    {slide.subtitle && (
-                      <p className="mx-auto mt-3.5 max-w-[34ch] text-[13px] leading-relaxed tracking-wide text-white/80">
-                        {slide.subtitle}
-                      </p>
-                    )}
-
-                    <div className="mt-6 flex flex-col gap-2.5">
-                      {slide.cta_primary_label && (
-                        <Cta href={slide.cta_primary_link} label={slide.cta_primary_label} primary />
-                      )}
-                      {slide.cta_secondary_label && (
-                        <Cta href={slide.cta_secondary_link} label={slide.cta_secondary_label} />
-                      )}
-                    </div>
-                  </motion.div>
-                </div>
-              </article>
+                </>
+              )}
             </div>
-          )
-        })}
+          </div>
+        ))}
       </div>
 
-      {/* Edge tap controls (arrow navigation alongside swipe/autoplay) */}
+      {/* ───────── LAYER 2 · Overlay grading (fixed, non-interactive) ───────── */}
+      <div className="pointer-events-none absolute inset-0 z-10">
+        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/10" />
+        <div
+          className="absolute inset-0 mix-blend-soft-light"
+          style={{ background: 'linear-gradient(160deg, rgba(201,116,122,0.20) 0%, transparent 45%, rgba(184,152,106,0.16) 100%)' }}
+        />
+      </div>
+
+      {/* ───────── LAYER 3 · Content (fixed/anchored — never drifts) ───────── */}
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 flex justify-center pb-16 pt-10">
+        <div className="w-[86vw] max-w-[440px] px-2 text-center text-white">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={active.id}
+              initial={reduced ? false : { opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={reduced ? { opacity: 0 } : { opacity: 0, y: -10 }}
+              transition={{ duration: 0.55, ease: LUXE }}
+            >
+              <div className="mb-4 flex items-center justify-center gap-3">
+                <span className="h-px w-7 bg-gradient-to-r from-transparent to-[var(--brand-gold)]" />
+                <span className="text-[10px] tracking-[0.4em] uppercase text-[var(--brand-gold)] font-medium">Geethams Silks</span>
+                <span className="h-px w-7 bg-gradient-to-l from-transparent to-[var(--brand-gold)]" />
+              </div>
+
+              <h1 className="font-serif font-light leading-[1.08] tracking-tight text-[clamp(1.8rem,7.5vw,2.5rem)]">
+                {active.title}
+              </h1>
+
+              {active.subtitle && (
+                <p className="mx-auto mt-3 max-w-[32ch] text-[13px] leading-relaxed tracking-wide text-white/80">
+                  {active.subtitle}
+                </p>
+              )}
+
+              <div className="pointer-events-auto mt-6 flex flex-col gap-2.5">
+                {active.cta_primary_label && (
+                  <Cta href={active.cta_primary_link} label={active.cta_primary_label} primary />
+                )}
+                {active.cta_secondary_label && (
+                  <Cta href={active.cta_secondary_link} label={active.cta_secondary_label} />
+                )}
+              </div>
+            </motion.div>
+          </AnimatePresence>
+        </div>
+      </div>
+
+      {/* ───────── Controls (fixed, interactive) ───────── */}
       {count > 1 && (
         <>
           <EdgeArrow side="left" onClick={() => { pause(); scrollToIndex(current - 1); resume() }} />
@@ -189,16 +194,15 @@ export default function HeroSliderMobile({ slides, duration }: { slides: HeroSli
         </>
       )}
 
-      {/* Luxury progress indicators */}
       {count > 1 && (
-        <div className="pointer-events-auto absolute bottom-4 left-1/2 z-30 flex -translate-x-1/2 items-center gap-1.5">
+        <div className="absolute bottom-5 left-1/2 z-30 flex -translate-x-1/2 items-center gap-1.5">
           {slides.map((s, i) => (
             <button
               key={s.id}
               onClick={() => { pause(); scrollToIndex(i); resume() }}
               aria-label={`Go to slide ${i + 1}`}
-              className={`relative h-[3px] overflow-hidden rounded-full transition-all duration-500 ${
-                i === current ? 'w-7 bg-white/30' : 'w-2.5 bg-white/30'
+              className={`relative h-[3px] overflow-hidden rounded-full bg-white/30 transition-all duration-500 ${
+                i === current ? 'w-7' : 'w-2.5'
               }`}
             >
               {i === current && (
@@ -215,13 +219,12 @@ export default function HeroSliderMobile({ slides, duration }: { slides: HeroSli
         </div>
       )}
 
-      {/* Compact boutique chip */}
       <a
         href={SITE.maps}
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Open the boutique location in Google Maps"
-        className="absolute bottom-3 left-5 z-30 flex items-center gap-2 text-white/80"
+        className="absolute bottom-4 left-5 z-30 flex items-center gap-2 text-white/80"
       >
         <span className="flex h-7 w-7 items-center justify-center rounded-full border border-white/25 backdrop-blur-sm">
           <MapPin size={12} className="text-[var(--brand-gold)]" />
@@ -263,7 +266,7 @@ function EdgeArrow({ side, onClick }: { side: 'left' | 'right'; onClick: () => v
     <button
       onClick={onClick}
       aria-label={side === 'left' ? 'Previous slide' : 'Next slide'}
-      className={`absolute top-1/2 z-30 -translate-y-1/2 flex h-9 w-9 items-center justify-center rounded-full border border-white/25 bg-black/20 text-white/85 backdrop-blur-sm active:scale-95 transition-transform ${
+      className={`absolute top-1/2 z-30 -translate-y-1/2 flex h-9 w-9 items-center justify-center rounded-full border border-white/25 bg-black/25 text-white/85 backdrop-blur-sm active:scale-95 transition-transform ${
         side === 'left' ? 'left-2' : 'right-2'
       }`}
     >

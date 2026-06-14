@@ -28,7 +28,10 @@ export default function AboutStrip() {
     <section className="relative bg-[var(--brand-charcoal)] text-white overflow-hidden">
       {/* ambient glow */}
       <div className="absolute -top-24 right-0 w-[700px] h-[400px] rounded-full bg-[var(--brand-rose)]/10 blur-3xl pointer-events-none" />
-      <span aria-hidden className="backdrop-word backdrop-word--light top-10">Heritage</span>
+      {/* Decorative watermark. On mobile the image stacks on top, so anchor the
+          word low (behind the text column) where it reads cleanly; on desktop
+          the two-column layout leaves the top clear, so keep it up top. */}
+      <span aria-hidden className="backdrop-word backdrop-word--light top-[62%] lg:top-10">Heritage</span>
 
       <div ref={ref} className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">

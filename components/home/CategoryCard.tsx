@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { motion, useMotionValue, useSpring } from 'framer-motion'
@@ -12,8 +12,13 @@ interface CategoryCardProps {
   title: string
   href: string
   index?: number
-  /** base visual scale to normalise model presence (Sarees = 1.0 reference) */
+  /** desktop visual scale to normalise model presence (tuned per image) */
   scale?: number
+  /** mobile visual scale — the card is a different aspect ratio on phones, so
+   *  the cutouts must be balanced separately from desktop. Falls back to `scale`. */
+  scaleMobile?: number
+  /** per-image horizontal anchor, e.g. '50% 100%' — keeps each subject centred */
+  objectPosition?: string
   priority?: boolean
 }
 
@@ -24,8 +29,20 @@ const CARD_BG = [
   'linear-gradient(160deg, #2f2b27 0%, #4a3b36 58%, #6f5642 100%)',
 ]
 
-export default function CategoryCard({ image, title, href, index = 0, scale = 1, priority = false }: CategoryCardProps) {
+export default function CategoryCard({ image, title, href, index = 0, scale = 1, scaleMobile, objectPosition = '50% 100%', priority = false }: CategoryCardProps) {
   const [hovered, setHovered] = useState(false)
+
+  // The card aspect ratio differs between phones (taller, narrower) and desktop,
+  // so each cutout needs its own base scale per breakpoint to look balanced.
+  const [isMobile, setIsMobile] = useState(false)
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 639px)')
+    const apply = () => setIsMobile(mq.matches)
+    apply()
+    mq.addEventListener('change', apply)
+    return () => mq.removeEventListener('change', apply)
+  }, [])
+  const baseScale = isMobile ? (scaleMobile ?? scale) : scale
 
   // Subtle mouse-move parallax on the model.
   const x = useMotionValue(0)
@@ -64,7 +81,7 @@ export default function CategoryCard({ image, title, href, index = 0, scale = 1,
       <motion.div
         className="absolute inset-x-0 bottom-0 top-8 will-change-transform"
         style={{ originX: 0.5, originY: 1 }}
-        animate={{ scale: hovered ? scale * 1.12 : scale, y: hovered ? -10 : 0 }}
+        animate={{ scale: hovered ? baseScale * 1.12 : baseScale, y: hovered ? -10 : 0 }}
         transition={{ duration: 0.7, ease: LUXE }}
       >
         <motion.div style={{ x: sx, y: sy }} className="relative w-full h-full">
@@ -74,7 +91,8 @@ export default function CategoryCard({ image, title, href, index = 0, scale = 1,
             fill
             priority={priority}
             sizes="(max-width: 640px) 80vw, (max-width: 1024px) 50vw, 25vw"
-            className="object-contain object-bottom drop-shadow-[0_18px_30px_rgba(0,0,0,0.45)]"
+            style={{ objectPosition }}
+            className="object-contain drop-shadow-[0_18px_30px_rgba(0,0,0,0.45)]"
           />
         </motion.div>
       </motion.div>
