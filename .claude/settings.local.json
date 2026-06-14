@@ -6,7 +6,9 @@
       "mcp__484b79f0-a26f-413f-92c0-6c49600c1edb__get_project_url",
       "mcp__484b79f0-a26f-413f-92c0-6c49600c1edb__get_publishable_keys",
       "mcp__484b79f0-a26f-413f-92c0-6c49600c1edb__execute_sql",
-      "mcp__484b79f0-a26f-413f-92c0-6c49600c1edb__apply_migration"
+      "mcp__484b79f0-a26f-413f-92c0-6c49600c1edb__apply_migration",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)"
     ]
   }
 }
