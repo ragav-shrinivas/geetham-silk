@@ -10,6 +10,7 @@ import { ChevronLeft, ChevronRight, ArrowRight, ArrowUpRight, MessageCircle, Map
 import { SITE } from '@/lib/constants'
 import { LUXE } from '@/lib/motion'
 import type { HeroSlide } from '@/types/database'
+import HeroSliderMobile from './HeroSliderMobile'
 
 // Luxury pacing — campaigns breathe. Admin-controllable via the page builder.
 const DEFAULT_DURATION = 7000
@@ -97,11 +98,16 @@ export default function HeroSlider({ slides, durationMs }: { slides: HeroSlide[]
   const slide = data[current]
 
   return (
-    <section
-      ref={sectionRef}
-      onMouseMove={onMouseMove}
-      className="relative h-[100svh] min-h-[560px] sm:min-h-[640px] w-full overflow-hidden bg-[var(--brand-charcoal)]"
-    >
+    <>
+      {/* Mobile (< md): premium peek carousel — preserves the landscape composition. */}
+      <HeroSliderMobile slides={data} duration={duration} />
+
+      {/* Desktop (md+): original cinematic full-bleed hero — unchanged. */}
+      <section
+        ref={sectionRef}
+        onMouseMove={onMouseMove}
+        className="relative hidden md:block h-[100svh] min-h-[560px] sm:min-h-[640px] w-full overflow-hidden bg-[var(--brand-charcoal)]"
+      >
       {/* Background layer (scroll parallax + mouse drift) */}
       <motion.div style={{ y: bgY }} className="absolute inset-0 will-change-transform">
         <motion.div style={{ x: driftX, y: driftY, scale: 1.03 }} className="absolute inset-0">
@@ -313,7 +319,8 @@ export default function HeroSlider({ slides, durationMs }: { slides: HeroSlide[]
           <motion.div animate={{ y: [-36, 36] }} transition={{ repeat: Infinity, duration: 1.8, ease: 'easeInOut' }} className="w-px h-9 bg-gradient-to-b from-transparent via-[var(--brand-gold)] to-transparent" />
         </div>
       </motion.div>
-    </section>
+      </section>
+    </>
   )
 }
 
