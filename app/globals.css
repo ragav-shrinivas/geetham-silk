@@ -38,6 +38,9 @@
     --brand-cream: #fdf8f3;
     --brand-cream-deep: #f9efe6;
     --brand-charcoal: #2c2c2c;
+    /* dark-purple wordmark palette (beveled top→bottom) */
+    --brand-purple: #6b2fa0;
+    --brand-purple-deep: #3d1a5b;
     /* exact background cream of geethamlogo.jpeg — used behind the logo so it sits seamlessly */
     --logo-cream: #f5eddf;
   }
@@ -129,6 +132,37 @@
 /* soft rose glow that works with gradient-clipped text */
 .wordmark-glow {
   filter: drop-shadow(0 1px 12px rgba(201, 116, 122, 0.22));
+}
+
+/* ---------- Dark-purple 3D wordmark ---------- */
+/* vertical bevel: lit lavender at the top falling to deep purple at the base */
+.text-purple-3d {
+  background-image: linear-gradient(
+    180deg,
+    #c79be8 0%, #9d5cd0 30%, #6b2fa0 60%, #4a1f6e 82%, #3d1a5b 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+/* stacked solid shadows extrude the letters; soft purple halo lifts them off the page */
+.wordmark-3d {
+  filter:
+    drop-shadow(0 1px 0 #4a1f6e)
+    drop-shadow(0 2px 0 #41195f)
+    drop-shadow(0 3px 0 #371552)
+    drop-shadow(0 4px 1px rgba(45, 18, 70, 0.55))
+    drop-shadow(0 8px 16px rgba(107, 47, 160, 0.4));
+}
+@media (max-width: 639px) {
+  /* shallower extrusion so small sizes stay crisp */
+  .wordmark-3d {
+    filter:
+      drop-shadow(0 1px 0 #4a1f6e)
+      drop-shadow(0 2px 0 #371552)
+      drop-shadow(0 4px 10px rgba(107, 47, 160, 0.38));
+  }
 }
 
 /* ---------- Glows ---------- */

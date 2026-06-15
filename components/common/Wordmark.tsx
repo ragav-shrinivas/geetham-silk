@@ -40,7 +40,7 @@ const SPARKLE_SIZE: Record<Size, number> = { sm: 9, md: 11, lg: 14, xl: 18 }
 interface WordmarkProps {
   size?: Size
   className?: string
-  /** animated rose-gold sheen sweep (default true) */
+  /** kept for API compatibility; the wordmark now uses a fixed 3D purple treatment */
   shine?: boolean
   /** flank the wordmark with logo-style sparkles */
   sparkles?: boolean
@@ -51,12 +51,11 @@ interface WordmarkProps {
 
 /**
  * Logo-inspired "GEETHAMS SILKS" wordmark — Cormorant Garamond, uppercase,
- * custom letter-spacing, rose-gold gradient with a subtle moving shine.
+ * custom letter-spacing, dark-purple beveled gradient with a 3D extrusion.
  */
 export default function Wordmark({
   size = 'md',
   className,
-  shine = true,
   sparkles = false,
   tagline = false,
   as: Tag = 'span',
@@ -68,9 +67,8 @@ export default function Wordmark({
         {sparkles && <Sparkle size={SPARKLE_SIZE[size]} className="text-[var(--brand-gold)] shrink-0 opacity-80" />}
         <span
           className={cn(
-            'font-serif font-medium uppercase wordmark-glow whitespace-nowrap',
-            SIZE_CLASS[size],
-            shine ? 'text-rosegold-shine' : 'text-rosegold'
+            'font-serif font-medium uppercase text-purple-3d wordmark-3d whitespace-nowrap',
+            SIZE_CLASS[size]
           )}
           // trailing letter-spacing is balanced with matching left padding for optical centering
           style={{ letterSpacing: tracking, paddingLeft: tracking }}
