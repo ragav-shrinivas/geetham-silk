@@ -77,14 +77,16 @@ export default function Navbar() {
                   'relative text-xs tracking-[0.15em] uppercase font-medium py-1 transition-colors duration-300',
                   isActive(link.href)
                     ? 'text-[var(--brand-rose)]'
-                    : 'text-[var(--brand-charcoal)] hover:text-[var(--brand-rose)]'
+                    : scrolled
+                      ? 'text-[var(--brand-charcoal)] hover:text-[var(--brand-rose)]'
+                      : 'text-white/90 hover:text-[var(--brand-pink)]'
                 )}
               >
                 {link.label}
                 <span
                   className={cn(
-                    'absolute left-0 -bottom-0.5 h-px w-full origin-left bg-[var(--brand-rose)] transition-transform duration-400 ease-[cubic-bezier(0.16,1,0.3,1)]',
-                    isActive(link.href) ? 'scale-x-100' : 'scale-x-0'
+                    'absolute left-0 -bottom-0.5 h-px w-full origin-left transition-transform duration-400 ease-[cubic-bezier(0.16,1,0.3,1)]',
+                    isActive(link.href) ? 'scale-x-100 bg-[var(--brand-rose)]' : 'scale-x-0 bg-[var(--brand-rose)]'
                   )}
                 />
               </Link>
@@ -96,7 +98,10 @@ export default function Navbar() {
             <button
               onClick={() => setSearchOpen(true)}
               aria-label="Search products"
-              className="text-[var(--brand-charcoal)] hover:text-[var(--brand-rose)] transition-colors p-1"
+              className={cn(
+                'transition-colors p-1',
+                scrolled ? 'text-[var(--brand-charcoal)] hover:text-[var(--brand-rose)]' : 'text-white/85 hover:text-white'
+              )}
             >
               <Search size={18} />
             </button>
@@ -116,12 +121,12 @@ export default function Navbar() {
             <button
               onClick={() => setSearchOpen(true)}
               aria-label="Search products"
-              className="text-[var(--brand-charcoal)] p-2"
+              className={cn('p-2 transition-colors', scrolled ? 'text-[var(--brand-charcoal)]' : 'text-white/90')}
             >
               <Search size={20} />
             </button>
             <button
-              className="text-[var(--brand-charcoal)] p-2"
+              className={cn('p-2 transition-colors', scrolled ? 'text-[var(--brand-charcoal)]' : 'text-white/90')}
               onClick={() => setOpen(true)}
               aria-label="Open menu"
             >

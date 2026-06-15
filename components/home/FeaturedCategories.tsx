@@ -21,10 +21,10 @@ const SCALE_MAP: Record<string, { scale: number; scaleMobile: number; objectPosi
 const DEFAULT_SCALE = { scale: 0.85, scaleMobile: 0.9, objectPosition: '50% 100%' }
 
 interface Props {
-  categories: Array<Category & { product_count: number }>
+  categories?: Array<Category & { product_count: number }>
 }
 
-export default function FeaturedCategories({ categories }: Props) {
+export default function FeaturedCategories({ categories = [] }: Props) {
   return (
     <section className="py-24 lg:py-28 bg-white relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
