@@ -9,7 +9,7 @@ import { LUXE } from '@/lib/motion'
 import type { HeroSlide } from '@/types/database'
 
 function waHref() {
-  return `https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent('Hi Geethams Silks, I would like to enquire about your collection.')}`
+  return `https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent('Hi Geetham Silks, I would like to enquire about your collection.')}`
 }
 
 /**
@@ -124,7 +124,7 @@ export default function HeroSliderMobile({ slides, duration }: { slides: HeroSli
                   {/* full, uncropped composition */}
                   <Image
                     src={slide.media_url}
-                    alt={slide.title ?? 'Geethams Silks'}
+                    alt={slide.title ?? 'Geetham Silks'}
                     fill
                     priority={i === 0}
                     sizes="90vw"
@@ -159,7 +159,7 @@ export default function HeroSliderMobile({ slides, duration }: { slides: HeroSli
             >
               <div className="mb-4 flex items-center justify-center gap-3">
                 <span className="h-px w-7 bg-gradient-to-r from-transparent to-[var(--brand-gold)]" />
-                <span className="text-[10px] tracking-[0.4em] uppercase text-[var(--brand-gold)] font-medium">Geethams Silks</span>
+                <span className="text-[10px] tracking-[0.4em] uppercase text-[var(--brand-gold)] font-medium">Geetham Silks</span>
                 <span className="h-px w-7 bg-gradient-to-l from-transparent to-[var(--brand-gold)]" />
               </div>
 

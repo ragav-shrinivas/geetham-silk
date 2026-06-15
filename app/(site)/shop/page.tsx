@@ -66,7 +66,7 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
         <span aria-hidden className="backdrop-word -top-4 text-left">Boutique</span>
         <div className="relative flex flex-col sm:flex-row sm:items-end justify-between gap-4">
           <div>
-            <p className="text-xs tracking-[0.35em] uppercase text-[var(--brand-rose)] mb-3">Geethams Silks</p>
+            <p className="text-xs tracking-[0.35em] uppercase text-[var(--brand-rose)] mb-3">Geetham Silks</p>
             <h1 className="font-serif text-4xl lg:text-6xl font-light text-[var(--brand-charcoal)] leading-[1.05]">
               {title}
             </h1>

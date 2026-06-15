@@ -13,7 +13,7 @@ interface Props { testimonials: Testimonial[] }
 const ROTATE_MS = 6500
 
 const PLACEHOLDER: Testimonial[] = [
-  { id: '1', customer_name: 'Priya Ramesh', location: 'Anna Nagar, Chennai', rating: 5, review: 'Absolutely stunning collection! The silk sarees are of premium quality. Highly recommend Geethams Silks for any occasion.', created_at: '', updated_at: '', is_active: true, display_order: 0, avatar_url: null, product_id: null },
+  { id: '1', customer_name: 'Priya Ramesh', location: 'Anna Nagar, Chennai', rating: 5, review: 'Absolutely stunning collection! The silk sarees are of premium quality. Highly recommend Geetham Silks for any occasion.', created_at: '', updated_at: '', is_active: true, display_order: 0, avatar_url: null, product_id: null },
   { id: '2', customer_name: 'Divya Krishnan', location: 'Velachery, Chennai', rating: 5, review: "Perfect for my daughter's school function. The kids wear collection is adorable and the fabric quality is excellent.", created_at: '', updated_at: '', is_active: true, display_order: 0, avatar_url: null, product_id: null },
   { id: '3', customer_name: 'Meena Subramanian', location: 'Adyar, Chennai', rating: 5, review: 'Found my dream saree here! The WhatsApp ordering experience was so smooth. Will definitely shop again.', created_at: '', updated_at: '', is_active: true, display_order: 0, avatar_url: null, product_id: null },
 ]

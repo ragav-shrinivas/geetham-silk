@@ -43,7 +43,7 @@ const DEFAULT_SLIDES: HeroSlide[] = HERO_IMAGES.map((src, i) => ({
 }))
 
 function waHref() {
-  return `https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent('Hi Geethams Silks, I would like to enquire about your collection.')}`
+  return `https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent('Hi Geetham Silks, I would like to enquire about your collection.')}`
 }
 
 export default function HeroSlider({ slides, durationMs }: { slides: HeroSlide[]; durationMs?: number }) {
@@ -137,7 +137,7 @@ export default function HeroSlider({ slides, durationMs }: { slides: HeroSlide[]
               ) : slide.media_url ? (
                 <Image
                   src={slide.media_url}
-                  alt={slide.title ?? 'Geethams Silks'}
+                  alt={slide.title ?? 'Geetham Silks'}
                   fill
                   priority={current === 0}
                   sizes="100vw"
@@ -178,7 +178,7 @@ export default function HeroSlider({ slides, durationMs }: { slides: HeroSlide[]
               className="mb-4 sm:mb-6 flex items-center justify-center gap-3 sm:gap-4"
             >
               <span className="h-px w-8 sm:w-10 bg-gradient-to-r from-transparent to-[var(--brand-gold)]" />
-              <span className="text-[10px] sm:text-[11px] tracking-[0.4em] sm:tracking-[0.45em] uppercase text-[var(--brand-gold)] font-medium">Geethams Silks</span>
+              <span className="text-[10px] sm:text-[11px] tracking-[0.4em] sm:tracking-[0.45em] uppercase text-[var(--brand-gold)] font-medium">Geetham Silks</span>
               <span className="h-px w-8 sm:w-10 bg-gradient-to-l from-transparent to-[var(--brand-gold)]" />
             </motion.div>
 

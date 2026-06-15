@@ -18,7 +18,7 @@ export function AboutHero() {
 
   return (
     <section ref={ref} className="relative pt-36 lg:pt-44 pb-20 lg:pb-28 overflow-hidden bg-[var(--brand-cream)]">
-      <span aria-hidden className="backdrop-word top-24">Geethams</span>
+      <span aria-hidden className="backdrop-word top-24">Geetham</span>
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
         <div className="lg:col-span-7">
           <motion.p
@@ -49,7 +49,7 @@ export function AboutHero() {
             transition={{ duration: 0.9, ease: LUXE, delay: 0.6 }}
             className="mt-8 text-base sm:text-lg text-gray-500 leading-relaxed max-w-xl"
           >
-            Geethams Silks is a premium boutique in Palavakkam, Chennai — dedicated to the finest
+            Geetham Silks is a premium boutique in Palavakkam, Chennai — dedicated to the finest
             sarees, kurtas, and ethnic wear for women and children. Clothing, to us, is an expression
             of culture, grace, and identity.
           </motion.p>
@@ -61,7 +61,7 @@ export function AboutHero() {
         >
           <CurtainImage
             src="/heroimage4.jpeg"
-            alt="Geethams Silks — the boutique"
+            alt="Geetham Silks — the boutique"
             from="right"
             priority
             sizes="(max-width: 1024px) 100vw, 40vw"
@@ -228,7 +228,7 @@ export function Craftsmanship() {
               Browse the Collection
             </LuxButton>
             <LuxButton
-              href={`https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent('Hi Geethams Silks, I would like to know more about your boutique.')}`}
+              href={`https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent('Hi Geetham Silks, I would like to know more about your boutique.')}`}
               variant="whatsapp"
               whatsappIcon
             >

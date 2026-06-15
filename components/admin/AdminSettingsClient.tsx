@@ -13,7 +13,7 @@ interface SiteSettings {
 
 export default function AdminSettingsClient() {
   const [settings, setSettings] = useState<SiteSettings>({
-    name: 'Geethams Silks', tagline: 'Elegance Woven in Every Thread',
+    name: 'Geetham Silks', tagline: 'Elegance Woven in Every Thread',
     whatsapp: '919677093294', email: 'geethamssilks@gmail.com',
     phone: '+91 96770 93294', address: '388, Periyar Salai, Krishna Nagar, Palavakkam, Chennai, Tamil Nadu 600041',
     instagram: 'https://www.instagram.com/geethams_silks_ecr',

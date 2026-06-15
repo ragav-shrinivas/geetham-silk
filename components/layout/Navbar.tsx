@@ -62,7 +62,7 @@ export default function Navbar() {
             className={cn('flex-shrink-0', !scrolled && 'pointer-events-none')}
             aria-hidden={!scrolled}
           >
-            <Link href="/" aria-label="Geethams Silks — home" tabIndex={scrolled ? 0 : -1}>
+            <Link href="/" aria-label="Geetham Silks — home" tabIndex={scrolled ? 0 : -1}>
               <Wordmark size="sm" />
             </Link>
           </motion.div>

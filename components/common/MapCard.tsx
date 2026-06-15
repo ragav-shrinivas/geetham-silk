@@ -12,7 +12,7 @@ export default function MapCard({ className }: { className?: string }) {
       href={SITE.maps}
       target="_blank"
       rel="noopener noreferrer"
-      aria-label="Open Geethams Silks location in Google Maps"
+      aria-label="Open Geetham Silks location in Google Maps"
       className={cn(
         'group relative block aspect-[16/10] overflow-hidden border border-[var(--brand-pink)]/25 bg-[var(--brand-cream-deep)]',
         className
@@ -20,7 +20,7 @@ export default function MapCard({ className }: { className?: string }) {
     >
       <iframe
         src={SITE.mapsEmbed}
-        title="Geethams Silks on Google Maps"
+        title="Geetham Silks on Google Maps"
         loading="lazy"
         referrerPolicy="no-referrer-when-downgrade"
         aria-hidden

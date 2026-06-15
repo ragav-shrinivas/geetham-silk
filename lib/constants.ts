@@ -1,5 +1,5 @@
 export const SITE = {
-  name: 'Geethams Silks',
+  name: 'Geetham Silks',
   tagline: 'Elegance Woven in Every Thread',
   description: 'Premium sarees, kurtas & ethnic wear for women and kids in Chennai.',
   url: process.env.NEXT_PUBLIC_SITE_URL ?? 'https://geethamssilks.com',

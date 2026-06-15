@@ -1,5 +1,5 @@
 /**
- * Vector peacock emblem inspired by the Geethams Silks logo — a displayed
+ * Vector peacock emblem inspired by the Geetham Silks logo — a displayed
  * peacock with a fan of eye-feathers, drawn in rose-gold gradient strokes.
  * Built as a watermark/atmospheric element: tint, blur and opacity are
  * controlled by the parent. currentColor is unused; strokes use the gradient.

@@ -7,11 +7,11 @@ import FeedbackForm from '@/components/common/FeedbackForm'
 
 export const metadata: Metadata = {
   title: 'Contact Us',
-  description: 'Get in touch with Geethams Silks. Visit us in Palavakkam or chat on WhatsApp.',
+  description: 'Get in touch with Geetham Silks. Visit us in Palavakkam or chat on WhatsApp.',
 }
 
 export default function ContactPage() {
-  const waMsg = encodeURIComponent('Hi Geethams Silks, I would like to enquire about your collection.')
+  const waMsg = encodeURIComponent('Hi Geetham Silks, I would like to enquire about your collection.')
 
   return (
     <div className="pt-24 min-h-screen bg-[var(--brand-cream)]">

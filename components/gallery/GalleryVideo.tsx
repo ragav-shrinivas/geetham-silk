@@ -79,7 +79,7 @@ export default function GalleryVideo({ src, poster }: Props) {
         </div>
       </motion.div>
 
-      <p className="mt-5 text-xs tracking-[0.2em] uppercase text-gray-400">Geethams Silks · In Motion</p>
+      <p className="mt-5 text-xs tracking-[0.2em] uppercase text-gray-400">Geetham Silks · In Motion</p>
     </div>
   )
 }

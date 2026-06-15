@@ -146,23 +146,50 @@
   -webkit-text-fill-color: transparent;
   color: transparent;
 }
-/* stacked solid shadows extrude the letters; soft purple halo lifts them off the page */
+/* stacked solid shadows extrude the letters; luminous purple halo glows + pulses */
 .wordmark-3d {
   filter:
     drop-shadow(0 1px 0 #4a1f6e)
     drop-shadow(0 2px 0 #41195f)
     drop-shadow(0 3px 0 #371552)
     drop-shadow(0 4px 1px rgba(45, 18, 70, 0.55))
+    drop-shadow(0 0 16px rgba(168, 110, 224, 0.55))
     drop-shadow(0 8px 16px rgba(107, 47, 160, 0.4));
+  animation: wordmarkGlow 3.4s ease-in-out infinite;
+}
+@keyframes wordmarkGlow {
+  0%, 100% {
+    filter:
+      drop-shadow(0 1px 0 #4a1f6e)
+      drop-shadow(0 2px 0 #41195f)
+      drop-shadow(0 3px 0 #371552)
+      drop-shadow(0 4px 1px rgba(45, 18, 70, 0.55))
+      drop-shadow(0 0 14px rgba(168, 110, 224, 0.45))
+      drop-shadow(0 8px 16px rgba(107, 47, 160, 0.38));
+  }
+  50% {
+    filter:
+      drop-shadow(0 1px 0 #4a1f6e)
+      drop-shadow(0 2px 0 #41195f)
+      drop-shadow(0 3px 0 #371552)
+      drop-shadow(0 4px 1px rgba(45, 18, 70, 0.55))
+      drop-shadow(0 0 28px rgba(190, 142, 238, 0.9))
+      drop-shadow(0 8px 18px rgba(107, 47, 160, 0.5));
+  }
 }
 @media (max-width: 639px) {
-  /* shallower extrusion so small sizes stay crisp */
+  /* shallower extrusion + steady glow so small sizes stay crisp */
   .wordmark-3d {
+    animation: none;
     filter:
       drop-shadow(0 1px 0 #4a1f6e)
       drop-shadow(0 2px 0 #371552)
+      drop-shadow(0 0 13px rgba(168, 110, 224, 0.5))
       drop-shadow(0 4px 10px rgba(107, 47, 160, 0.38));
   }
+}
+@media (prefers-reduced-motion: reduce) {
+  .wordmark-3d { animation: none; }
 }
 
 /* ---------- Glows ---------- */

@@ -37,7 +37,7 @@ export default function AdminLoginPage() {
             <Lock className="text-[var(--brand-pink)]" size={24} />
           </div>
           <h1 className="font-serif text-3xl font-light text-white mb-1">Admin Access</h1>
-          <p className="text-gray-400 text-xs tracking-widest uppercase">Geethams Silks</p>
+          <p className="text-gray-400 text-xs tracking-widest uppercase">Geetham Silks</p>
         </div>
 
         <form onSubmit={handleLogin} className="space-y-5 bg-white/5 border border-white/10 p-8">

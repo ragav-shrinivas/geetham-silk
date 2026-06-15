@@ -8,7 +8,7 @@ import Reveal from '@/components/common/Reveal'
 
 export const metadata: Metadata = {
   title: 'Gallery',
-  description: 'Explore our lookbook, films and store gallery at Geethams Silks, Chennai.',
+  description: 'Explore our lookbook, films and store gallery at Geetham Silks, Chennai.',
 }
 
 export const revalidate = 3600

@@ -39,7 +39,7 @@ export default function AboutStrip() {
           <div className="relative">
             <CurtainImage
               src="/secondheroimage.jpeg"
-              alt="Geethams Silks boutique collection"
+              alt="Geetham Silks boutique collection"
               from="left"
               parallax={40}
               sizes="(max-width: 1024px) 100vw, 50vw"
@@ -60,7 +60,7 @@ export default function AboutStrip() {
                 transition={{ duration: 0.9, ease: LUXE }}
                 className="block text-xs tracking-[0.4em] uppercase text-[var(--brand-gold)] mb-7"
               >
-                The House of Geethams
+                The House of Geetham
               </motion.span>
             </span>
 

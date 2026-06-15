@@ -29,7 +29,7 @@ export function buildWhatsAppMessage(product: {
 }): string {
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? ''
   const productUrl = `${siteUrl}/products/${product.slug}`
-  const message = `Hi Geethams Silks,
+  const message = `Hi Geetham Silks,
 
 I am interested in the following product.
 

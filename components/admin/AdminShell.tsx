@@ -39,7 +39,7 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
       <div className="px-6 py-6 border-b border-gray-100">
         <Link href="/" target="_blank" className="block">
           <span className="font-serif text-xl font-semibold text-[var(--brand-charcoal)]">
-            Geethams <span className="text-[var(--brand-rose)]">Silks</span>
+            Geetham <span className="text-[var(--brand-rose)]">Silks</span>
           </span>
           <p className="text-[10px] tracking-[0.2em] uppercase text-gray-400 mt-0.5">Admin Panel</p>
         </Link>
