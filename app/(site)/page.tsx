@@ -8,7 +8,7 @@ import NewArrivals from '@/components/home/NewArrivals'
 import TestimonialsSection from '@/components/home/TestimonialsSection'
 import AboutStrip from '@/components/home/AboutStrip'
 import WhatsAppFloat from '@/components/common/WhatsAppFloat'
-import { getProducts, getTestimonials, getPageSections } from '@/lib/queries'
+import { getProducts, getTestimonials, getPageSections, getCategoriesWithCount } from '@/lib/queries'
 import type { Metadata } from 'next'
 import type { Json, PageSection } from '@/types/database'
 import { SITE } from '@/lib/constants'
@@ -48,11 +48,12 @@ export default async function HomePage() {
   const arrivalsSettings = sections.find((s) => s.section_key === 'arrivals')?.settings ?? {}
   const bestSettings = sections.find((s) => s.section_key === 'bestsellers')?.settings ?? {}
 
-  const [featuredProducts, newArrivals, bestSellers, testimonials] = await Promise.all([
+  const [featuredProducts, newArrivals, bestSellers, testimonials, categories] = await Promise.all([
     getProducts({ featured: true, limit: setting(featuredSettings, 'limit', 8) }),
     getProducts({ newArrival: true, limit: setting(arrivalsSettings, 'limit', 8) }),
     getProducts({ bestSeller: true, limit: setting(bestSettings, 'limit', 12) }),
     getTestimonials(),
+    getCategoriesWithCount(),
   ])
 
   return (
@@ -65,7 +66,7 @@ export default async function HomePage() {
           case 'marquee':
             return <BrandMarquee key="marquee" items={setting<string[] | undefined>(s, 'items', undefined)} />
           case 'categories':
-            return <FeaturedCategories key="categories" />
+            return <FeaturedCategories key="categories" categories={categories} />
           case 'featured':
             return <FeaturedProducts key="featured" products={featuredProducts} />
           case 'bestsellers':

@@ -11,6 +11,7 @@ import { Plus, Pencil, Trash2, X, Upload, Check } from 'lucide-react'
 interface Category {
   id: string; name: string; slug: string; description: string | null
   image_url: string | null; is_active: boolean; display_order: number
+  product_count?: number
 }
 
 const EMPTY: Omit<Category, 'id'> = { name: '', slug: '', description: null, image_url: null, is_active: true, display_order: 0 }
@@ -26,8 +27,15 @@ export default function AdminCategoriesClient() {
 
   async function load() {
     const supabase = createClient()
-    const { data } = await supabase.from('categories').select('*').order('display_order')
-    setItems(data ?? [])
+    const [{ data: cats }, { data: products }] = await Promise.all([
+      supabase.from('categories').select('*').order('display_order'),
+      supabase.from('products').select('category_id').eq('is_active', true),
+    ])
+    const countMap: Record<string, number> = {}
+    for (const p of products ?? []) {
+      if (p.category_id) countMap[p.category_id] = (countMap[p.category_id] ?? 0) + 1
+    }
+    setItems((cats ?? []).map((c) => ({ ...c, product_count: countMap[c.id] ?? 0 })))
   }
   // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => { load() }, [])
@@ -151,6 +159,7 @@ export default function AdminCategoriesClient() {
               <tr>
                 <th className="text-left px-4 py-3 font-medium text-gray-500 text-xs tracking-wider">Category</th>
                 <th className="text-left px-4 py-3 font-medium text-gray-500 text-xs tracking-wider">Slug</th>
+                <th className="text-left px-4 py-3 font-medium text-gray-500 text-xs tracking-wider">Products</th>
                 <th className="text-left px-4 py-3 font-medium text-gray-500 text-xs tracking-wider">Status</th>
                 <th className="text-right px-4 py-3"></th>
               </tr>
@@ -169,6 +178,7 @@ export default function AdminCategoriesClient() {
                     </div>
                   </td>
                   <td className="px-4 py-3 text-gray-400 font-mono text-xs">{cat.slug}</td>
+                  <td className="px-4 py-3 text-gray-500 text-sm">{cat.product_count ?? 0}</td>
                   <td className="px-4 py-3">
                     <span className={`text-xs px-2 py-0.5 ${cat.is_active ? 'bg-green-50 text-green-600' : 'bg-gray-100 text-gray-400'}`}>
                       {cat.is_active ? 'Active' : 'Hidden'}

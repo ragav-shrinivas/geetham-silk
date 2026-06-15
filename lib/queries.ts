@@ -96,6 +96,21 @@ export async function getCategories(): Promise<import('@/types/database').Catego
   return (data ?? []) as import('@/types/database').Category[]
 }
 
+export async function getCategoriesWithCount(): Promise<Array<import('@/types/database').Category & { product_count: number }>> {
+  const supabase = await createClient()
+  const [{ data: cats }, { data: productRows }] = await Promise.all([
+    supabase.from('categories').select('*').eq('is_active', true).order('display_order'),
+    supabase.from('products').select('category_id').eq('is_active', true),
+  ])
+  const rows = (productRows ?? []) as Array<{ category_id: string | null }>
+  const countMap: Record<string, number> = {}
+  for (const p of rows) {
+    if (p.category_id) countMap[p.category_id] = (countMap[p.category_id] ?? 0) + 1
+  }
+  const catList = (cats ?? []) as Array<import('@/types/database').Category>
+  return catList.map((c) => ({ ...c, product_count: countMap[c.id] ?? 0 }))
+}
+
 export async function getCollections(): Promise<import('@/types/database').Collection[]> {
   const supabase = await createClient()
   const { data } = await supabase

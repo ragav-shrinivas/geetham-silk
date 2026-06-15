@@ -12,6 +12,7 @@ interface CategoryCardProps {
   title: string
   href: string
   index?: number
+  count?: number
   /** desktop visual scale to normalise model presence (tuned per image) */
   scale?: number
   /** mobile visual scale — the card is a different aspect ratio on phones, so
@@ -29,7 +30,7 @@ const CARD_BG = [
   'linear-gradient(160deg, #2f2b27 0%, #4a3b36 58%, #6f5642 100%)',
 ]
 
-export default function CategoryCard({ image, title, href, index = 0, scale = 1, scaleMobile, objectPosition = '50% 100%', priority = false }: CategoryCardProps) {
+export default function CategoryCard({ image, title, href, index = 0, count, scale = 1, scaleMobile, objectPosition = '50% 100%', priority = false }: CategoryCardProps) {
   const [hovered, setHovered] = useState(false)
 
   // The card aspect ratio differs between phones (taller, narrower) and desktop,
@@ -104,6 +105,11 @@ export default function CategoryCard({ image, title, href, index = 0, scale = 1,
         <h3 className="font-serif text-3xl lg:text-[2.5rem] font-light text-white leading-none tracking-wide">
           {title}
         </h3>
+        {count != null && count > 0 && (
+          <p className="mt-1.5 text-[10px] tracking-[0.22em] uppercase text-white/45 font-sans">
+            {count} {count === 1 ? 'piece' : 'pieces'}
+          </p>
+        )}
         <span className="mt-3 inline-flex items-center gap-2 text-[11px] tracking-[0.28em] uppercase text-[var(--brand-pink)] opacity-0 translate-y-3 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]">
           Explore Collection
           <ArrowRight size={13} />
