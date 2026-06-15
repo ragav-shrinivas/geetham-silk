@@ -12,7 +12,7 @@ import {
 import { CSS } from '@dnd-kit/utilities'
 import {
   GripVertical, Eye, EyeOff, Pencil, X, ExternalLink,
-  Film, Image as ImageIcon, LayoutGrid, Quote, Sparkles, Type, ShoppingBag, MessageSquareQuote,
+  Film, Image as ImageIcon, LayoutGrid, Quote, Sparkles, Type, ShoppingBag, MessageSquareQuote, Star,
 } from 'lucide-react'
 import { createAdminClient } from '@/lib/supabase/admin-client'
 import { Button } from '@/components/ui/button'
@@ -82,15 +82,15 @@ const SECTION_META: Record<string, SectionMeta> = {
     manageHref: '/evo9-admin/products',
     manageLabel: 'Manage products',
   },
-  film: {
-    label: 'The Film',
-    desc: 'Full-bleed silk video moment',
-    icon: Film,
+  bestsellers: {
+    label: 'Best Selling Products',
+    desc: 'Most-loved products carousel',
+    icon: Star,
     fields: [
-      { key: 'heading', label: 'Headline', type: 'text' },
-      { key: 'caption', label: 'Caption (small line above)', type: 'text' },
-      { key: 'src', label: 'Image or video', type: 'media', help: 'Use a wide (landscape) image or video — portrait files get cropped here.' },
+      { key: 'limit', label: 'Max products to show', type: 'number', min: 2, max: 20 },
     ],
+    manageHref: '/evo9-admin/products?filter=bestseller',
+    manageLabel: 'Manage best sellers',
   },
   story: {
     label: 'Brand Story Strip',

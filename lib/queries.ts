@@ -9,6 +9,7 @@ export async function getProducts(opts?: {
   featured?: boolean
   trending?: boolean
   newArrival?: boolean
+  bestSeller?: boolean
   search?: string
   sort?: ProductSort
   limit?: number
@@ -25,23 +26,29 @@ export async function getProducts(opts?: {
     `)
     .eq('is_active', true)
 
-  switch (opts?.sort) {
-    case 'newest':
-      query = query.order('created_at', { ascending: false })
-      break
-    case 'price-asc':
-      query = query.order('price', { ascending: true })
-      break
-    case 'price-desc':
-      query = query.order('price', { ascending: false })
-      break
-    default:
-      query = query.order('display_order', { ascending: true }).order('created_at', { ascending: false })
+  // best sellers follow the admin-controlled order unless an explicit sort is set
+  if (opts?.bestSeller && !opts?.sort) {
+    query = query.order('best_seller_order', { ascending: true }).order('created_at', { ascending: false })
+  } else {
+    switch (opts?.sort) {
+      case 'newest':
+        query = query.order('created_at', { ascending: false })
+        break
+      case 'price-asc':
+        query = query.order('price', { ascending: true })
+        break
+      case 'price-desc':
+        query = query.order('price', { ascending: false })
+        break
+      default:
+        query = query.order('display_order', { ascending: true }).order('created_at', { ascending: false })
+    }
   }
 
   if (opts?.featured) query = query.eq('is_featured', true)
   if (opts?.trending) query = query.eq('is_trending', true)
   if (opts?.newArrival) query = query.eq('is_new_arrival', true)
+  if (opts?.bestSeller) query = query.eq('is_best_seller', true)
   if (opts?.search) query = query.ilike('name', `%${opts.search}%`)
   if (opts?.categorySlug) {
     const { data: cat } = await supabase

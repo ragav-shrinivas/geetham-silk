@@ -55,6 +55,8 @@ export interface Database {
           is_trending: boolean
           is_new_arrival: boolean
           is_out_of_stock: boolean
+          is_best_seller: boolean
+          best_seller_order: number
           display_order: number
           meta_title: string | null
           meta_description: string | null

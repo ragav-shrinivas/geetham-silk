@@ -18,6 +18,7 @@ interface Props {
     sizes: string[]; colors: string[]; material: string | null
     care_instructions: string | null; is_active: boolean; is_featured: boolean
     is_trending: boolean; is_new_arrival: boolean; is_out_of_stock: boolean
+    is_best_seller: boolean
     meta_title: string | null; meta_description: string | null
     product_images: { id: string; url: string; is_primary: boolean; display_order: number }[]
   }
@@ -47,6 +48,7 @@ export default function ProductForm({ product, categories, collections }: Props)
     is_trending: product?.is_trending ?? false,
     is_new_arrival: product?.is_new_arrival ?? false,
     is_out_of_stock: product?.is_out_of_stock ?? false,
+    is_best_seller: product?.is_best_seller ?? false,
     meta_title: product?.meta_title ?? '',
     meta_description: product?.meta_description ?? '',
   })
@@ -117,6 +119,7 @@ export default function ProductForm({ product, categories, collections }: Props)
       is_trending: form.is_trending,
       is_new_arrival: form.is_new_arrival,
       is_out_of_stock: form.is_out_of_stock,
+      is_best_seller: form.is_best_seller,
       meta_title: form.meta_title || null,
       meta_description: form.meta_description || null,
     }
@@ -264,6 +267,7 @@ export default function ProductForm({ product, categories, collections }: Props)
                 { key: 'is_featured', label: 'Featured' },
                 { key: 'is_trending', label: 'Trending' },
                 { key: 'is_new_arrival', label: 'New Arrival' },
+                { key: 'is_best_seller', label: 'Best Selling (homepage)' },
                 { key: 'is_out_of_stock', label: 'Out of Stock' },
               ].map(({ key, label }) => (
                 <label key={key} className="flex items-center gap-3 cursor-pointer">
