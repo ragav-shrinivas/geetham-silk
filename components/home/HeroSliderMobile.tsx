@@ -147,7 +147,7 @@ export default function HeroSliderMobile({ slides, duration }: { slides: HeroSli
       </div>
 
       {/* ───────── LAYER 3 · Content (fixed/anchored — never drifts) ───────── */}
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 flex justify-center pb-16 pt-10">
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 flex justify-center pb-16 pt-4">
         <div className="w-[86vw] max-w-[440px] px-2 text-center text-white">
           <AnimatePresence mode="wait">
             <motion.div
@@ -157,23 +157,17 @@ export default function HeroSliderMobile({ slides, duration }: { slides: HeroSli
               exit={reduced ? { opacity: 0 } : { opacity: 0, y: -10 }}
               transition={{ duration: 0.55, ease: LUXE }}
             >
-              <div className="mb-4 flex items-center justify-center gap-3">
+              <div className="mb-3 flex items-center justify-center gap-3">
                 <span className="h-px w-7 bg-gradient-to-r from-transparent to-[var(--brand-gold)]" />
                 <span className="text-[10px] tracking-[0.4em] uppercase text-[var(--brand-gold)] font-medium">Geetham Silks</span>
                 <span className="h-px w-7 bg-gradient-to-l from-transparent to-[var(--brand-gold)]" />
               </div>
 
-              <h1 className="font-serif font-light leading-[1.08] tracking-tight text-[clamp(1.8rem,7.5vw,2.5rem)]">
+              <h1 className="font-serif font-light leading-[1.08] tracking-tight text-[clamp(1.9rem,7.5vw,2.5rem)]">
                 {active.title}
               </h1>
 
-              {active.subtitle && (
-                <p className="mx-auto mt-3 max-w-[32ch] text-[13px] leading-relaxed tracking-wide text-white/80">
-                  {active.subtitle}
-                </p>
-              )}
-
-              <div className="pointer-events-auto mt-6 flex flex-col gap-2.5">
+              <div className="pointer-events-auto mt-5 flex flex-col gap-2.5">
                 {active.cta_primary_label && (
                   <Cta href={active.cta_primary_link} label={active.cta_primary_label} primary />
                 )}
