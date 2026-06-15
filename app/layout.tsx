@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     template: `%s | ${SITE.name}`,
   },
   description: 'Shop premium sarees, kurtas, and kids ethnic wear at Geetham Silks, Palavakkam, Chennai. Enquire on WhatsApp for the latest collections.',
-  keywords: ['sarees chennai', 'silk sarees', 'ethnic wear', 'kurtas', 'kids wear', 'palavakkam', 'geethams silks', 'women clothing chennai'],
+  keywords: ['sarees chennai', 'silk sarees', 'ethnic wear', 'kurtas', 'kids wear', 'palavakkam', 'geetham silks', 'geethams silks', 'women clothing chennai'],
   openGraph: {
     type: 'website',
     locale: 'en_IN',
