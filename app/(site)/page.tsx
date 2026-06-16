@@ -4,11 +4,12 @@ import BrandMarquee from '@/components/home/BrandMarquee'
 import FeaturedCategories from '@/components/home/FeaturedCategories'
 import FeaturedProducts from '@/components/home/FeaturedProducts'
 import BestSellers from '@/components/home/BestSellers'
+import ProductDiscovery from '@/components/home/ProductDiscovery'
 import NewArrivals from '@/components/home/NewArrivals'
 import TestimonialsSection from '@/components/home/TestimonialsSection'
 import AboutStrip from '@/components/home/AboutStrip'
 import WhatsAppFloat from '@/components/common/WhatsAppFloat'
-import { getProducts, getTestimonials, getPageSections, getCategoriesWithCount } from '@/lib/queries'
+import { getProducts, getTestimonials, getPageSections, getCategoriesWithCount, getDiscoveryProducts } from '@/lib/queries'
 import type { Metadata } from 'next'
 import type { Json, PageSection } from '@/types/database'
 import { SITE } from '@/lib/constants'
@@ -31,6 +32,7 @@ const DEFAULT_SECTIONS: Array<Pick<PageSection, 'section_key' | 'is_visible' | '
   { section_key: 'story', is_visible: true, settings: {} },
   { section_key: 'arrivals', is_visible: true, settings: { limit: 8 } },
   { section_key: 'testimonials', is_visible: true, settings: {} },
+  { section_key: 'discovery', is_visible: true, settings: {} },
 ]
 
 function setting<T>(settings: Json, key: string, fallback: T): T {
@@ -48,12 +50,13 @@ export default async function HomePage() {
   const arrivalsSettings = sections.find((s) => s.section_key === 'arrivals')?.settings ?? {}
   const bestSettings = sections.find((s) => s.section_key === 'bestsellers')?.settings ?? {}
 
-  const [featuredProducts, newArrivals, bestSellers, testimonials, categories] = await Promise.all([
+  const [featuredProducts, newArrivals, bestSellers, testimonials, categories, discoveryProducts] = await Promise.all([
     getProducts({ featured: true, limit: setting(featuredSettings, 'limit', 8) }),
     getProducts({ newArrival: true, limit: setting(arrivalsSettings, 'limit', 8) }),
     getProducts({ bestSeller: true, limit: setting(bestSettings, 'limit', 12) }),
     getTestimonials(),
     getCategoriesWithCount(),
+    getDiscoveryProducts(24),
   ])
 
   return (
@@ -84,6 +87,8 @@ export default async function HomePage() {
                 <TestimonialsSection testimonials={testimonials} />
               </Suspense>
             )
+          case 'discovery':
+            return <ProductDiscovery key="discovery" products={discoveryProducts} />
           default:
             return null
         }

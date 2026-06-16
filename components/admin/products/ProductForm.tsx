@@ -49,6 +49,7 @@ export default function ProductForm({ product, categories, collections }: Props)
     is_new_arrival: product?.is_new_arrival ?? false,
     is_out_of_stock: product?.is_out_of_stock ?? false,
     is_best_seller: product?.is_best_seller ?? false,
+    show_in_discovery: (product as { show_in_discovery?: boolean } | undefined)?.show_in_discovery ?? true,
     meta_title: product?.meta_title ?? '',
     meta_description: product?.meta_description ?? '',
   })
@@ -120,6 +121,7 @@ export default function ProductForm({ product, categories, collections }: Props)
       is_new_arrival: form.is_new_arrival,
       is_out_of_stock: form.is_out_of_stock,
       is_best_seller: form.is_best_seller,
+      show_in_discovery: form.show_in_discovery,
       meta_title: form.meta_title || null,
       meta_description: form.meta_description || null,
     }
@@ -268,6 +270,7 @@ export default function ProductForm({ product, categories, collections }: Props)
                 { key: 'is_trending', label: 'Trending' },
                 { key: 'is_new_arrival', label: 'New Arrival' },
                 { key: 'is_best_seller', label: 'Best Selling (homepage)' },
+                { key: 'show_in_discovery', label: 'Show in Homepage Discovery' },
                 { key: 'is_out_of_stock', label: 'Out of Stock' },
               ].map(({ key, label }) => (
                 <label key={key} className="flex items-center gap-3 cursor-pointer">

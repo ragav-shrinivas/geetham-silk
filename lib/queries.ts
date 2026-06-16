@@ -96,6 +96,18 @@ export async function getCategories(): Promise<import('@/types/database').Catego
   return (data ?? []) as import('@/types/database').Category[]
 }
 
+export async function getDiscoveryProducts(limit = 24): Promise<ProductWithImages[]> {
+  const supabase = await createClient()
+  const { data } = await supabase
+    .from('products')
+    .select('*, product_images(*), categories(*), collections(*)')
+    .eq('is_active', true)
+    .eq('show_in_discovery', true)
+    .order('created_at', { ascending: false })
+    .limit(limit)
+  return (data ?? []) as ProductWithImages[]
+}
+
 export async function getCategoriesWithCount(): Promise<Array<import('@/types/database').Category & { product_count: number }>> {
   const supabase = await createClient()
   const [{ data: cats }, { data: productRows }] = await Promise.all([
