@@ -59,18 +59,6 @@ export default function ProductCard({ product, animate = true }: ProductCardProp
           </div>
         )}
 
-        {/* Badges */}
-        <div className="absolute top-3 left-3 flex flex-col gap-1.5">
-          {product.is_new_arrival && <Badge variant="rose">New</Badge>}
-          {product.is_trending && <Badge variant="gold">Trending</Badge>}
-          {product.is_out_of_stock && <Badge variant="default">Sold Out</Badge>}
-          {product.original_price && product.original_price > product.price && (
-            <Badge variant="pink">
-              {Math.round(((product.original_price - product.price) / product.original_price) * 100)}% off
-            </Badge>
-          )}
-        </div>
-
         {/* Quick WhatsApp hover overlay */}
         <div className="absolute inset-0 bg-[var(--brand-charcoal)]/0 group-hover:bg-[var(--brand-charcoal)]/20 transition-all duration-300 flex items-end justify-center pb-4 opacity-0 group-hover:opacity-100">
           <a
@@ -99,6 +87,21 @@ export default function ProductCard({ product, animate = true }: ProductCardProp
           </h3>
         </Link>
         <p className="text-xs text-gray-400 tracking-wider mt-0.5">#{product.product_code}</p>
+
+        {/* Status badges — kept off the photo so the product is never obscured */}
+        {(product.is_new_arrival || product.is_trending || product.is_out_of_stock ||
+          (product.original_price && product.original_price > product.price)) && (
+          <div className="flex flex-wrap gap-1.5 mt-2.5">
+            {product.is_new_arrival && <Badge variant="rose">New</Badge>}
+            {product.is_trending && <Badge variant="gold">Trending</Badge>}
+            {product.is_out_of_stock && <Badge variant="default">Sold Out</Badge>}
+            {product.original_price && product.original_price > product.price && (
+              <Badge variant="pink">
+                {Math.round(((product.original_price - product.price) / product.original_price) * 100)}% off
+              </Badge>
+            )}
+          </div>
+        )}
 
         <div className="mt-auto pt-3 flex items-center justify-between">
           <div className="flex items-baseline gap-2">
