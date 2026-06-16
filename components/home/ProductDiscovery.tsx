@@ -47,21 +47,17 @@ export default function ProductDiscovery({ products }: Props) {
           copy="Discover pieces from every category — sarees, women's wear, kids ethnic and kurtas — curated for every occasion."
         />
 
-        {/* Mobile: horizontal peek carousel · SM+: 2-col · LG: 4-col · XL: 5-col */}
+        {/* True ecommerce grid — vertical scroll, no carousel.
+            Mobile: 2-col · SM: 3-col · LG: 4-col · XL: 5-col */}
         {shuffled.length > 0 ? (
-          <div className="flex sm:grid sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-5 lg:gap-6 overflow-x-auto sm:overflow-visible snap-x snap-mandatory sm:snap-none no-scrollbar -mx-4 px-4 sm:mx-0 sm:px-0 pb-2 sm:pb-0">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-4 gap-y-9 sm:gap-x-5 sm:gap-y-10 lg:gap-x-6 lg:gap-y-12">
             {visible.map((product, i) => (
-              <div
-                key={product.id}
-                className="snap-center shrink-0 w-[72%] sm:w-auto"
-              >
-                <DiscoveryCard product={product} index={i} reduced={!!reduced} />
-              </div>
+              <DiscoveryCard key={product.id} product={product} index={i} reduced={!!reduced} />
             ))}
           </div>
         ) : (
           /* SSR placeholder — same grid but empty cards to prevent layout shift */
-          <div className="grid grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-5 lg:gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-4 gap-y-9 sm:gap-x-5 sm:gap-y-10 lg:gap-x-6 lg:gap-y-12">
             {products.slice(0, 10).map((p) => (
               <div key={p.id} className="aspect-[3/4] bg-[var(--brand-cream-deep)] animate-pulse rounded-sm" />
             ))}
