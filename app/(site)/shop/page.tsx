@@ -4,6 +4,8 @@ import { getProducts, getCategories, getCollections, type ProductSort } from '@/
 import ShopFilters from '@/components/shop/ShopFilters'
 import ShopGrid from '@/components/shop/ShopGrid'
 import LuxButton from '@/components/ui/lux-button'
+import PageNav from '@/components/common/PageNav'
+import type { Crumb } from '@/components/common/Breadcrumbs'
 import WhatsAppFloat from '@/components/common/WhatsAppFloat'
 
 export const metadata: Metadata = {
@@ -59,10 +61,17 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
 
   const filterKey = JSON.stringify(params)
 
+  // Breadcrumb trail — Home > Shop, plus the active filter as the leaf when present.
+  const isFiltered = !!(params.search || params.category || params.collection || params.new === 'true' || params.featured === 'true' || params.trending === 'true')
+  const crumbs: Crumb[] = isFiltered
+    ? [{ label: 'Shop', href: '/shop' }, { label: title }]
+    : [{ label: 'Shop' }]
+
   return (
     <div className="pt-24 min-h-screen bg-[var(--brand-cream)]">
       {/* Editorial header */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-8 relative overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-8 relative overflow-hidden">
+        <PageNav fallback="/" backLabel="Home" crumbs={crumbs} className="mb-8" />
         <span aria-hidden className="backdrop-word -top-4 text-left">Boutique</span>
         <div className="relative flex flex-col sm:flex-row sm:items-end justify-between gap-4">
           <div>

@@ -5,6 +5,7 @@ import CollectionHero from '@/components/collections/CollectionHero'
 import ProductCard from '@/components/products/ProductCard'
 import Reveal, { RevealGroup, RevealItem } from '@/components/common/Reveal'
 import LuxButton from '@/components/ui/lux-button'
+import PageNav from '@/components/common/PageNav'
 import WhatsAppFloat from '@/components/common/WhatsAppFloat'
 
 interface Props { params: Promise<{ slug: string }> }
@@ -30,7 +31,19 @@ export default async function CollectionCampaignPage({ params }: Props) {
   const products = await getProducts({ collectionSlug: slug })
 
   return (
-    <div className="min-h-screen bg-[var(--brand-cream)]">
+    <div className="min-h-screen bg-[var(--brand-cream)] relative">
+      {/* Back + breadcrumbs — overlay on the dark hero, below the fixed navbar */}
+      <div className="absolute top-[92px] sm:top-28 left-0 right-0 z-30">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <PageNav
+            variant="overlay"
+            fallback="/collections"
+            backLabel="Collections"
+            crumbs={[{ label: 'Collections', href: '/collections' }, { label: collection.name }]}
+            className="w-fit"
+          />
+        </div>
+      </div>
       <CollectionHero collection={collection} productCount={products.length} />
 
       {/* Collection story */}

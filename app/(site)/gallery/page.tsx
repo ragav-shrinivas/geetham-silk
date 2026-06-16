@@ -4,6 +4,7 @@ import WhatsAppFloat from '@/components/common/WhatsAppFloat'
 import GalleryVideo from '@/components/gallery/GalleryVideo'
 import LookbookGrid from '@/components/gallery/LookbookGrid'
 import SectionHeading from '@/components/common/SectionHeading'
+import PageNav from '@/components/common/PageNav'
 import Reveal from '@/components/common/Reveal'
 
 export const metadata: Metadata = {
@@ -19,6 +20,7 @@ export default async function GalleryPage() {
   return (
     <div className="pt-24 min-h-screen bg-[var(--brand-cream)]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <PageNav fallback="/" backLabel="Home" crumbs={[{ label: 'Gallery' }]} className="mb-10" />
         {/* Heading */}
         <SectionHeading
           eyebrow="Lookbook"

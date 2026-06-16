@@ -4,6 +4,7 @@ import { SITE } from '@/lib/constants'
 import WhatsAppFloat from '@/components/common/WhatsAppFloat'
 import MapCard from '@/components/common/MapCard'
 import FeedbackForm from '@/components/common/FeedbackForm'
+import PageNav from '@/components/common/PageNav'
 
 export const metadata: Metadata = {
   title: 'Contact Us',
@@ -16,6 +17,7 @@ export default function ContactPage() {
   return (
     <div className="pt-24 min-h-screen bg-[var(--brand-cream)]">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        <PageNav fallback="/" backLabel="Home" crumbs={[{ label: 'Contact' }]} className="mb-12" />
         <div className="text-center mb-16">
           <p className="text-xs tracking-[0.3em] uppercase text-[var(--brand-rose)] mb-3">Get In Touch</p>
           <h1 className="font-serif text-5xl font-light text-[var(--brand-charcoal)]">Contact Us</h1>

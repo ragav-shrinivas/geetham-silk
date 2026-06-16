@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { SITE } from '@/lib/constants'
+import PageNav from '@/components/common/PageNav'
 
 export const metadata: Metadata = { title: 'Terms & Conditions' }
 
@@ -7,6 +8,7 @@ export default function TermsPage() {
   return (
     <div className="pt-24 min-h-screen bg-[var(--brand-cream)]">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-20 prose prose-sm prose-gray">
+        <PageNav fallback="/" backLabel="Home" crumbs={[{ label: 'Terms & Conditions' }]} className="not-prose mb-10" />
         <h1 className="font-serif text-4xl font-light text-[var(--brand-charcoal)] not-prose mb-8">Terms & Conditions</h1>
         <p className="text-gray-500 text-sm not-prose mb-8">Last updated: June 2026</p>
 

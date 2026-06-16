@@ -8,6 +8,7 @@ import WhatsAppFloat from '@/components/common/WhatsAppFloat'
 import { Badge } from '@/components/ui/badge'
 import { formatPrice } from '@/lib/utils'
 import { SITE } from '@/lib/constants'
+import PageNav from '@/components/common/PageNav'
 import Link from 'next/link'
 
 interface Props { params: Promise<{ slug: string }> }
@@ -66,22 +67,19 @@ export default async function ProductPage({ params }: Props) {
 
       <div className="pt-24 min-h-screen bg-[var(--brand-cream)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-          {/* Breadcrumb */}
-          <nav className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs tracking-wider uppercase text-gray-400 mb-8">
-            <Link href="/" className="hover:text-[var(--brand-rose)]">Home</Link>
-            <span>/</span>
-            <Link href="/shop" className="hover:text-[var(--brand-rose)]">Shop</Link>
-            {product.categories && (
-              <>
-                <span>/</span>
-                <Link href={`/shop?category=${product.categories.slug}`} className="hover:text-[var(--brand-rose)]">
-                  {product.categories.name}
-                </Link>
-              </>
-            )}
-            <span>/</span>
-            <span className="text-[var(--brand-charcoal)] truncate max-w-[200px] sm:max-w-none">{product.name}</span>
-          </nav>
+          {/* Back + breadcrumbs */}
+          <PageNav
+            fallback="/shop"
+            backLabel="Shop"
+            crumbs={[
+              { label: 'Shop', href: '/shop' },
+              ...(product.categories
+                ? [{ label: product.categories.name, href: `/shop?category=${product.categories.slug}` }]
+                : []),
+              { label: product.name },
+            ]}
+            className="mb-8"
+          />
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
             {/* Gallery — pinned while the details scroll past */}

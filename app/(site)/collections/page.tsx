@@ -3,6 +3,7 @@ import { getCollections } from '@/lib/queries'
 import CampaignRow from '@/components/collections/CampaignRow'
 import SectionHeading from '@/components/common/SectionHeading'
 import LuxButton from '@/components/ui/lux-button'
+import PageNav from '@/components/common/PageNav'
 import WhatsAppFloat from '@/components/common/WhatsAppFloat'
 
 export const metadata: Metadata = {
@@ -18,6 +19,7 @@ export default async function CollectionsPage() {
   return (
     <div className="pt-24 min-h-screen bg-[var(--brand-cream)] overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20">
+        <PageNav fallback="/" backLabel="Home" crumbs={[{ label: 'Collections' }]} className="mb-10" />
         <SectionHeading
           eyebrow="Curated For You"
           title="The *Collections*"

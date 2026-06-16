@@ -4,6 +4,7 @@ import { SITE } from '@/lib/constants'
 import { AboutHero, JourneyTimeline, Craftsmanship, StatsStrip } from '@/components/about/AboutStory'
 import Reveal from '@/components/common/Reveal'
 import MapCard from '@/components/common/MapCard'
+import PageNav from '@/components/common/PageNav'
 import WhatsAppFloat from '@/components/common/WhatsAppFloat'
 
 const InstagramIcon = () => (
@@ -20,7 +21,13 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <div className="min-h-screen bg-[var(--brand-cream)]">
+    <div className="min-h-screen bg-[var(--brand-cream)] relative">
+      {/* Back + breadcrumbs — sits in the gap between the fixed navbar and the hero heading */}
+      <div className="absolute top-[92px] sm:top-28 left-0 right-0 z-30">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <PageNav fallback="/" backLabel="Home" crumbs={[{ label: 'About' }]} />
+        </div>
+      </div>
       <AboutHero />
       <JourneyTimeline />
       <Craftsmanship />
