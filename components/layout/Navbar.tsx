@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { useState, useEffect, useRef, type FormEvent } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
+import { useLenis } from 'lenis/react'
 import { Menu, X, Search, MessageCircle, ArrowRight } from 'lucide-react'
 import { NAV_LINKS, SITE } from '@/lib/constants'
 import { cn } from '@/lib/utils'
@@ -14,6 +15,7 @@ export default function Navbar() {
   const [searchOpen, setSearchOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const pathname = usePathname()
+  const lenis = useLenis()
 
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 40)
@@ -29,11 +31,22 @@ export default function Navbar() {
     setSearchOpen(false)
   }, [pathname])
 
-  // lock body scroll while an overlay is up
+  // lock scroll while an overlay is up. Lenis ignores `body { overflow:hidden }`
+  // (it drives scroll itself), so we must stop/start the Lenis instance too.
   useEffect(() => {
-    document.body.style.overflow = open || searchOpen ? 'hidden' : ''
-    return () => { document.body.style.overflow = '' }
-  }, [open, searchOpen])
+    const locked = open || searchOpen
+    if (locked) {
+      lenis?.stop()
+      document.body.style.overflow = 'hidden'
+    } else {
+      lenis?.start()
+      document.body.style.overflow = ''
+    }
+    return () => {
+      lenis?.start()
+      document.body.style.overflow = ''
+    }
+  }, [open, searchOpen, lenis])
 
   const isActive = (href: string) =>
     href === '/' ? pathname === '/' : pathname.startsWith(href)
@@ -142,7 +155,12 @@ export default function Navbar() {
   )
 }
 
-/* ---------- Full-screen mobile menu — fashion-house treatment ---------- */
+/* ---------- Full-screen mobile menu — fashion-house treatment ----------
+   - Truly fullscreen: fixed inset-0, 100dvh (handles mobile browser chrome),
+     z-[100] above every page element, fully OPAQUE cream so nothing shows through.
+   - Slide + fade in from the right (300–500ms).
+   - Safe-area insets so the header/footer never tuck under notches or home bars.
+   - Inner column scrolls if the links don't fit a short viewport — never clipped. */
 
 function MobileMenu({ open, onClose, pathname }: { open: boolean; onClose: () => void; pathname: string }) {
   const reduced = useReducedMotion()
@@ -150,25 +168,34 @@ function MobileMenu({ open, onClose, pathname }: { open: boolean; onClose: () =>
     <AnimatePresence>
       {open && (
         <motion.div
-          initial={{ clipPath: 'inset(0% 0% 100% 0%)' }}
-          animate={{ clipPath: 'inset(0% 0% 0% 0%)' }}
-          exit={{ clipPath: 'inset(0% 0% 100% 0%)' }}
-          transition={{ duration: reduced ? 0 : 0.7, ease: LUXE }}
-          className="lg:hidden fixed inset-0 z-[60] flex flex-col"
+          key="mobile-menu"
+          initial={reduced ? { opacity: 0 } : { opacity: 0, x: '12%' }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={reduced ? { opacity: 0 } : { opacity: 0, x: '12%' }}
+          transition={{ duration: reduced ? 0 : 0.42, ease: LUXE }}
+          className="lg:hidden fixed inset-0 z-[100] flex flex-col h-[100dvh] w-screen overflow-y-auto overscroll-contain"
           style={{
             background:
-              'radial-gradient(ellipse 80% 50% at 50% 0%, rgba(232,164,184,0.18) 0%, transparent 60%),' +
+              'radial-gradient(ellipse 90% 40% at 50% 0%, rgba(232,164,184,0.20) 0%, transparent 62%),' +
               'linear-gradient(180deg, #fdf8f3 0%, #f9efe6 100%)',
+            paddingTop: 'env(safe-area-inset-top)',
+            paddingBottom: 'env(safe-area-inset-bottom)',
           }}
         >
-          <div className="flex items-center justify-between px-6 pt-5">
+          {/* Header row — logo left, close right */}
+          <div className="flex items-center justify-between px-6 pt-5 pb-2 shrink-0">
             <Wordmark size="sm" />
-            <button onClick={onClose} aria-label="Close menu" className="p-2 text-[var(--brand-charcoal)]">
-              <X size={24} />
+            <button
+              onClick={onClose}
+              aria-label="Close menu"
+              className="-mr-2 p-2.5 text-[var(--brand-charcoal)] active:scale-90 transition-transform"
+            >
+              <X size={26} />
             </button>
           </div>
 
-          <nav className="flex-1 flex flex-col justify-center px-10 gap-1">
+          {/* Links — large touch targets, centered, scroll if they overflow */}
+          <nav className="flex-1 min-h-0 flex flex-col justify-center px-9 py-6 gap-1">
             {NAV_LINKS.map((link, i) => {
               const active = link.href === '/' ? pathname === '/' : pathname.startsWith(link.href)
               return (
@@ -176,14 +203,14 @@ function MobileMenu({ open, onClose, pathname }: { open: boolean; onClose: () =>
                   <motion.span
                     initial={{ y: '110%' }}
                     animate={{ y: 0 }}
-                    transition={{ duration: reduced ? 0 : 0.8, ease: LUXE, delay: 0.15 + i * 0.07 }}
+                    transition={{ duration: reduced ? 0 : 0.6, ease: LUXE, delay: 0.12 + i * 0.06 }}
                     className="block"
                   >
                     <Link
                       href={link.href}
                       onClick={onClose}
                       className={cn(
-                        'group inline-flex items-baseline gap-4 font-serif text-[2.6rem] leading-[1.15] font-light transition-colors duration-300',
+                        'group flex items-baseline gap-4 font-serif text-[2.3rem] sm:text-[2.6rem] leading-[1.35] font-light py-1.5 transition-colors duration-300',
                         active ? 'text-[var(--brand-rose)] italic' : 'text-[var(--brand-charcoal)]'
                       )}
                     >
@@ -198,18 +225,19 @@ function MobileMenu({ open, onClose, pathname }: { open: boolean; onClose: () =>
             })}
           </nav>
 
+          {/* Footer CTA */}
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: reduced ? 0 : 0.7, ease: LUXE, delay: 0.5 }}
-            className="px-10 pb-12 space-y-5"
+            transition={{ duration: reduced ? 0 : 0.6, ease: LUXE, delay: 0.32 }}
+            className="px-9 pb-10 pt-2 space-y-5 shrink-0"
           >
             <div className="hairline" />
             <a
               href={`https://wa.me/${SITE.whatsapp}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center gap-2 bg-[#25D366] text-white text-sm tracking-widest uppercase px-6 py-4 w-full"
+              className="flex items-center justify-center gap-2 bg-[#25D366] text-white text-sm tracking-widest uppercase px-6 py-4 w-full active:scale-[0.98] transition-transform"
             >
               <MessageCircle size={16} />
               Enquire on WhatsApp
