@@ -47,7 +47,7 @@ export default function ProductReviews({ productId }: { productId: string }) {
           )}
         </div>
         {!showForm && (
-          <button onClick={() => setShowForm(true)} className="inline-flex items-center gap-2 border border-[var(--brand-charcoal)] text-[var(--brand-charcoal)] text-[11px] tracking-[0.2em] uppercase px-6 py-3 hover:bg-[var(--brand-charcoal)] hover:text-white transition-colors self-start">
+          <button onClick={() => setShowForm(true)} className="inline-flex items-center gap-2 border border-[var(--brand-charcoal)] text-[var(--brand-charcoal)] text-[11px] tracking-[0.2em] uppercase px-6 py-3 hover:bg-[var(--brand-darkpink)] hover:text-white transition-colors self-start">
             Write a Review
           </button>
         )}
@@ -130,7 +130,7 @@ function ReviewForm({ productId, onDone }: { productId: string; onDone: () => vo
       <textarea className={cn(field, 'resize-none')} rows={4} placeholder="Share your experience…" value={form.body} onChange={(e) => setForm((p) => ({ ...p, body: e.target.value }))} />
       {error && <p className="text-sm text-red-500">{error}</p>}
       <div className="flex gap-3">
-        <button type="submit" disabled={busy} className="inline-flex items-center gap-2 bg-[var(--brand-charcoal)] text-white text-[11px] tracking-[0.2em] uppercase px-7 py-3 hover:bg-[var(--brand-rose)] transition-colors disabled:opacity-60">
+        <button type="submit" disabled={busy} className="inline-flex items-center gap-2 bg-[var(--brand-darkpink)] text-white text-[11px] tracking-[0.2em] uppercase px-7 py-3 hover:bg-[var(--brand-rose)] transition-colors disabled:opacity-60">
           {busy ? <><Loader2 size={14} className="animate-spin" /> Submitting…</> : 'Submit Review'}
         </button>
         <button type="button" onClick={onDone} className="text-[11px] tracking-[0.2em] uppercase text-gray-500 px-4">Cancel</button>

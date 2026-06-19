@@ -18,7 +18,7 @@ import Wordmark from '@/components/common/Wordmark'
 
 export default function Footer() {
   return (
-    <footer className="bg-[var(--brand-charcoal)] text-white">
+    <footer className="bg-[var(--brand-darkpink)] text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           {/* Brand */}
@@ -116,7 +116,7 @@ export default function Footer() {
       <div className="border-t border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 flex flex-col sm:flex-row justify-between items-center gap-3 text-xs text-gray-500 tracking-wide">
           <p className="flex items-center gap-2">
-            © {new Date().getFullYear()} Geetham Silks. All rights reserved.
+            © {new Date().getFullYear()} Geethams Silks. All rights reserved.
             <Link
               href={`${ADMIN_ROUTE}/login`}
               aria-label="Site management"

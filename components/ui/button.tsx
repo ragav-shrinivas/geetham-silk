@@ -8,10 +8,10 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: 'bg-[var(--brand-charcoal)] text-white hover:bg-[var(--brand-rose)] shadow-sm',
-        rose: 'bg-[var(--brand-rose)] text-white hover:bg-[var(--brand-charcoal)]',
-        gold: 'bg-[var(--brand-gold)] text-white hover:bg-[var(--brand-charcoal)]',
-        outline: 'border border-[var(--brand-charcoal)] text-[var(--brand-charcoal)] hover:bg-[var(--brand-charcoal)] hover:text-white',
+        default: 'bg-[var(--brand-darkpink)] text-white hover:bg-[var(--brand-rose)] shadow-sm',
+        rose: 'bg-[var(--brand-rose)] text-white hover:bg-[var(--brand-darkpink)]',
+        gold: 'bg-[var(--brand-gold)] text-white hover:bg-[var(--brand-darkpink)]',
+        outline: 'border border-[var(--brand-charcoal)] text-[var(--brand-charcoal)] hover:bg-[var(--brand-darkpink)] hover:text-white',
         ghost: 'hover:bg-[var(--brand-pink)]/20 hover:text-[var(--brand-charcoal)]',
         whatsapp: 'bg-[#25D366] text-white hover:bg-[#128C7E] shadow-lg',
         destructive: 'bg-destructive text-destructive-foreground hover:bg-destructive/90',

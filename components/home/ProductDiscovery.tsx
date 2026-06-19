@@ -68,7 +68,7 @@ export default function ProductDiscovery({ products }: Props) {
         <div className="mt-14 flex justify-center">
           <Link
             href="/shop"
-            className="group inline-flex items-center gap-3 border border-[var(--brand-charcoal)] text-[var(--brand-charcoal)] text-[11px] tracking-[0.28em] uppercase px-10 py-4 hover:bg-[var(--brand-charcoal)] hover:text-white transition-all duration-500"
+            className="group inline-flex items-center gap-3 border border-[var(--brand-charcoal)] text-[var(--brand-charcoal)] text-[11px] tracking-[0.28em] uppercase px-10 py-4 hover:bg-[var(--brand-darkpink)] hover:text-white transition-all duration-500"
           >
             <ShoppingBag size={14} className="transition-transform duration-300 group-hover:scale-110" />
             Browse Full Collection
@@ -148,7 +148,7 @@ function DiscoveryCard({ product, index, reduced }: { product: ProductWithImages
 
         {/* OOS ribbon */}
         {oos && (
-          <div className="absolute inset-0 bg-[var(--brand-charcoal)]/30 flex items-start justify-center pt-5">
+          <div className="absolute inset-0 bg-[var(--brand-darkpink)]/30 flex items-start justify-center pt-5">
             <span className="bg-white/95 text-[var(--brand-charcoal)] text-[10px] tracking-[0.25em] uppercase px-4 py-1.5">
               Out of Stock
             </span>

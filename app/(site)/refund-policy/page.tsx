@@ -13,7 +13,7 @@ export default function RefundPolicyPage() {
         <p className="text-gray-500 text-sm not-prose mb-8">Last updated: June 2026</p>
 
         <h2>WhatsApp Commerce Model</h2>
-        <p>Geetham Silks operates exclusively through WhatsApp-based enquiry and in-store purchase. All purchases are finalized in-store or via direct WhatsApp arrangement.</p>
+        <p>Geethams Silks operates exclusively through WhatsApp-based enquiry and in-store purchase. All purchases are finalized in-store or via direct WhatsApp arrangement.</p>
 
         <h2>Exchange Policy</h2>
         <p>We offer exchanges on eligible items within 7 days of purchase, subject to the item being in its original condition with tags intact. Please contact us on WhatsApp or visit our store.</p>

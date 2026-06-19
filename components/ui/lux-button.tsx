@@ -36,11 +36,11 @@ const SIZES = { md: 'px-9 py-4', lg: 'px-11 py-5 text-sm' }
 
 /** [resting classes, fill bg, hover text color] per variant */
 const STYLES: Record<Variant, { rest: string; fill: string; hoverText: string }> = {
-  'solid-charcoal': { rest: 'bg-[var(--brand-charcoal)] text-white', fill: 'bg-[var(--brand-rose)]', hoverText: 'group-hover:text-white' },
+  'solid-charcoal': { rest: 'bg-[var(--brand-darkpink)] text-white', fill: 'bg-[var(--brand-rose)]', hoverText: 'group-hover:text-white' },
   'solid-white':    { rest: 'bg-white text-[var(--brand-charcoal)] shadow-xl', fill: 'bg-[var(--brand-gold)]', hoverText: 'group-hover:text-white' },
   'outline-white':  { rest: 'border border-white/50 text-white backdrop-blur-sm', fill: 'bg-white', hoverText: 'group-hover:text-[var(--brand-charcoal)]' },
-  'outline-charcoal': { rest: 'border border-[var(--brand-charcoal)]/40 text-[var(--brand-charcoal)]', fill: 'bg-[var(--brand-charcoal)]', hoverText: 'group-hover:text-white' },
-  gold:             { rest: 'bg-[var(--brand-gold)] text-white', fill: 'bg-[var(--brand-charcoal)]', hoverText: 'group-hover:text-white' },
+  'outline-charcoal': { rest: 'border border-[var(--brand-charcoal)]/40 text-[var(--brand-charcoal)]', fill: 'bg-[var(--brand-darkpink)]', hoverText: 'group-hover:text-white' },
+  gold:             { rest: 'bg-[var(--brand-gold)] text-white', fill: 'bg-[var(--brand-darkpink)]', hoverText: 'group-hover:text-white' },
   whatsapp:         { rest: 'bg-[#25D366] text-white shadow-lg', fill: 'bg-[#128C7E]', hoverText: 'group-hover:text-white' },
 }
 

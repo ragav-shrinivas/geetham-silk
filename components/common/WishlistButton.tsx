@@ -30,12 +30,12 @@ export default function WishlistButton({ item, variant = 'overlay', className }:
         className={cn(
           'inline-flex items-center justify-center gap-2 min-h-[52px] px-6 border text-[11px] tracking-[0.2em] uppercase transition-colors duration-300',
           active
-            ? 'border-[var(--brand-rose)] text-[var(--brand-rose)] bg-[var(--brand-rose)]/5'
-            : 'border-[var(--brand-charcoal)]/25 text-[var(--brand-charcoal)] hover:border-[var(--brand-rose)] hover:text-[var(--brand-rose)]',
+            ? 'border-[var(--brand-purple)] text-[var(--brand-purple)] bg-[var(--brand-purple)]/5'
+            : 'border-[var(--brand-charcoal)]/25 text-[var(--brand-charcoal)] hover:border-[var(--brand-purple)] hover:text-[var(--brand-purple)]',
           className
         )}
       >
-        <Heart size={16} className={cn('transition-transform', active && 'fill-[var(--brand-rose)] scale-110')} />
+        <Heart size={16} className={cn('transition-transform', active && 'fill-[var(--brand-purple)] scale-110')} />
         {active ? 'Saved' : 'Wishlist'}
       </button>
     )
@@ -56,7 +56,7 @@ export default function WishlistButton({ item, variant = 'overlay', className }:
         size={16}
         className={cn(
           'transition-all duration-300',
-          active ? 'fill-[var(--brand-rose)] text-[var(--brand-rose)] scale-110' : 'text-[var(--brand-charcoal)]'
+          active ? 'fill-[var(--brand-purple)] text-[var(--brand-purple)] scale-110' : 'text-[var(--brand-charcoal)]'
         )}
       />
     </button>

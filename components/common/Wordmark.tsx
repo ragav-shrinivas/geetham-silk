@@ -73,7 +73,7 @@ export default function Wordmark({
           // trailing letter-spacing is balanced with matching left padding for optical centering
           style={{ letterSpacing: tracking, paddingLeft: tracking }}
         >
-          Geetham Silks
+          Geethams Silks
         </span>
         {sparkles && <Sparkle size={SPARKLE_SIZE[size]} className="text-[var(--brand-gold)] shrink-0 opacity-80" />}
       </span>

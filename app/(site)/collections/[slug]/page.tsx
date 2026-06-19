@@ -16,7 +16,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!collection) return {}
   return {
     title: `${collection.name} Collection`,
-    description: collection.description ?? `Explore the ${collection.name} collection at Geetham Silks, Chennai.`,
+    description: collection.description ?? `Explore the ${collection.name} collection at Geethams Silks, Chennai.`,
     alternates: { canonical: `/collections/${slug}` },
   }
 }

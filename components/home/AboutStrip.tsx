@@ -25,7 +25,7 @@ export default function AboutStrip() {
   const shown = reduced || inView
 
   return (
-    <section className="relative bg-[var(--brand-charcoal)] text-white overflow-hidden">
+    <section className="relative bg-[var(--brand-darkpink)] text-white overflow-hidden">
       {/* ambient glow */}
       <div className="absolute -top-24 right-0 w-[700px] h-[400px] rounded-full bg-[var(--brand-rose)]/10 blur-3xl pointer-events-none" />
       {/* Decorative watermark. On mobile the image stacks on top, so anchor the
@@ -39,7 +39,7 @@ export default function AboutStrip() {
           <div className="relative">
             <CurtainImage
               src="/secondheroimage.jpeg"
-              alt="Geetham Silks boutique collection"
+              alt="Geethams Silks boutique collection"
               from="left"
               parallax={40}
               sizes="(max-width: 1024px) 100vw, 50vw"

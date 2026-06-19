@@ -8,7 +8,7 @@ import WhatsAppFloat from '@/components/common/WhatsAppFloat'
 
 export const metadata: Metadata = {
   title: 'Collections',
-  description: 'Explore our curated collections of premium sarees and ethnic wear at Geetham Silks.',
+  description: 'Explore our curated collections of premium sarees and ethnic wear at Geethams Silks.',
 }
 
 export const revalidate = 3600

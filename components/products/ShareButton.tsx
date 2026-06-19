@@ -10,7 +10,7 @@ export default function ShareButton({ title }: { title: string }) {
   function url() { return typeof window !== 'undefined' ? window.location.href : '' }
 
   async function nativeShare() {
-    const shareData = { title, text: `Check out ${title} at Geetham Silks`, url: url() }
+    const shareData = { title, text: `Check out ${title} at Geethams Silks`, url: url() }
     if (typeof navigator !== 'undefined' && navigator.share) {
       try { await navigator.share(shareData) } catch { /* dismissed */ }
     } else {

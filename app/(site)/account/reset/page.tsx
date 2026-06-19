@@ -34,7 +34,7 @@ export default function ResetPasswordPage() {
         <form onSubmit={submit} className="bg-white border border-[var(--brand-pink)]/30 p-6 space-y-4">
           <input type="password" required minLength={6} placeholder="New password (min 6 chars)" className={field} value={password} onChange={(e) => setPassword(e.target.value)} />
           {error && <p className="text-sm text-red-500">{error}</p>}
-          <button type="submit" disabled={busy} className="w-full min-h-[52px] bg-[var(--brand-charcoal)] text-white text-xs tracking-[0.2em] uppercase hover:bg-[var(--brand-rose)] transition-colors disabled:opacity-60 inline-flex items-center justify-center gap-2">
+          <button type="submit" disabled={busy} className="w-full min-h-[52px] bg-[var(--brand-darkpink)] text-white text-xs tracking-[0.2em] uppercase hover:bg-[var(--brand-rose)] transition-colors disabled:opacity-60 inline-flex items-center justify-center gap-2">
             {busy ? <><Loader2 size={16} className="animate-spin" /> Saving…</> : 'Update Password'}
           </button>
         </form>

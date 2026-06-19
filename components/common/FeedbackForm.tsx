@@ -162,7 +162,7 @@ export default function FeedbackForm() {
             <button
               type="submit"
               disabled={submitting}
-              className="inline-flex items-center justify-center gap-3 w-full sm:w-auto bg-[var(--brand-charcoal)] text-white text-xs tracking-[0.22em] uppercase font-medium px-9 py-4 hover:bg-[var(--brand-rose)] transition-colors duration-500 disabled:opacity-60 disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-rose)] focus-visible:ring-offset-2"
+              className="inline-flex items-center justify-center gap-3 w-full sm:w-auto bg-[var(--brand-darkpink)] text-white text-xs tracking-[0.22em] uppercase font-medium px-9 py-4 hover:bg-[var(--brand-rose)] transition-colors duration-500 disabled:opacity-60 disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-rose)] focus-visible:ring-offset-2"
             >
               {submitting ? 'Sending…' : 'Share Feedback'}
             </button>

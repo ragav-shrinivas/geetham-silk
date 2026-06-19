@@ -6,7 +6,7 @@ import { SITE } from '@/lib/constants'
 export default function WhatsAppFloat() {
   return (
     <motion.a
-      href={`https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent('Hi Geetham Silks, I would like to enquire about your collection.')}`}
+      href={`https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent('Hi Geethams Silks, I would like to enquire about your collection.')}`}
       target="_blank"
       rel="noopener noreferrer"
       initial={{ scale: 0 }}

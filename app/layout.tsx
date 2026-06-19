@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     default: `${SITE.name} — Premium Sarees & Ethnic Wear Chennai`,
     template: `%s | ${SITE.name}`,
   },
-  description: 'Shop premium sarees, kurtas, and kids ethnic wear at Geetham Silks, Palavakkam, Chennai. Enquire on WhatsApp for the latest collections.',
+  description: 'Shop premium sarees, kurtas, and kids ethnic wear at Geethams Silks, Palavakkam, Chennai. Enquire on WhatsApp for the latest collections.',
   keywords: ['sarees chennai', 'silk sarees', 'ethnic wear', 'kurtas', 'kids wear', 'palavakkam', 'geetham silks', 'geethams silks', 'women clothing chennai'],
   openGraph: {
     type: 'website',
@@ -33,13 +33,13 @@ export const metadata: Metadata = {
     url: SITE.url,
     siteName: SITE.name,
     title: `${SITE.name} — Premium Sarees & Ethnic Wear Chennai`,
-    description: 'Discover elegance at Geetham Silks — premium sarees, kurtas & kids ethnic wear in Chennai.',
-    images: [{ url: '/og-image.jpg', width: 1200, height: 630, alt: 'Geetham Silks' }],
+    description: 'Discover elegance at Geethams Silks — premium sarees, kurtas & kids ethnic wear in Chennai.',
+    images: [{ url: '/og-image.jpg', width: 1200, height: 630, alt: 'Geethams Silks' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: `${SITE.name} — Premium Sarees & Ethnic Wear Chennai`,
-    description: 'Discover elegance at Geetham Silks — premium sarees, kurtas & kids ethnic wear in Chennai.',
+    description: 'Discover elegance at Geethams Silks — premium sarees, kurtas & kids ethnic wear in Chennai.',
     images: ['/og-image.jpg'],
   },
   robots: {
@@ -53,7 +53,7 @@ export const metadata: Metadata = {
 const localBusinessSchema = {
   '@context': 'https://schema.org',
   '@type': 'ClothingStore',
-  name: 'Geetham Silks',
+  name: 'Geethams Silks',
   description: 'Premium sarees, kurtas & ethnic wear for women and kids in Chennai.',
   url: 'https://geethamssilks.com',
   telephone: '+91-96770-93294',

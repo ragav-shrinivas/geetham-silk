@@ -7,7 +7,7 @@ const badgeVariants = cva(
   {
     variants: {
       variant: {
-        default: 'bg-[var(--brand-charcoal)] text-white',
+        default: 'bg-[var(--brand-darkpink)] text-white',
         rose: 'bg-[var(--brand-rose)] text-white',
         gold: 'bg-[var(--brand-gold)] text-white',
         pink: 'bg-[var(--brand-pink)] text-[var(--brand-charcoal)]',

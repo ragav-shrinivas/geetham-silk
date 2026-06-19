@@ -5,7 +5,7 @@ const DEFAULT_ITEMS = ['Pure Silk', 'Handpicked', 'Bridal Collection', 'Kids Eth
 export default function BrandMarquee({ items = DEFAULT_ITEMS }: { items?: string[] }) {
   const row = [...items, ...items]
   return (
-    <div className="bg-[var(--brand-charcoal)] py-5 overflow-hidden">
+    <div className="bg-[var(--brand-darkpink)] py-5 overflow-hidden">
       <div className="flex animate-marquee">
         {row.map((item, i) => (
           <div key={i} className="flex items-center flex-shrink-0">

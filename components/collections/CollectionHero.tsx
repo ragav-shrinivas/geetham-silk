@@ -19,7 +19,7 @@ export default function CollectionHero({ collection, productCount }: { collectio
   const banner = collection.banner_url ?? collection.image_url
 
   return (
-    <section ref={ref} className="relative h-[72svh] min-h-[420px] sm:min-h-[480px] overflow-hidden bg-[var(--brand-charcoal)]">
+    <section ref={ref} className="relative h-[72svh] min-h-[420px] sm:min-h-[480px] overflow-hidden bg-[var(--brand-darkpink)]">
       <motion.div style={reduced ? undefined : { y: bgY }} className="absolute inset-0 will-change-transform">
         {banner ? (
           <Image

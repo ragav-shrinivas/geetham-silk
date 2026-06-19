@@ -34,7 +34,7 @@ export default function AddToCartButton({ item, qty = 1, disabled, size = 'full'
         disabled={disabled}
         aria-label="Add to cart"
         className={cn(
-          'inline-flex items-center justify-center gap-2 min-h-[44px] w-full bg-[var(--brand-charcoal)] text-white text-[11px] tracking-[0.18em] uppercase transition-colors duration-300 hover:bg-[var(--brand-rose)] active:scale-[0.98] disabled:opacity-40 disabled:cursor-not-allowed',
+          'inline-flex items-center justify-center gap-2 min-h-[44px] w-full bg-[var(--brand-darkpink)] text-white text-[11px] tracking-[0.18em] uppercase transition-colors duration-300 hover:bg-[var(--brand-rose)] active:scale-[0.98] disabled:opacity-40 disabled:cursor-not-allowed',
           className
         )}
       >
@@ -49,7 +49,7 @@ export default function AddToCartButton({ item, qty = 1, disabled, size = 'full'
       onClick={onClick}
       disabled={disabled}
       className={cn(
-        'inline-flex items-center justify-center gap-3 min-h-[52px] px-8 bg-[var(--brand-charcoal)] text-white text-xs tracking-[0.2em] uppercase transition-all duration-300 hover:bg-[var(--brand-rose)] active:scale-[0.99] disabled:opacity-40 disabled:cursor-not-allowed',
+        'inline-flex items-center justify-center gap-3 min-h-[52px] px-8 bg-[var(--brand-darkpink)] text-white text-xs tracking-[0.2em] uppercase transition-all duration-300 hover:bg-[var(--brand-rose)] active:scale-[0.99] disabled:opacity-40 disabled:cursor-not-allowed',
         className
       )}
     >

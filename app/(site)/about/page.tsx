@@ -16,7 +16,7 @@ const FacebookIcon = () => (
 
 export const metadata: Metadata = {
   title: 'About Us',
-  description: 'Learn about Geetham Silks — premium ethnic wear boutique in Palavakkam, Chennai.',
+  description: 'Learn about Geethams Silks — premium ethnic wear boutique in Palavakkam, Chennai.',
 }
 
 export default function AboutPage() {

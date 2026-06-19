@@ -115,7 +115,7 @@ export default function ProductGallery({ images, productName }: Props) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.4, ease: LUXE }}
-            className="fixed inset-0 z-[80] bg-[var(--brand-charcoal)]/97 backdrop-blur-sm flex flex-col"
+            className="fixed inset-0 z-[80] bg-[var(--brand-darkpink)]/97 backdrop-blur-sm flex flex-col"
             onClick={() => setLightbox(false)}
           >
             <div className="flex items-center justify-between px-6 pt-5 text-white/70">

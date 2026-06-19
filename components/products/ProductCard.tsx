@@ -78,7 +78,7 @@ export default function ProductCard({ product, animate = true }: ProductCardProp
         </div>
 
         {/* Hover overlay — Quick View + Enquire (buttons, not <a>, to avoid nesting in the card Link) */}
-        <div className="absolute inset-0 bg-[var(--brand-charcoal)]/0 group-hover:bg-[var(--brand-charcoal)]/20 transition-all duration-300 flex items-end justify-center gap-2 pb-4 opacity-0 group-hover:opacity-100">
+        <div className="absolute inset-0 bg-[var(--brand-darkpink)]/0 group-hover:bg-[var(--brand-darkpink)]/20 transition-all duration-300 flex items-end justify-center gap-2 pb-4 opacity-0 group-hover:opacity-100">
           <span
             role="button"
             tabIndex={-1}

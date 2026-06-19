@@ -72,7 +72,7 @@ function LeadCard({ product }: { product: ProductWithImages }) {
   const whatsappUrl = buildWhatsAppUrl(product)
 
   return (
-    <div className="group relative h-full min-h-[460px] lg:min-h-[640px] overflow-hidden bg-[var(--brand-charcoal)]">
+    <div className="group relative h-full min-h-[460px] lg:min-h-[640px] overflow-hidden bg-[var(--brand-darkpink)]">
       {img ? (
         <Image
           src={img.url}

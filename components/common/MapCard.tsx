@@ -12,7 +12,7 @@ export default function MapCard({ className }: { className?: string }) {
       href={SITE.maps}
       target="_blank"
       rel="noopener noreferrer"
-      aria-label="Open Geetham Silks location in Google Maps"
+      aria-label="Open Geethams Silks location in Google Maps"
       className={cn(
         'group relative block aspect-[16/10] overflow-hidden border border-[var(--brand-pink)]/25 bg-[var(--brand-cream-deep)]',
         className
@@ -20,7 +20,7 @@ export default function MapCard({ className }: { className?: string }) {
     >
       <iframe
         src={SITE.mapsEmbed}
-        title="Geetham Silks on Google Maps"
+        title="Geethams Silks on Google Maps"
         loading="lazy"
         referrerPolicy="no-referrer-when-downgrade"
         aria-hidden
@@ -38,7 +38,7 @@ export default function MapCard({ className }: { className?: string }) {
           <MapPin size={13} className="text-[var(--brand-rose)]" />
           388, Periyar Salai, Palavakkam
         </span>
-        <span className="inline-flex items-center gap-2 bg-[var(--brand-charcoal)]/90 text-white text-[11px] tracking-[0.18em] uppercase px-4 py-2.5 shadow-lg transition-colors duration-300 group-hover:bg-[var(--brand-rose)]">
+        <span className="inline-flex items-center gap-2 bg-[var(--brand-darkpink)]/90 text-white text-[11px] tracking-[0.18em] uppercase px-4 py-2.5 shadow-lg transition-colors duration-300 group-hover:bg-[var(--brand-rose)]">
           <span className="hidden sm:inline">Open in Maps</span>
           <ExternalLink size={13} />
         </span>

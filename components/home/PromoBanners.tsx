@@ -23,7 +23,7 @@ export default function PromoBanners({ banners }: { banners: Banner[] }) {
   const b = banners[i]
 
   const inner = (
-    <div className="relative w-full aspect-[16/7] sm:aspect-[16/5] overflow-hidden bg-[var(--brand-charcoal)]">
+    <div className="relative w-full aspect-[16/7] sm:aspect-[16/5] overflow-hidden bg-[var(--brand-darkpink)]">
       <AnimatePresence mode="wait">
         <motion.div
           key={b.id}

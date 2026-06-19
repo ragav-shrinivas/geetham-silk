@@ -66,7 +66,7 @@ export default function Navbar() {
       )}
     >
       {/* Top announcement bar */}
-      <div className="bg-[var(--brand-charcoal)] text-white text-[11px] sm:text-xs tracking-[0.15em] sm:tracking-[0.2em] text-center py-2 px-4 whitespace-nowrap overflow-hidden">
+      <div className="bg-[var(--brand-darkpink)] text-white text-[11px] sm:text-xs tracking-[0.15em] sm:tracking-[0.2em] text-center py-2 px-4 whitespace-nowrap overflow-hidden">
         <span className="hidden sm:inline">Free consultation on </span>WhatsApp · +91 96770 93294
       </div>
 
@@ -80,7 +80,7 @@ export default function Navbar() {
             className={cn('flex-shrink-0', !scrolled && 'pointer-events-none')}
             aria-hidden={!scrolled}
           >
-            <Link href="/" aria-label="Geetham Silks — home" tabIndex={scrolled ? 0 : -1}>
+            <Link href="/" aria-label="Geethams Silks — home" tabIndex={scrolled ? 0 : -1}>
               <Wordmark size="sm" />
             </Link>
           </motion.div>

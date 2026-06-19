@@ -38,7 +38,7 @@ export default function LoginPage() {
           <input type="email" required placeholder="Email" className={field} value={email} onChange={(e) => setEmail(e.target.value)} />
           <input type="password" required placeholder="Password" className={field} value={password} onChange={(e) => setPassword(e.target.value)} />
           {error && <p className="text-sm text-red-500">{error}</p>}
-          <button type="submit" disabled={busy} className="w-full min-h-[52px] bg-[var(--brand-charcoal)] text-white text-xs tracking-[0.2em] uppercase hover:bg-[var(--brand-rose)] transition-colors disabled:opacity-60 inline-flex items-center justify-center gap-2">
+          <button type="submit" disabled={busy} className="w-full min-h-[52px] bg-[var(--brand-darkpink)] text-white text-xs tracking-[0.2em] uppercase hover:bg-[var(--brand-rose)] transition-colors disabled:opacity-60 inline-flex items-center justify-center gap-2">
             {busy ? <><Loader2 size={16} className="animate-spin" /> Signing in…</> : 'Sign In'}
           </button>
           <div className="flex items-center justify-between text-xs">

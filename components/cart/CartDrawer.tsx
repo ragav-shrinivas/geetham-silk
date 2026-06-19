@@ -118,7 +118,7 @@ export default function CartDrawer() {
                 <p className="text-[10px] text-gray-400">Shipping & taxes calculated at checkout.</p>
                 <button
                   onClick={goCheckout}
-                  className="w-full min-h-[52px] bg-[var(--brand-charcoal)] text-white text-xs tracking-[0.2em] uppercase hover:bg-[var(--brand-rose)] transition-colors active:scale-[0.99]"
+                  className="w-full min-h-[52px] bg-[var(--brand-darkpink)] text-white text-xs tracking-[0.2em] uppercase hover:bg-[var(--brand-rose)] transition-colors active:scale-[0.99]"
                 >
                   Proceed to Checkout
                 </button>

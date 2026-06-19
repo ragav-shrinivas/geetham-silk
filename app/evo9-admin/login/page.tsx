@@ -30,14 +30,14 @@ export default function AdminLoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[var(--brand-charcoal)] flex items-center justify-center px-4">
+    <div className="min-h-screen bg-[var(--brand-darkpink)] flex items-center justify-center px-4">
       <div className="w-full max-w-sm">
         <div className="text-center mb-10">
           <div className="inline-flex items-center justify-center w-14 h-14 bg-[var(--brand-rose)]/20 rounded-full mb-4">
             <Lock className="text-[var(--brand-pink)]" size={24} />
           </div>
           <h1 className="font-serif text-3xl font-light text-white mb-1">Admin Access</h1>
-          <p className="text-gray-400 text-xs tracking-widest uppercase">Geetham Silks</p>
+          <p className="text-gray-400 text-xs tracking-widest uppercase">Geethams Silks</p>
         </div>
 
         <form onSubmit={handleLogin} className="space-y-5 bg-white/5 border border-white/10 p-8">

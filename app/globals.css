@@ -29,16 +29,19 @@
     --ring: 346 77% 49%;
     --radius: 0.5rem;
 
-    /* Brand tokens */
+    /* Brand tokens — feminine boutique palette: dark pink + baby pink + purple + soft gold */
+    --brand-darkpink: #c85a8b;        /* PRIMARY — buttons, dark surfaces, logo, links */
+    --brand-darkpink-deep: #a83f6e;   /* hover/active for primary */
+    --brand-babypink: #fbe9f0;        /* soft tint for "white" sections */
     --brand-pink: #e8a4b8;
     --brand-pink-soft: #f6dde4;
     --brand-rose: #c9747a;
-    --brand-gold: #b8986a;
+    --brand-gold: #c9a25e;            /* soft gold — premium highlight */
     --brand-gold-light: #e8c98a;
-    --brand-cream: #fdf8f3;
-    --brand-cream-deep: #f9efe6;
-    --brand-charcoal: #2c2c2c;
-    /* dark-purple wordmark palette (beveled top→bottom) */
+    --brand-cream: #fdf4f8;           /* baby-pink-tinted ivory */
+    --brand-cream-deep: #f8e6f0;
+    --brand-charcoal: #2c2c2c;        /* reserved for body text (kept dark for readability) */
+    /* luxury purple — icons / wishlist accents */
     --brand-purple: #6b2fa0;
     --brand-purple-deep: #3d1a5b;
     /* exact background cream of geethamlogo.jpeg — used behind the logo so it sits seamlessly */
@@ -134,12 +137,12 @@
   filter: drop-shadow(0 1px 12px rgba(201, 116, 122, 0.22));
 }
 
-/* ---------- Dark-purple 3D wordmark ---------- */
-/* vertical bevel: lit lavender at the top falling to deep purple at the base */
+/* ---------- Dark-pink 3D wordmark ---------- */
+/* vertical bevel: lit rose at the top falling to deep dark-pink at the base */
 .text-purple-3d {
   background-image: linear-gradient(
     180deg,
-    #c79be8 0%, #9d5cd0 30%, #6b2fa0 60%, #4a1f6e 82%, #3d1a5b 100%
+    #f3a9c8 0%, #e87aa6 28%, #c85a8b 58%, #a83f6e 82%, #8a3157 100%
   );
   -webkit-background-clip: text;
   background-clip: text;
@@ -149,23 +152,23 @@
 /* layered soft glow — no solid-offset extrusion so letters stay crisp at all sizes */
 .wordmark-3d {
   filter:
-    drop-shadow(0 0 6px rgba(192, 132, 240, 0.55))
-    drop-shadow(0 0 18px rgba(147, 80, 210, 0.45))
-    drop-shadow(0 0 38px rgba(107, 47, 160, 0.28));
+    drop-shadow(0 0 6px rgba(240, 140, 180, 0.55))
+    drop-shadow(0 0 18px rgba(200, 90, 139, 0.45))
+    drop-shadow(0 0 38px rgba(168, 63, 110, 0.28));
   animation: wordmarkGlow 3.4s ease-in-out infinite;
 }
 @keyframes wordmarkGlow {
   0%, 100% {
     filter:
-      drop-shadow(0 0 5px rgba(192, 132, 240, 0.45))
-      drop-shadow(0 0 16px rgba(147, 80, 210, 0.38))
-      drop-shadow(0 0 34px rgba(107, 47, 160, 0.22));
+      drop-shadow(0 0 5px rgba(240, 140, 180, 0.45))
+      drop-shadow(0 0 16px rgba(200, 90, 139, 0.38))
+      drop-shadow(0 0 34px rgba(168, 63, 110, 0.22));
   }
   50% {
     filter:
-      drop-shadow(0 0 10px rgba(210, 160, 250, 0.85))
-      drop-shadow(0 0 28px rgba(160, 90, 220, 0.70))
-      drop-shadow(0 0 52px rgba(107, 47, 160, 0.48));
+      drop-shadow(0 0 10px rgba(245, 170, 200, 0.85))
+      drop-shadow(0 0 28px rgba(210, 100, 150, 0.70))
+      drop-shadow(0 0 52px rgba(168, 63, 110, 0.48));
   }
 }
 @media (max-width: 639px) {
@@ -173,9 +176,9 @@
   .wordmark-3d {
     animation: none;
     filter:
-      drop-shadow(0 0 5px rgba(192, 132, 240, 0.5))
-      drop-shadow(0 0 16px rgba(147, 80, 210, 0.4))
-      drop-shadow(0 0 30px rgba(107, 47, 160, 0.25));
+      drop-shadow(0 0 5px rgba(240, 140, 180, 0.5))
+      drop-shadow(0 0 16px rgba(200, 90, 139, 0.4))
+      drop-shadow(0 0 30px rgba(168, 63, 110, 0.25));
   }
 }
 @media (prefers-reduced-motion: reduce) {

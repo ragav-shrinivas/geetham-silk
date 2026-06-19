@@ -37,7 +37,7 @@ export default function WishlistPage() {
             <Heart size={44} strokeWidth={1} className="mx-auto text-[var(--brand-charcoal)]/20 mb-5" />
             <p className="font-serif text-3xl text-[var(--brand-charcoal)]/60 mb-3">Your wishlist is empty</p>
             <p className="text-sm text-gray-400 mb-8">Tap the heart on any piece to save it here.</p>
-            <Link href="/shop" className="inline-flex items-center gap-2 bg-[var(--brand-charcoal)] text-white text-[11px] tracking-[0.22em] uppercase px-8 py-4 hover:bg-[var(--brand-rose)] transition-colors">
+            <Link href="/shop" className="inline-flex items-center gap-2 bg-[var(--brand-darkpink)] text-white text-[11px] tracking-[0.22em] uppercase px-8 py-4 hover:bg-[var(--brand-rose)] transition-colors">
               Explore the Boutique
             </Link>
           </div>
@@ -67,7 +67,7 @@ export default function WishlistPage() {
                   <span className="font-serif text-lg font-semibold text-[var(--brand-charcoal)] mt-1">{formatPrice(it.price)}</span>
                   <button
                     onClick={() => moveToCart(it.id)}
-                    className="mt-3 inline-flex items-center justify-center gap-2 min-h-[44px] bg-[var(--brand-charcoal)] text-white text-[11px] tracking-[0.18em] uppercase hover:bg-[var(--brand-rose)] active:scale-[0.98] transition"
+                    className="mt-3 inline-flex items-center justify-center gap-2 min-h-[44px] bg-[var(--brand-darkpink)] text-white text-[11px] tracking-[0.18em] uppercase hover:bg-[var(--brand-rose)] active:scale-[0.98] transition"
                   >
                     <ShoppingBag size={14} /> Move to Bag
                   </button>

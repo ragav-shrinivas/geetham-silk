@@ -105,14 +105,14 @@ export default function ProductActions({ product }: { product: ProductWithImages
             <button
               type="button"
               onClick={handleAdd}
-              className="inline-flex items-center justify-center gap-2 min-h-[52px] border border-[var(--brand-charcoal)] text-[var(--brand-charcoal)] text-xs tracking-[0.2em] uppercase hover:bg-[var(--brand-charcoal)] hover:text-white transition-colors active:scale-[0.99]"
+              className="inline-flex items-center justify-center gap-2 min-h-[52px] border border-[var(--brand-charcoal)] text-[var(--brand-charcoal)] text-xs tracking-[0.2em] uppercase hover:bg-[var(--brand-darkpink)] hover:text-white transition-colors active:scale-[0.99]"
             >
               {added ? <><Check size={16} /> Added</> : <><ShoppingBag size={16} /> Add to Cart</>}
             </button>
             <button
               type="button"
               onClick={handleBuyNow}
-              className="inline-flex items-center justify-center gap-2 min-h-[52px] bg-[var(--brand-charcoal)] text-white text-xs tracking-[0.2em] uppercase hover:bg-[var(--brand-rose)] transition-colors active:scale-[0.99]"
+              className="inline-flex items-center justify-center gap-2 min-h-[52px] bg-[var(--brand-darkpink)] text-white text-xs tracking-[0.2em] uppercase hover:bg-[var(--brand-rose)] transition-colors active:scale-[0.99]"
             >
               <Zap size={16} /> Buy Now
             </button>

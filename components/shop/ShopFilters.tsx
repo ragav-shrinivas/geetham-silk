@@ -85,7 +85,7 @@ export default function ShopFilters({ categories, collections }: Props) {
             </button>
           ))}
 
-          {categories.length > 0 && <span className="h-4 w-px bg-[var(--brand-charcoal)]/15 shrink-0" />}
+          {categories.length > 0 && <span className="h-4 w-px bg-[var(--brand-darkpink)]/15 shrink-0" />}
 
           {categories.map((cat) => {
             const active = activeCategory === cat.slug || cat.children.some((ch) => ch.slug === activeCategory)
@@ -159,7 +159,7 @@ export default function ShopFilters({ categories, collections }: Props) {
           {search && (
             <button
               onClick={() => setParam('search', null)}
-              className="shrink-0 inline-flex items-center gap-2 bg-[var(--brand-rose)] text-white text-[10px] tracking-[0.2em] uppercase px-3.5 py-1.5 hover:bg-[var(--brand-charcoal)] transition-colors"
+              className="shrink-0 inline-flex items-center gap-2 bg-[var(--brand-rose)] text-white text-[10px] tracking-[0.2em] uppercase px-3.5 py-1.5 hover:bg-[var(--brand-darkpink)] transition-colors"
             >
               &ldquo;{search}&rdquo;
               <X size={11} />

@@ -146,6 +146,12 @@ const SECTION_META: Record<string, SectionMeta> = {
     icon: Star,
     fields: [],
   },
+  store: {
+    label: 'Visit Our Store',
+    desc: 'Map preview + address with directions',
+    icon: ImageIcon,
+    fields: [],
+  },
 }
 
 /* ---------- Builder ---------- */

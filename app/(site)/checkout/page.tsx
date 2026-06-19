@@ -57,7 +57,7 @@ export default function CheckoutPage() {
 
     const orderNo = (data as { order_number: string }).order_number
     const lines = cart.map((it, i) => `${i + 1}. ${it.name}${it.size ? ` (${it.size})` : ''} × ${it.qty} — ${formatPrice(it.price * it.qty)}`).join('\n')
-    const msg = `Hi Geetham Silks, I've placed order ${orderNo}:\n\n${lines}\n\nTotal: ${formatPrice(cartTotal)}\n\nShip to: ${form.name}, ${address.line1}${address.line2 ? ', ' + address.line2 : ''}, ${address.city} ${address.pincode}\nPhone: ${form.phone}\n\nPlease confirm and share payment details.`
+    const msg = `Hi Geethams Silks, I've placed order ${orderNo}:\n\n${lines}\n\nTotal: ${formatPrice(cartTotal)}\n\nShip to: ${form.name}, ${address.line1}${address.line2 ? ', ' + address.line2 : ''}, ${address.city} ${address.pincode}\nPhone: ${form.phone}\n\nPlease confirm and share payment details.`
     window.open(`https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener')
 
     clearCart()
@@ -80,12 +80,12 @@ export default function CheckoutPage() {
             <p className="text-sm text-gray-500 mb-1">Your order reference is</p>
             <p className="font-mono text-lg font-semibold text-[var(--brand-rose)] mb-5">{done.number}</p>
             <p className="text-sm text-gray-500 mb-6">We’ve opened WhatsApp so you can confirm with us. We’ll verify availability and share payment details shortly.</p>
-            <Link href="/shop" className="inline-flex bg-[var(--brand-charcoal)] text-white text-[11px] tracking-[0.22em] uppercase px-8 py-4 hover:bg-[var(--brand-rose)] transition-colors">Continue Shopping</Link>
+            <Link href="/shop" className="inline-flex bg-[var(--brand-darkpink)] text-white text-[11px] tracking-[0.22em] uppercase px-8 py-4 hover:bg-[var(--brand-rose)] transition-colors">Continue Shopping</Link>
           </div>
         ) : !ready ? null : cartCount === 0 ? (
           <div className="text-center py-20">
             <p className="font-serif text-2xl text-[var(--brand-charcoal)]/60 mb-6">Your bag is empty</p>
-            <Link href="/shop" className="inline-flex bg-[var(--brand-charcoal)] text-white text-[11px] tracking-[0.22em] uppercase px-8 py-4 hover:bg-[var(--brand-rose)] transition-colors">Start Shopping</Link>
+            <Link href="/shop" className="inline-flex bg-[var(--brand-darkpink)] text-white text-[11px] tracking-[0.22em] uppercase px-8 py-4 hover:bg-[var(--brand-rose)] transition-colors">Start Shopping</Link>
           </div>
         ) : (
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
@@ -132,7 +132,7 @@ export default function CheckoutPage() {
                   <span className="text-[11px] tracking-[0.2em] uppercase text-gray-500">Total</span>
                   <span className="font-serif text-2xl font-semibold text-[var(--brand-charcoal)] tabular-nums">{formatPrice(cartTotal)}</span>
                 </div>
-                <button onClick={placeOrder} disabled={placing} className="w-full min-h-[52px] bg-[var(--brand-charcoal)] text-white text-xs tracking-[0.2em] uppercase hover:bg-[var(--brand-rose)] transition-colors active:scale-[0.99] disabled:opacity-60 inline-flex items-center justify-center gap-2">
+                <button onClick={placeOrder} disabled={placing} className="w-full min-h-[52px] bg-[var(--brand-darkpink)] text-white text-xs tracking-[0.2em] uppercase hover:bg-[var(--brand-rose)] transition-colors active:scale-[0.99] disabled:opacity-60 inline-flex items-center justify-center gap-2">
                   {placing ? <><Loader2 size={16} className="animate-spin" /> Placing…</> : <><MessageCircle size={16} /> Place Order</>}
                 </button>
                 <div className="mt-4 flex items-center gap-2 text-[11px] text-gray-400">

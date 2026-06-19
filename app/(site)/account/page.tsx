@@ -21,7 +21,7 @@ const STATUS_STYLE: Record<string, string> = {
 export default function AccountPage() {
   const { user, loading } = useUser()
   const router = useRouter()
-  const waMsg = encodeURIComponent('Hi Geetham Silks, I need help with my order.')
+  const waMsg = encodeURIComponent('Hi Geethams Silks, I need help with my order.')
 
   if (loading) {
     return <div className="pt-24 min-h-screen bg-[var(--brand-cream)] flex items-center justify-center"><Loader2 className="animate-spin text-[var(--brand-rose)]" /></div>
@@ -47,8 +47,8 @@ function SignedOut({ waMsg }: { waMsg: string }) {
         <p className="text-gray-500 mt-3 max-w-md mx-auto text-sm">Sign in to track orders, save addresses and check out faster.</p>
       </div>
       <div className="flex flex-col sm:flex-row gap-3 justify-center mb-10">
-        <Link href="/account/login" className="inline-flex items-center justify-center bg-[var(--brand-charcoal)] text-white text-[11px] tracking-[0.22em] uppercase px-8 py-4 hover:bg-[var(--brand-rose)] transition-colors">Sign In</Link>
-        <Link href="/account/register" className="inline-flex items-center justify-center border border-[var(--brand-charcoal)] text-[var(--brand-charcoal)] text-[11px] tracking-[0.22em] uppercase px-8 py-4 hover:bg-[var(--brand-charcoal)] hover:text-white transition-colors">Create Account</Link>
+        <Link href="/account/login" className="inline-flex items-center justify-center bg-[var(--brand-darkpink)] text-white text-[11px] tracking-[0.22em] uppercase px-8 py-4 hover:bg-[var(--brand-rose)] transition-colors">Sign In</Link>
+        <Link href="/account/register" className="inline-flex items-center justify-center border border-[var(--brand-charcoal)] text-[var(--brand-charcoal)] text-[11px] tracking-[0.22em] uppercase px-8 py-4 hover:bg-[var(--brand-darkpink)] hover:text-white transition-colors">Create Account</Link>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {[{ href: '/wishlist', icon: Heart, label: 'Wishlist' }, { href: '/cart', icon: ShoppingBag, label: 'Shopping Bag' }].map(({ href, icon: Icon, label }) => (
@@ -171,7 +171,7 @@ function AddressBook({ userId, addresses, reload }: { userId: string; addresses:
             <input className={field} placeholder="PIN *" value={form.pincode} onChange={(e) => set('pincode', e.target.value)} />
           </div>
           <div className="flex gap-2">
-            <button onClick={save} disabled={busy} className="bg-[var(--brand-charcoal)] text-white text-[11px] tracking-[0.18em] uppercase px-6 py-2.5 hover:bg-[var(--brand-rose)] transition-colors disabled:opacity-60">{busy ? 'Saving…' : 'Save'}</button>
+            <button onClick={save} disabled={busy} className="bg-[var(--brand-darkpink)] text-white text-[11px] tracking-[0.18em] uppercase px-6 py-2.5 hover:bg-[var(--brand-rose)] transition-colors disabled:opacity-60">{busy ? 'Saving…' : 'Save'}</button>
             <button onClick={() => setAdding(false)} className="text-[11px] tracking-[0.18em] uppercase text-gray-500 px-4">Cancel</button>
           </div>
         </div>

@@ -75,7 +75,7 @@ export default function AdminOrdersClient() {
             key={f}
             onClick={() => setFilter(f)}
             className={`shrink-0 px-3.5 py-1.5 text-xs tracking-wide uppercase rounded-full border transition-colors ${
-              filter === f ? 'bg-[var(--brand-charcoal)] text-white border-[var(--brand-charcoal)]' : 'bg-white text-gray-500 border-gray-200 hover:border-[var(--brand-rose)]'
+              filter === f ? 'bg-[var(--brand-darkpink)] text-white border-[var(--brand-charcoal)]' : 'bg-white text-gray-500 border-gray-200 hover:border-[var(--brand-rose)]'
             }`}
           >
             {f} <span className="opacity-60">({count(f)})</span>

@@ -83,7 +83,7 @@ function BestSellerCard({ product, index }: { product: ProductWithImages; index:
         )}
 
         {/* rank + status badges */}
-        <span className="absolute top-3 left-3 inline-flex items-center justify-center w-7 h-7 bg-[var(--brand-charcoal)]/85 backdrop-blur-sm text-white text-[11px] font-serif tabular-nums">
+        <span className="absolute top-3 left-3 inline-flex items-center justify-center w-7 h-7 bg-[var(--brand-darkpink)]/85 backdrop-blur-sm text-white text-[11px] font-serif tabular-nums">
           {String(index + 1).padStart(2, '0')}
         </span>
         <div className="absolute top-3 right-3 flex flex-col items-end gap-1.5">
@@ -94,7 +94,7 @@ function BestSellerCard({ product, index }: { product: ProductWithImages; index:
 
         {/* availability ribbon for out-of-stock (kept visible — admin decides) */}
         {oos && (
-          <div className="absolute inset-0 bg-[var(--brand-charcoal)]/35 flex items-start justify-center pt-5">
+          <div className="absolute inset-0 bg-[var(--brand-darkpink)]/35 flex items-start justify-center pt-5">
             <span className="bg-white/95 text-[var(--brand-charcoal)] text-[10px] tracking-[0.25em] uppercase px-4 py-1.5">Out of Stock</span>
           </div>
         )}

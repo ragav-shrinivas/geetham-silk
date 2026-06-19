@@ -8,6 +8,7 @@ import ProductDiscovery from '@/components/home/ProductDiscovery'
 import PromoBanners from '@/components/home/PromoBanners'
 import ProductRail from '@/components/home/ProductRail'
 import RecentlyViewed from '@/components/home/RecentlyViewed'
+import StoreLocation from '@/components/home/StoreLocation'
 import NewArrivals from '@/components/home/NewArrivals'
 import TestimonialsSection from '@/components/home/TestimonialsSection'
 import AboutStrip from '@/components/home/AboutStrip'
@@ -39,6 +40,7 @@ const DEFAULT_SECTIONS: Array<Pick<PageSection, 'section_key' | 'is_visible' | '
   { section_key: 'testimonials', is_visible: true, settings: {} },
   { section_key: 'discovery', is_visible: true, settings: {} },
   { section_key: 'recently', is_visible: true, settings: {} },
+  { section_key: 'store', is_visible: true, settings: {} },
 ]
 
 function setting<T>(settings: Json, key: string, fallback: T): T {
@@ -105,6 +107,8 @@ export default async function HomePage() {
             return <ProductRail key="trending" products={trendingProducts} eyebrow="In Demand" title="Trending *Now*" backdropWord="Trending" viewAllHref="/shop?trending=true" tone="cream" />
           case 'recently':
             return <RecentlyViewed key="recently" tone="cream" />
+          case 'store':
+            return <StoreLocation key="store" />
           default:
             return null
         }

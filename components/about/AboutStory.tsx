@@ -49,7 +49,7 @@ export function AboutHero() {
             transition={{ duration: 0.9, ease: LUXE, delay: 0.6 }}
             className="mt-8 text-base sm:text-lg text-gray-500 leading-relaxed max-w-xl"
           >
-            Geetham Silks is a premium boutique in Palavakkam, Chennai — dedicated to the finest
+            Geethams Silks is a premium boutique in Palavakkam, Chennai — dedicated to the finest
             sarees, kurtas, and ethnic wear for women and children. Clothing, to us, is an expression
             of culture, grace, and identity.
           </motion.p>
@@ -61,7 +61,7 @@ export function AboutHero() {
         >
           <CurtainImage
             src="/heroimage4.jpeg"
-            alt="Geetham Silks — the boutique"
+            alt="Geethams Silks — the boutique"
             from="right"
             priority
             sizes="(max-width: 1024px) 100vw, 40vw"
@@ -101,7 +101,7 @@ export function JourneyTimeline() {
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start 75%', 'end 60%'] })
 
   return (
-    <section className="py-24 lg:py-32 bg-[var(--brand-charcoal)] text-white relative overflow-hidden">
+    <section className="py-24 lg:py-32 bg-[var(--brand-darkpink)] text-white relative overflow-hidden">
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[380px] rounded-full bg-[var(--brand-rose)]/10 blur-3xl pointer-events-none" />
       <span aria-hidden className="backdrop-word backdrop-word--light top-12">Journey</span>
 
@@ -145,7 +145,7 @@ function Milestone({ title, copy, index }: { title: string; copy: string; index:
         initial={false}
         animate={{ scale: shown ? 1 : 0 }}
         transition={{ duration: 0.6, ease: LUXE, delay: 0.1 }}
-        className="absolute -left-10 sm:-left-14 top-1.5 w-[15px] h-[15px] sm:w-[19px] sm:h-[19px] rounded-full border border-[var(--brand-gold)] bg-[var(--brand-charcoal)] flex items-center justify-center"
+        className="absolute -left-10 sm:-left-14 top-1.5 w-[15px] h-[15px] sm:w-[19px] sm:h-[19px] rounded-full border border-[var(--brand-gold)] bg-[var(--brand-darkpink)] flex items-center justify-center"
       >
         <span className="w-1.5 h-1.5 rounded-full bg-[var(--brand-gold)]" />
       </motion.span>
@@ -228,7 +228,7 @@ export function Craftsmanship() {
               Browse the Collection
             </LuxButton>
             <LuxButton
-              href={`https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent('Hi Geetham Silks, I would like to know more about your boutique.')}`}
+              href={`https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent('Hi Geethams Silks, I would like to know more about your boutique.')}`}
               variant="whatsapp"
               whatsappIcon
             >

@@ -27,7 +27,7 @@ export default function CartPage() {
             <ShoppingBag size={44} strokeWidth={1} className="mx-auto text-[var(--brand-charcoal)]/20 mb-5" />
             <p className="font-serif text-3xl text-[var(--brand-charcoal)]/60 mb-3">Your bag is empty</p>
             <p className="text-sm text-gray-400 mb-8">Discover something beautiful to add.</p>
-            <Link href="/shop" className="inline-flex items-center gap-2 bg-[var(--brand-charcoal)] text-white text-[11px] tracking-[0.22em] uppercase px-8 py-4 hover:bg-[var(--brand-rose)] transition-colors">
+            <Link href="/shop" className="inline-flex items-center gap-2 bg-[var(--brand-darkpink)] text-white text-[11px] tracking-[0.22em] uppercase px-8 py-4 hover:bg-[var(--brand-rose)] transition-colors">
               Start Shopping
             </Link>
           </div>
@@ -70,7 +70,7 @@ export default function CartPage() {
                   <span className="text-[11px] tracking-[0.2em] uppercase text-gray-500">Total</span>
                   <span className="font-serif text-2xl font-semibold text-[var(--brand-charcoal)] tabular-nums">{formatPrice(cartTotal)}</span>
                 </div>
-                <button onClick={() => router.push('/checkout')} className="w-full min-h-[52px] mt-5 bg-[var(--brand-charcoal)] text-white text-xs tracking-[0.2em] uppercase hover:bg-[var(--brand-rose)] transition-colors active:scale-[0.99]">
+                <button onClick={() => router.push('/checkout')} className="w-full min-h-[52px] mt-5 bg-[var(--brand-darkpink)] text-white text-xs tracking-[0.2em] uppercase hover:bg-[var(--brand-rose)] transition-colors active:scale-[0.99]">
                   Proceed to Checkout
                 </button>
                 <Link href="/shop" className="block text-center mt-3 text-[11px] tracking-[0.2em] uppercase text-[var(--brand-charcoal)]/60 hover:text-[var(--brand-rose)] transition-colors">Continue Shopping</Link>

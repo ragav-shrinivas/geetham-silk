@@ -9,7 +9,7 @@ import { LUXE } from '@/lib/motion'
 import type { HeroSlide } from '@/types/database'
 
 function waHref() {
-  return `https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent('Hi Geetham Silks, I would like to enquire about your collection.')}`
+  return `https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent('Hi Geethams Silks, I would like to enquire about your collection.')}`
 }
 
 /**
@@ -91,7 +91,7 @@ export default function HeroSliderMobile({ slides, duration }: { slides: HeroSli
   const active = slides[current] ?? slides[0]
 
   return (
-    <section className="relative md:hidden w-full h-[68vh] min-h-[440px] max-h-[720px] overflow-hidden bg-[var(--brand-charcoal)]">
+    <section className="relative md:hidden w-full h-[46vh] min-h-[320px] max-h-[460px] overflow-hidden bg-[var(--brand-darkpink)]">
       {/* ───────── LAYER 1 · Background media (the only thing that slides) ───────── */}
       <div
         ref={trackRef}
@@ -104,33 +104,22 @@ export default function HeroSliderMobile({ slides, duration }: { slides: HeroSli
         style={{ scrollPaddingInline: '7vw' }}
       >
         {slides.map((slide, i) => (
-          <div key={slide.id} className="snap-center shrink-0 w-[86vw] h-full py-4">
+          <div key={slide.id} className="snap-center shrink-0 w-[86vw] h-full py-3">
             <div
-              className={`relative h-full w-full overflow-hidden rounded-[1.75rem] ring-1 ring-white/10 shadow-2xl transition-opacity duration-700 ${
+              className={`relative h-full w-full overflow-hidden rounded-2xl ring-1 ring-white/10 shadow-xl transition-opacity duration-700 ${
                 i === current ? 'opacity-100' : 'opacity-60'
               }`}
             >
               {slide.media_url && (
-                <>
-                  {/* blurred cinematic fill so the frame is never empty */}
-                  <Image
-                    src={slide.media_url}
-                    alt=""
-                    aria-hidden
-                    fill
-                    sizes="90vw"
-                    className="object-cover scale-125 blur-2xl opacity-50"
-                  />
-                  {/* full, uncropped composition */}
-                  <Image
-                    src={slide.media_url}
-                    alt={slide.title ?? 'Geetham Silks'}
-                    fill
-                    priority={i === 0}
-                    sizes="90vw"
-                    className={`object-contain object-top ${i === current && !reduced ? 'animate-kenburns' : ''}`}
-                  />
-                </>
+                /* compact promo banner — fills the card edge-to-edge (Flipkart-style) */
+                <Image
+                  src={slide.media_url}
+                  alt={slide.title ?? 'Geethams Silks'}
+                  fill
+                  priority={i === 0}
+                  sizes="90vw"
+                  className={`object-cover object-center ${i === current && !reduced ? 'animate-kenburns' : ''}`}
+                />
               )}
             </div>
           </div>
@@ -147,7 +136,7 @@ export default function HeroSliderMobile({ slides, duration }: { slides: HeroSli
       </div>
 
       {/* ───────── LAYER 3 · Content (fixed/anchored — never drifts) ───────── */}
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 flex justify-center pb-16 pt-4">
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 flex justify-center pb-9 pt-3">
         <div className="w-[86vw] max-w-[440px] px-2 text-center text-white">
           <AnimatePresence mode="wait">
             <motion.div
@@ -157,17 +146,17 @@ export default function HeroSliderMobile({ slides, duration }: { slides: HeroSli
               exit={reduced ? { opacity: 0 } : { opacity: 0, y: -10 }}
               transition={{ duration: 0.55, ease: LUXE }}
             >
-              <div className="mb-3 flex items-center justify-center gap-3">
-                <span className="h-px w-7 bg-gradient-to-r from-transparent to-[var(--brand-gold)]" />
-                <span className="text-[10px] tracking-[0.4em] uppercase text-[var(--brand-gold)] font-medium">Geetham Silks</span>
-                <span className="h-px w-7 bg-gradient-to-l from-transparent to-[var(--brand-gold)]" />
+              <div className="mb-2 flex items-center justify-center gap-2.5">
+                <span className="h-px w-5 bg-gradient-to-r from-transparent to-[var(--brand-gold)]" />
+                <span className="text-[9px] tracking-[0.35em] uppercase text-[var(--brand-gold)] font-medium">Geethams Silks</span>
+                <span className="h-px w-5 bg-gradient-to-l from-transparent to-[var(--brand-gold)]" />
               </div>
 
-              <h1 className="font-serif font-light leading-[1.08] tracking-tight text-[clamp(1.9rem,7.5vw,2.5rem)]">
+              <h1 className="font-serif font-light leading-[1.12] tracking-tight text-[clamp(1.35rem,5.6vw,1.85rem)]">
                 {active.title}
               </h1>
 
-              <div className="pointer-events-auto mt-5 flex flex-col gap-2.5">
+              <div className="pointer-events-auto mt-3.5 flex flex-row gap-2 justify-center">
                 {active.cta_primary_label && (
                   <Cta href={active.cta_primary_link} label={active.cta_primary_label} primary />
                 )}
@@ -238,14 +227,14 @@ function Cta({ href, label, primary = false }: { href: string | null; label: str
   const external = isWhatsApp || /^https?:\/\//.test(target)
 
   const cls = primary
-    ? 'group inline-flex w-full items-center justify-center gap-2.5 bg-white text-[var(--brand-charcoal)] text-[11px] tracking-[0.2em] uppercase px-7 py-3.5 rounded-full shadow-xl active:scale-[0.98] transition-transform'
-    : 'group inline-flex w-full items-center justify-center gap-2.5 border border-white/45 text-white text-[11px] tracking-[0.2em] uppercase px-7 py-3.5 rounded-full backdrop-blur-sm active:scale-[0.98] transition-transform'
+    ? 'group inline-flex items-center justify-center gap-1.5 bg-white text-[var(--brand-darkpink-deep)] text-[10px] tracking-[0.18em] uppercase px-4 py-2.5 rounded-full shadow-lg active:scale-[0.97] transition-transform font-medium'
+    : 'group inline-flex items-center justify-center gap-1.5 border border-white/55 text-white text-[10px] tracking-[0.18em] uppercase px-4 py-2.5 rounded-full backdrop-blur-sm active:scale-[0.97] transition-transform'
 
   const inner = (
     <>
-      {isWhatsApp && <MessageCircle size={13} />}
+      {isWhatsApp && <MessageCircle size={12} />}
       {label}
-      {!isWhatsApp && <ArrowRight size={13} className="transition-transform duration-300 group-active:translate-x-1" />}
+      {!isWhatsApp && <ArrowRight size={12} className="transition-transform duration-300 group-active:translate-x-1" />}
     </>
   )
 

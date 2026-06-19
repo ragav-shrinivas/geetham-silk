@@ -78,7 +78,7 @@ export default function LookbookGrid({ items }: { items: Gallery[] }) {
               >
                 <Image
                   src={item.image_url}
-                  alt={item.title ?? item.caption ?? 'Geetham Silks lookbook'}
+                  alt={item.title ?? item.caption ?? 'Geethams Silks lookbook'}
                   width={500}
                   height={700}
                   sizes="(max-width: 1024px) 50vw, 33vw"
@@ -108,7 +108,7 @@ export default function LookbookGrid({ items }: { items: Gallery[] }) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.4, ease: LUXE }}
-            className="fixed inset-0 z-[80] bg-[var(--brand-charcoal)]/97 backdrop-blur-sm flex flex-col"
+            className="fixed inset-0 z-[80] bg-[var(--brand-darkpink)]/97 backdrop-blur-sm flex flex-col"
             onClick={close}
           >
             <div className="flex items-center justify-between px-6 pt-5 text-white/70">
@@ -132,7 +132,7 @@ export default function LookbookGrid({ items }: { items: Gallery[] }) {
               >
                 <Image
                   src={items[active].image_url}
-                  alt={items[active].title ?? items[active].caption ?? 'Geetham Silks lookbook'}
+                  alt={items[active].title ?? items[active].caption ?? 'Geethams Silks lookbook'}
                   width={1000}
                   height={1400}
                   sizes="90vw"
