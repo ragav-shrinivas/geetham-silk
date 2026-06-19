@@ -1,7 +1,7 @@
 import { createClient } from '@/lib/supabase/server'
 import type { ProductWithImages } from '@/types/database'
 
-export type ProductSort = 'featured' | 'newest' | 'price-asc' | 'price-desc'
+export type ProductSort = 'featured' | 'newest' | 'price-asc' | 'price-desc' | 'bestselling'
 
 export async function getProducts(opts?: {
   categorySlug?: string
@@ -39,6 +39,12 @@ export async function getProducts(opts?: {
         break
       case 'price-desc':
         query = query.order('price', { ascending: false })
+        break
+      case 'bestselling':
+        query = query.order('is_best_seller', { ascending: false }).order('best_seller_order', { ascending: true })
+        break
+      case 'featured':
+        query = query.order('is_featured', { ascending: false }).order('display_order', { ascending: true })
         break
       default:
         query = query.order('display_order', { ascending: true }).order('created_at', { ascending: false })
@@ -81,6 +87,19 @@ export async function getProducts(opts?: {
   const { data, error } = await query
   if (error) throw error
   return (data ?? []) as ProductWithImages[]
+}
+
+export async function getProductRating(productId: string): Promise<{ avg: number; count: number }> {
+  const supabase = await createClient()
+  const { data } = await supabase
+    .from('product_reviews')
+    .select('rating')
+    .eq('product_id', productId)
+    .eq('is_approved', true)
+  const rows = (data ?? []) as { rating: number }[]
+  if (rows.length === 0) return { avg: 0, count: 0 }
+  const avg = rows.reduce((s, r) => s + r.rating, 0) / rows.length
+  return { avg: Math.round(avg * 10) / 10, count: rows.length }
 }
 
 export async function getProductBySlug(slug: string) {

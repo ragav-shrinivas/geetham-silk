@@ -6,6 +6,7 @@ import LoadingScreen from '@/components/common/LoadingScreen'
 import PageTransition from '@/components/common/PageTransition'
 import { StoreProvider } from '@/lib/store/StoreProvider'
 import CartDrawer from '@/components/cart/CartDrawer'
+import QuickViewModal from '@/components/products/QuickViewModal'
 
 export default function SiteLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -21,6 +22,7 @@ export default function SiteLayout({ children }: { children: React.ReactNode }) 
         <div className="h-16 lg:hidden" aria-hidden />
         <BottomNav />
         <CartDrawer />
+        <QuickViewModal />
       </StoreProvider>
     </SmoothScroll>
   )

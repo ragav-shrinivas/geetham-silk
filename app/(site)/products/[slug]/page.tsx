@@ -1,11 +1,13 @@
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
-import { getProductBySlug, getProducts } from '@/lib/queries'
+import { getProductBySlug, getProducts, getProductRating } from '@/lib/queries'
 import ProductGallery from '@/components/products/ProductGallery'
 import ProductActions from '@/components/products/ProductActions'
 import ProductCard from '@/components/products/ProductCard'
 import RecordView from '@/components/products/RecordView'
 import RecentlyViewed from '@/components/home/RecentlyViewed'
+import ProductReviews from '@/components/products/ProductReviews'
+import ShareButton from '@/components/products/ShareButton'
 import WhatsAppFloat from '@/components/common/WhatsAppFloat'
 import { Badge } from '@/components/ui/badge'
 import { formatPrice } from '@/lib/utils'
@@ -38,7 +40,10 @@ export default async function ProductPage({ params }: Props) {
   const product = await getProductBySlug(slug)
   if (!product) notFound()
 
-  const related = await getProducts({ categorySlug: product.categories?.slug, limit: 4 })
+  const [related, rating] = await Promise.all([
+    getProducts({ categorySlug: product.categories?.slug, limit: 4 }),
+    getProductRating(product.id),
+  ])
   const relatedFiltered = related.filter((p) => p.id !== product.id).slice(0, 4)
 
   // Schema.org Product markup
@@ -49,6 +54,13 @@ export default async function ProductPage({ params }: Props) {
     sku: product.product_code,
     description: product.description,
     image: product.product_images?.map((i) => i.url) ?? [],
+    ...(rating.count > 0 && {
+      aggregateRating: {
+        '@type': 'AggregateRating',
+        ratingValue: rating.avg,
+        reviewCount: rating.count,
+      },
+    }),
     offers: {
       '@type': 'Offer',
       price: product.price,
@@ -103,7 +115,10 @@ export default async function ProductPage({ params }: Props) {
                 {product.name}
               </h1>
 
-              <p className="text-xs text-gray-400 tracking-wider mb-5">Product Code: #{product.product_code}</p>
+              <div className="flex items-center justify-between gap-4 mb-5">
+                <p className="text-xs text-gray-400 tracking-wider">Product Code: #{product.product_code}</p>
+                <ShareButton title={product.name} />
+              </div>
 
               {/* Price */}
               <div className="flex items-baseline gap-3 mb-6">
@@ -181,6 +196,8 @@ export default async function ProductPage({ params }: Props) {
               </div>
             </div>
           )}
+          {/* Reviews & ratings */}
+          <ProductReviews productId={product.id} />
         </div>
 
         {/* Recently viewed */}

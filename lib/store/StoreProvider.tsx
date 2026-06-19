@@ -1,5 +1,6 @@
 'use client'
 import { createContext, useContext, useEffect, useState, useCallback, type ReactNode } from 'react'
+import type { ProductWithImages } from '@/types/database'
 
 /* ------------------------------------------------------------------ types */
 
@@ -44,6 +45,10 @@ interface StoreValue {
   cartOpen: boolean
   openCart: () => void
   closeCart: () => void
+  // quick view
+  quickView: ProductWithImages | null
+  openQuickView: (p: ProductWithImages) => void
+  closeQuickView: () => void
 }
 
 const CART_KEY = 'gs_cart_v1'
@@ -61,6 +66,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   const [cart, setCart] = useState<CartItem[]>([])
   const [wishlist, setWishlist] = useState<WishlistItem[]>([])
   const [cartOpen, setCartOpen] = useState(false)
+  const [quickView, setQuickView] = useState<ProductWithImages | null>(null)
 
   // hydrate from localStorage once on mount
   useEffect(() => {
@@ -141,6 +147,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     cart, cartCount, cartTotal, addToCart, removeFromCart, setQty, clearCart,
     wishlist, wishlistCount: wishlist.length, inWishlist, toggleWishlist, removeFromWishlist, moveToCart,
     cartOpen, openCart: () => setCartOpen(true), closeCart: () => setCartOpen(false),
+    quickView, openQuickView: (p) => setQuickView(p), closeQuickView: () => setQuickView(null),
   }
 
   return <StoreContext.Provider value={value}>{children}</StoreContext.Provider>

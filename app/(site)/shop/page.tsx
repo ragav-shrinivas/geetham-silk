@@ -25,7 +25,7 @@ interface SearchParams {
   sort?: string
 }
 
-const VALID_SORTS: ProductSort[] = ['featured', 'newest', 'price-asc', 'price-desc']
+const VALID_SORTS: ProductSort[] = ['featured', 'newest', 'price-asc', 'price-desc', 'bestselling']
 
 export default async function ShopPage({ searchParams }: { searchParams: Promise<SearchParams> }) {
   const params = await searchParams

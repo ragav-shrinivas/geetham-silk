@@ -2,9 +2,10 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { MessageCircle } from 'lucide-react'
+import { MessageCircle, Eye } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { formatPrice, buildWhatsAppUrl } from '@/lib/utils'
+import { useStore } from '@/lib/store/StoreProvider'
 import WishlistButton from '@/components/common/WishlistButton'
 import AddToCartButton from '@/components/cart/AddToCartButton'
 import type { ProductWithImages } from '@/types/database'
@@ -19,6 +20,7 @@ export default function ProductCard({ product, animate = true }: ProductCardProp
   const primaryImage = product.product_images?.find((i) => i.is_primary) ?? product.product_images?.[0]
   const secondaryImage = product.product_images?.[1]
   const whatsappUrl = buildWhatsAppUrl(product)
+  const { openQuickView } = useStore()
 
   const entrance = animate
     ? {
@@ -75,13 +77,22 @@ export default function ProductCard({ product, animate = true }: ProductCardProp
           />
         </div>
 
-        {/* Quick WhatsApp hover overlay — button (not <a>) to avoid nesting in the card Link */}
-        <div className="absolute inset-0 bg-[var(--brand-charcoal)]/0 group-hover:bg-[var(--brand-charcoal)]/20 transition-all duration-300 flex items-end justify-center pb-4 opacity-0 group-hover:opacity-100">
+        {/* Hover overlay — Quick View + Enquire (buttons, not <a>, to avoid nesting in the card Link) */}
+        <div className="absolute inset-0 bg-[var(--brand-charcoal)]/0 group-hover:bg-[var(--brand-charcoal)]/20 transition-all duration-300 flex items-end justify-center gap-2 pb-4 opacity-0 group-hover:opacity-100">
+          <span
+            role="button"
+            tabIndex={-1}
+            onClick={(e) => { e.preventDefault(); e.stopPropagation(); openQuickView(product) }}
+            className="flex items-center gap-1.5 bg-white text-[var(--brand-charcoal)] text-[11px] tracking-widest uppercase px-3.5 py-2.5 hover:bg-[var(--brand-rose)] hover:text-white transition-colors shadow-lg cursor-pointer"
+          >
+            <Eye size={14} />
+            Quick View
+          </span>
           <span
             role="button"
             tabIndex={-1}
             onClick={(e) => { e.preventDefault(); e.stopPropagation(); window.open(whatsappUrl, '_blank', 'noopener') }}
-            className="flex items-center gap-2 bg-[#25D366] text-white text-xs tracking-widest uppercase px-4 py-2.5 hover:bg-[#128C7E] transition-colors shadow-lg cursor-pointer"
+            className="flex items-center gap-1.5 bg-[#25D366] text-white text-[11px] tracking-widest uppercase px-3.5 py-2.5 hover:bg-[#128C7E] transition-colors shadow-lg cursor-pointer"
           >
             <MessageCircle size={14} />
             Enquire
