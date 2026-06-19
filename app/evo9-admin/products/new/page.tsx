@@ -11,7 +11,7 @@ export default async function NewProductPage() {
   if (!user) redirect('/evo9-admin/login')
 
   const [{ data: categories }, { data: collections }] = await Promise.all([
-    supabase.from('categories').select('id, name').eq('is_active', true).order('name'),
+    supabase.from('categories').select('id, name, parent_id').eq('is_active', true).order('display_order'),
     supabase.from('collections').select('id, name').eq('is_active', true).order('name'),
   ])
 

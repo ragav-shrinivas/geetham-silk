@@ -11,10 +11,11 @@ import { Plus, Pencil, Trash2, X, Upload, Check } from 'lucide-react'
 interface Category {
   id: string; name: string; slug: string; description: string | null
   image_url: string | null; is_active: boolean; display_order: number
+  parent_id: string | null
   product_count?: number
 }
 
-const EMPTY: Omit<Category, 'id'> = { name: '', slug: '', description: null, image_url: null, is_active: true, display_order: 0 }
+const EMPTY: Omit<Category, 'id'> = { name: '', slug: '', description: null, image_url: null, is_active: true, display_order: 0, parent_id: null }
 
 export default function AdminCategoriesClient() {
   const [items, setItems] = useState<Category[]>([])
@@ -42,12 +43,12 @@ export default function AdminCategoriesClient() {
 
   function openNew() {
     setEditing(null)
-    setForm({ name: '', slug: '', description: '', display_order: items.length, is_active: true, image_url: null })
+    setForm({ name: '', slug: '', description: '', display_order: items.length, is_active: true, image_url: null, parent_id: null })
     setImageFile(null); setPreview(''); setIsNew(true)
   }
   function openEdit(cat: Category) {
     setEditing(cat)
-    setForm({ name: cat.name, slug: cat.slug, description: cat.description ?? '', display_order: cat.display_order, is_active: cat.is_active, image_url: cat.image_url })
+    setForm({ name: cat.name, slug: cat.slug, description: cat.description ?? '', display_order: cat.display_order, is_active: cat.is_active, image_url: cat.image_url, parent_id: cat.parent_id })
     setImageFile(null); setPreview(''); setIsNew(false)
   }
   function closeForm() { setEditing(null); setIsNew(false) }
@@ -71,7 +72,7 @@ export default function AdminCategoriesClient() {
       image_url = publicUrl
     }
 
-    const payload = { name: form.name, slug: form.slug, description: form.description || null, image_url, is_active: form.is_active, display_order: form.display_order }
+    const payload = { name: form.name, slug: form.slug, description: form.description || null, image_url, is_active: form.is_active, display_order: form.display_order, parent_id: form.parent_id || null }
     if (editing) {
       await supabase.from('categories').update(payload).eq('id', editing.id)
     } else {
@@ -110,6 +111,19 @@ export default function AdminCategoriesClient() {
             <div>
               <Label>Slug *</Label>
               <Input className="mt-1.5" value={form.slug} onChange={(e) => setForm((p) => ({ ...p, slug: e.target.value }))} required />
+            </div>
+            <div>
+              <Label>Parent Category</Label>
+              <select
+                className="mt-1.5 flex h-10 w-full border border-[var(--brand-pink)] bg-white px-3 py-2 text-sm text-[var(--brand-charcoal)] focus:outline-none focus:border-[var(--brand-rose)] rounded-none"
+                value={form.parent_id ?? ''}
+                onChange={(e) => setForm((p) => ({ ...p, parent_id: e.target.value || null }))}
+              >
+                <option value="">— None (top level) —</option>
+                {items.filter((c) => !c.parent_id && c.id !== editing?.id).map((c) => (
+                  <option key={c.id} value={c.id}>{c.name}</option>
+                ))}
+              </select>
             </div>
             <div className="sm:col-span-2">
               <Label>Description</Label>
@@ -165,16 +179,22 @@ export default function AdminCategoriesClient() {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-50">
-              {items.map((cat) => (
+              {(() => {
+                const parents = items.filter((c) => !c.parent_id)
+                const ordered = parents.flatMap((p) => [p, ...items.filter((c) => c.parent_id === p.id)])
+                const orphans = items.filter((c) => c.parent_id && !parents.some((p) => p.id === c.parent_id))
+                return [...ordered, ...orphans]
+              })().map((cat) => (
                 <tr key={cat.id} className="hover:bg-gray-50/50">
                   <td className="px-4 py-3">
-                    <div className="flex items-center gap-3">
+                    <div className={`flex items-center gap-3 ${cat.parent_id ? 'pl-6' : ''}`}>
+                      {cat.parent_id && <span className="text-gray-300">↳</span>}
                       {cat.image_url && (
                         <div className="relative w-8 h-8 rounded overflow-hidden flex-shrink-0">
                           <Image src={cat.image_url} alt={cat.name} fill className="object-cover" />
                         </div>
                       )}
-                      <span className="font-medium text-[var(--brand-charcoal)]">{cat.name}</span>
+                      <span className={cat.parent_id ? 'text-[var(--brand-charcoal)]' : 'font-medium text-[var(--brand-charcoal)]'}>{cat.name}</span>
                     </div>
                   </td>
                   <td className="px-4 py-3 text-gray-400 font-mono text-xs">{cat.slug}</td>

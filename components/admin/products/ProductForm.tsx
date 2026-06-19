@@ -23,7 +23,7 @@ interface Props {
     meta_title: string | null; meta_description: string | null
     product_images: { id: string; url: string; is_primary: boolean; display_order: number }[]
   }
-  categories: { id: string; name: string }[]
+  categories: { id: string; name: string; parent_id?: string | null }[]
   collections: { id: string; name: string }[]
 }
 
@@ -304,7 +304,14 @@ export default function ProductForm({ product, categories, collections }: Props)
                 className="mt-1.5 flex h-10 w-full border border-[var(--brand-pink)] bg-white px-3 py-2 text-sm text-[var(--brand-charcoal)] focus:outline-none focus:border-[var(--brand-rose)] rounded-none"
               >
                 <option value="">No Category</option>
-                {categories.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
+                {categories.filter((c) => !c.parent_id).map((parent) => (
+                  <optgroup key={parent.id} label={parent.name}>
+                    <option value={parent.id}>{parent.name} (all)</option>
+                    {categories.filter((c) => c.parent_id === parent.id).map((child) => (
+                      <option key={child.id} value={child.id}>&nbsp;&nbsp;{child.name}</option>
+                    ))}
+                  </optgroup>
+                ))}
               </select>
             </div>
             <div>

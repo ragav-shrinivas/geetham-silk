@@ -1,5 +1,6 @@
 'use client'
 import Link from 'next/link'
+import Image from 'next/image'
 import { useState, useEffect, useRef, type FormEvent } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
@@ -9,6 +10,8 @@ import { NAV_LINKS, SITE } from '@/lib/constants'
 import { cn } from '@/lib/utils'
 import { LUXE } from '@/lib/motion'
 import { useStore } from '@/lib/store/StoreProvider'
+import { createClient } from '@/lib/supabase/client'
+import { formatPrice } from '@/lib/utils'
 import Wordmark from '@/components/common/Wordmark'
 
 export default function Navbar() {
@@ -278,21 +281,46 @@ function MobileMenu({ open, onClose, pathname }: { open: boolean; onClose: () =>
 
 /* ---------- Search overlay ---------- */
 
+interface Suggestion { id: string; name: string; slug: string; price: number; product_images: { url: string; is_primary: boolean }[] }
+
 function SearchOverlay({ open, onClose }: { open: boolean; onClose: () => void }) {
   const reduced = useReducedMotion()
   const router = useRouter()
   const inputRef = useRef<HTMLInputElement>(null)
   const [q, setQ] = useState('')
+  const [results, setResults] = useState<Suggestion[]>([])
+  const [searching, setSearching] = useState(false)
 
   useEffect(() => {
     if (open) {
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setQ('')
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setResults([])
       // focus after the entrance settles
       const t = setTimeout(() => inputRef.current?.focus(), 350)
       return () => clearTimeout(t)
     }
   }, [open])
+
+  // Instant suggestions — debounced product lookup by name
+  useEffect(() => {
+    const term = q.trim()
+    if (term.length < 2) { setResults([]); setSearching(false); return }
+    setSearching(true)
+    const t = setTimeout(async () => {
+      const supabase = createClient()
+      const { data } = await supabase
+        .from('products')
+        .select('id, name, slug, price, product_images(url, is_primary)')
+        .eq('is_active', true)
+        .ilike('name', `%${term}%`)
+        .limit(6)
+      setResults((data as unknown as Suggestion[]) ?? [])
+      setSearching(false)
+    }, 250)
+    return () => clearTimeout(t)
+  }, [q])
 
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
@@ -354,22 +382,52 @@ function SearchOverlay({ open, onClose }: { open: boolean; onClose: () => void }
                 <ArrowRight size={30} strokeWidth={1.5} />
               </button>
             </motion.form>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: reduced ? 0 : 0.6, delay: 0.4 }}
-              className="mt-8 flex flex-wrap gap-3"
-            >
-              {['Silk Sarees', 'Bridal', 'Kurtas', 'Kids Wear'].map((s) => (
-                <button
-                  key={s}
-                  onClick={() => { onClose(); router.push(`/shop?search=${encodeURIComponent(s)}`) }}
-                  className="text-[11px] tracking-[0.2em] uppercase border border-[var(--brand-charcoal)]/20 text-[var(--brand-charcoal)]/70 px-4 py-2 hover:border-[var(--brand-rose)] hover:text-[var(--brand-rose)] transition-colors duration-300"
-                >
-                  {s}
-                </button>
-              ))}
-            </motion.div>
+            {/* Live suggestions */}
+            {q.trim().length >= 2 ? (
+              <div className="mt-6">
+                {searching && results.length === 0 ? (
+                  <p className="text-sm text-[var(--brand-charcoal)]/40">Searching…</p>
+                ) : results.length === 0 ? (
+                  <p className="text-sm text-[var(--brand-charcoal)]/40">No matches. Press enter to search all.</p>
+                ) : (
+                  <div className="divide-y divide-[var(--brand-charcoal)]/10 max-h-[50vh] overflow-y-auto">
+                    {results.map((p) => {
+                      const img = p.product_images?.find((i) => i.is_primary) ?? p.product_images?.[0]
+                      return (
+                        <button
+                          key={p.id}
+                          onClick={() => { onClose(); router.push(`/products/${p.slug}`) }}
+                          className="w-full flex items-center gap-4 py-3 text-left group"
+                        >
+                          <div className="relative w-12 h-14 shrink-0 bg-[var(--brand-cream-deep)] overflow-hidden">
+                            {img ? <Image src={img.url} alt={p.name} fill sizes="48px" className="object-cover" /> : <div className="w-full h-full flex items-center justify-center font-serif text-[var(--brand-charcoal)]/25">G</div>}
+                          </div>
+                          <span className="flex-1 font-serif text-lg font-light text-[var(--brand-charcoal)] group-hover:text-[var(--brand-rose)] transition-colors">{p.name}</span>
+                          <span className="text-sm font-medium text-[var(--brand-charcoal)] tabular-nums">{formatPrice(p.price)}</span>
+                        </button>
+                      )
+                    })}
+                  </div>
+                )}
+              </div>
+            ) : (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: reduced ? 0 : 0.6, delay: 0.4 }}
+                className="mt-8 flex flex-wrap gap-3"
+              >
+                {['Silk Sarees', 'Bridal', 'Kurtas', 'Kids Wear'].map((s) => (
+                  <button
+                    key={s}
+                    onClick={() => { onClose(); router.push(`/shop?search=${encodeURIComponent(s)}`) }}
+                    className="text-[11px] tracking-[0.2em] uppercase border border-[var(--brand-charcoal)]/20 text-[var(--brand-charcoal)]/70 px-4 py-2 hover:border-[var(--brand-rose)] hover:text-[var(--brand-rose)] transition-colors duration-300"
+                  >
+                    {s}
+                  </button>
+                ))}
+              </motion.div>
+            )}
           </div>
         </motion.div>
       )}

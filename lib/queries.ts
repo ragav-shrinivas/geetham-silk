@@ -56,7 +56,16 @@ export async function getProducts(opts?: {
       .select('id')
       .eq('slug', opts.categorySlug)
       .single()
-    if (cat) query = query.eq('category_id', (cat as { id: string }).id)
+    if (cat) {
+      const catId = (cat as { id: string }).id
+      // include any child subcategories so a parent shows everything beneath it
+      const { data: children } = await supabase
+        .from('categories')
+        .select('id')
+        .eq('parent_id', catId)
+      const ids = [catId, ...((children ?? []) as { id: string }[]).map((c) => c.id)]
+      query = query.in('category_id', ids)
+    }
   }
   if (opts?.collectionSlug) {
     const { data: col } = await supabase
@@ -108,6 +117,21 @@ export async function getDiscoveryProducts(limit = 24): Promise<ProductWithImage
   return (data ?? []) as ProductWithImages[]
 }
 
+export type CategoryNode = import('@/types/database').Category & { children: import('@/types/database').Category[] }
+
+/** Parent categories, each with their active subcategories nested under `children`. */
+export async function getCategoryTree(): Promise<CategoryNode[]> {
+  const supabase = await createClient()
+  const { data } = await supabase
+    .from('categories')
+    .select('*')
+    .eq('is_active', true)
+    .order('display_order')
+  const all = (data ?? []) as import('@/types/database').Category[]
+  const parents = all.filter((c) => !c.parent_id)
+  return parents.map((p) => ({ ...p, children: all.filter((c) => c.parent_id === p.id) }))
+}
+
 export async function getCategoriesWithCount(): Promise<Array<import('@/types/database').Category & { product_count: number }>> {
   const supabase = await createClient()
   const [{ data: cats }, { data: productRows }] = await Promise.all([
@@ -115,12 +139,21 @@ export async function getCategoriesWithCount(): Promise<Array<import('@/types/da
     supabase.from('products').select('category_id').eq('is_active', true),
   ])
   const rows = (productRows ?? []) as Array<{ category_id: string | null }>
+  const catList = (cats ?? []) as Array<import('@/types/database').Category>
+  // map each child category to its parent so a parent's count rolls up its subcategories
+  const parentOf: Record<string, string> = {}
+  for (const c of catList) if (c.parent_id) parentOf[c.id] = c.parent_id
+
   const countMap: Record<string, number> = {}
   for (const p of rows) {
-    if (p.category_id) countMap[p.category_id] = (countMap[p.category_id] ?? 0) + 1
+    if (!p.category_id) continue
+    const target = parentOf[p.category_id] ?? p.category_id
+    countMap[target] = (countMap[target] ?? 0) + 1
   }
-  const catList = (cats ?? []) as Array<import('@/types/database').Category>
-  return catList.map((c) => ({ ...c, product_count: countMap[c.id] ?? 0 }))
+  // Homepage cards show only top-level categories
+  return catList
+    .filter((c) => !c.parent_id)
+    .map((c) => ({ ...c, product_count: countMap[c.id] ?? 0 }))
 }
 
 export async function getCollections(): Promise<import('@/types/database').Collection[]> {

@@ -1,6 +1,6 @@
 import { Suspense } from 'react'
 import type { Metadata } from 'next'
-import { getProducts, getCategories, getCollections, type ProductSort } from '@/lib/queries'
+import { getProducts, getCategories, getCategoryTree, getCollections, type ProductSort } from '@/lib/queries'
 import ShopFilters from '@/components/shop/ShopFilters'
 import ShopGrid from '@/components/shop/ShopGrid'
 import LuxButton from '@/components/ui/lux-button'
@@ -31,7 +31,7 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
   const params = await searchParams
   const sort = VALID_SORTS.includes(params.sort as ProductSort) ? (params.sort as ProductSort) : undefined
 
-  const [products, categories, collections] = await Promise.all([
+  const [products, categories, categoryTree, collections] = await Promise.all([
     getProducts({
       categorySlug: params.category,
       collectionSlug: params.collection,
@@ -42,6 +42,7 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
       sort,
     }),
     getCategories(),
+    getCategoryTree(),
     getCollections(),
   ])
 
@@ -89,7 +90,7 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
       {/* Filter bar — sticky beneath the fixed navbar (announcement bar + nav ≈ 96px when condensed) */}
       <div className="sticky top-[96px] z-40">
         <Suspense>
-          <ShopFilters categories={categories} collections={collections} />
+          <ShopFilters categories={categoryTree} collections={collections} />
         </Suspense>
       </div>
 
