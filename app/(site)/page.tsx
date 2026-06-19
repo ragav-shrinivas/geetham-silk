@@ -5,11 +5,14 @@ import FeaturedCategories from '@/components/home/FeaturedCategories'
 import FeaturedProducts from '@/components/home/FeaturedProducts'
 import BestSellers from '@/components/home/BestSellers'
 import ProductDiscovery from '@/components/home/ProductDiscovery'
+import PromoBanners from '@/components/home/PromoBanners'
+import ProductRail from '@/components/home/ProductRail'
+import RecentlyViewed from '@/components/home/RecentlyViewed'
 import NewArrivals from '@/components/home/NewArrivals'
 import TestimonialsSection from '@/components/home/TestimonialsSection'
 import AboutStrip from '@/components/home/AboutStrip'
 import WhatsAppFloat from '@/components/common/WhatsAppFloat'
-import { getProducts, getTestimonials, getPageSections, getCategoriesWithCount, getDiscoveryProducts } from '@/lib/queries'
+import { getProducts, getTestimonials, getPageSections, getCategoriesWithCount, getDiscoveryProducts, getActiveBanners } from '@/lib/queries'
 import type { Metadata } from 'next'
 import type { Json, PageSection } from '@/types/database'
 import { SITE } from '@/lib/constants'
@@ -30,9 +33,12 @@ const DEFAULT_SECTIONS: Array<Pick<PageSection, 'section_key' | 'is_visible' | '
   { section_key: 'featured', is_visible: true, settings: { limit: 8 } },
   { section_key: 'bestsellers', is_visible: true, settings: { limit: 12 } },
   { section_key: 'story', is_visible: true, settings: {} },
+  { section_key: 'banners', is_visible: true, settings: {} },
   { section_key: 'arrivals', is_visible: true, settings: { limit: 8 } },
+  { section_key: 'trending', is_visible: true, settings: { limit: 8 } },
   { section_key: 'testimonials', is_visible: true, settings: {} },
   { section_key: 'discovery', is_visible: true, settings: {} },
+  { section_key: 'recently', is_visible: true, settings: {} },
 ]
 
 function setting<T>(settings: Json, key: string, fallback: T): T {
@@ -50,13 +56,17 @@ export default async function HomePage() {
   const arrivalsSettings = sections.find((s) => s.section_key === 'arrivals')?.settings ?? {}
   const bestSettings = sections.find((s) => s.section_key === 'bestsellers')?.settings ?? {}
 
-  const [featuredProducts, newArrivals, bestSellers, testimonials, categories, discoveryProducts] = await Promise.all([
+  const trendingSettings = sections.find((s) => s.section_key === 'trending')?.settings ?? {}
+
+  const [featuredProducts, newArrivals, bestSellers, testimonials, categories, discoveryProducts, trendingProducts, banners] = await Promise.all([
     getProducts({ featured: true, limit: setting(featuredSettings, 'limit', 8) }),
     getProducts({ newArrival: true, limit: setting(arrivalsSettings, 'limit', 8) }),
     getProducts({ bestSeller: true, limit: setting(bestSettings, 'limit', 12) }),
     getTestimonials(),
     getCategoriesWithCount(),
     getDiscoveryProducts(24),
+    getProducts({ trending: true, limit: setting(trendingSettings, 'limit', 8) }),
+    getActiveBanners(),
   ])
 
   return (
@@ -89,6 +99,12 @@ export default async function HomePage() {
             )
           case 'discovery':
             return <ProductDiscovery key="discovery" products={discoveryProducts} />
+          case 'banners':
+            return <PromoBanners key="banners" banners={banners} />
+          case 'trending':
+            return <ProductRail key="trending" products={trendingProducts} eyebrow="In Demand" title="Trending *Now*" backdropWord="Trending" viewAllHref="/shop?trending=true" tone="cream" />
+          case 'recently':
+            return <RecentlyViewed key="recently" tone="cream" />
           default:
             return null
         }

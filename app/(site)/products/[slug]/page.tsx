@@ -4,6 +4,8 @@ import { getProductBySlug, getProducts } from '@/lib/queries'
 import ProductGallery from '@/components/products/ProductGallery'
 import ProductActions from '@/components/products/ProductActions'
 import ProductCard from '@/components/products/ProductCard'
+import RecordView from '@/components/products/RecordView'
+import RecentlyViewed from '@/components/home/RecentlyViewed'
 import WhatsAppFloat from '@/components/common/WhatsAppFloat'
 import { Badge } from '@/components/ui/badge'
 import { formatPrice } from '@/lib/utils'
@@ -64,6 +66,7 @@ export default async function ProductPage({ params }: Props) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
       />
+      <RecordView slug={product.slug} />
 
       <div className="pt-24 min-h-screen bg-[var(--brand-cream)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
@@ -179,6 +182,9 @@ export default async function ProductPage({ params }: Props) {
             </div>
           )}
         </div>
+
+        {/* Recently viewed */}
+        <RecentlyViewed excludeSlug={product.slug} tone="cream" />
       </div>
       <WhatsAppFloat />
     </>

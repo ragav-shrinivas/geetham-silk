@@ -6,7 +6,7 @@ import { createAdminClient as createClient } from '@/lib/supabase/admin-client'
 import {
   LayoutDashboard, Package, Tag, BookOpen, Image, Star,
   Settings, LogOut, Menu, ChevronRight, Film, Blocks, FolderOpen,
-  ShoppingCart, Users
+  ShoppingCart, Users, GalleryHorizontalEnd
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
@@ -18,6 +18,7 @@ const NAV = [
   { label: 'Collections', href: '/evo9-admin/collections', icon: BookOpen },
   { label: 'Customers', href: '/evo9-admin/customers', icon: Users },
   { label: 'Page Builder', href: '/evo9-admin/homepage', icon: Blocks },
+  { label: 'Banners', href: '/evo9-admin/banners', icon: GalleryHorizontalEnd },
   { label: 'Hero Slider', href: '/evo9-admin/hero', icon: Film },
   { label: 'Media Library', href: '/evo9-admin/media', icon: FolderOpen },
   { label: 'Gallery', href: '/evo9-admin/gallery', icon: Image },

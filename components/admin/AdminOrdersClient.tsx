@@ -1,8 +1,9 @@
 'use client'
 import { useEffect, useState, useCallback } from 'react'
+import Link from 'next/link'
 import { createAdminClient as createClient } from '@/lib/supabase/admin-client'
 import { formatPrice } from '@/lib/utils'
-import { ChevronDown, Package, Phone, Mail, MapPin } from 'lucide-react'
+import { ChevronDown, Package, Phone, Mail, MapPin, FileText } from 'lucide-react'
 
 interface OrderItem {
   id: string; product_name: string; product_slug: string | null; size: string | null
@@ -151,6 +152,9 @@ export default function AdminOrdersClient() {
                         {STATUSES.map((s) => <option key={s} value={s}>{s.charAt(0).toUpperCase() + s.slice(1)}</option>)}
                       </select>
                       {updating === o.id && <span className="text-xs text-gray-400">Saving…</span>}
+                      <Link href={`/evo9-admin/orders/${o.id}/invoice`} target="_blank" className="ml-auto inline-flex items-center gap-1.5 text-xs text-[var(--brand-rose)] hover:underline">
+                        <FileText size={13} /> Invoice
+                      </Link>
                     </div>
                   </div>
                 )}

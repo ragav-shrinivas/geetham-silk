@@ -117,6 +117,27 @@ export async function getDiscoveryProducts(limit = 24): Promise<ProductWithImage
   return (data ?? []) as ProductWithImages[]
 }
 
+export interface Banner {
+  id: string; title: string | null; subtitle: string | null; image_url: string
+  link_url: string | null; cta_label: string | null; display_order: number
+  is_active: boolean; starts_at: string | null; ends_at: string | null
+}
+
+/** Active banners within their scheduled window, ordered for display. */
+export async function getActiveBanners(): Promise<Banner[]> {
+  const supabase = await createClient()
+  const nowIso = new Date().toISOString()
+  const { data } = await supabase
+    .from('banners')
+    .select('*')
+    .eq('is_active', true)
+    .order('display_order', { ascending: true })
+  const rows = (data ?? []) as Banner[]
+  return rows.filter((b) =>
+    (!b.starts_at || b.starts_at <= nowIso) && (!b.ends_at || b.ends_at >= nowIso)
+  )
+}
+
 export type CategoryNode = import('@/types/database').Category & { children: import('@/types/database').Category[] }
 
 /** Parent categories, each with their active subcategories nested under `children`. */

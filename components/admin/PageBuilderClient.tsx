@@ -116,6 +116,36 @@ const SECTION_META: Record<string, SectionMeta> = {
     manageHref: '/evo9-admin/testimonials',
     manageLabel: 'Manage reviews',
   },
+  banners: {
+    label: 'Promo Banners',
+    desc: 'Scheduled promotional banner strip',
+    icon: ImageIcon,
+    fields: [],
+    manageHref: '/evo9-admin/banners',
+    manageLabel: 'Manage banners',
+  },
+  trending: {
+    label: 'Trending Now',
+    desc: 'Carousel of trending products',
+    icon: Star,
+    fields: [{ key: 'limit', label: 'Number of products', type: 'number', min: 2, max: 12 }],
+    manageHref: '/evo9-admin/products?filter=all',
+    manageLabel: 'Manage products',
+  },
+  discovery: {
+    label: 'Explore Our Collection',
+    desc: 'Shuffled all-category product grid',
+    icon: Star,
+    fields: [],
+    manageHref: '/evo9-admin/products',
+    manageLabel: 'Manage products',
+  },
+  recently: {
+    label: 'Recently Viewed',
+    desc: 'Each visitor’s recently viewed products',
+    icon: Star,
+    fields: [],
+  },
 }
 
 /* ---------- Builder ---------- */
