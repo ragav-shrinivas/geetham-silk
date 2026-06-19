@@ -4,10 +4,11 @@ import { useState, useEffect, useRef, type FormEvent } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import { useLenis } from 'lenis/react'
-import { Menu, X, Search, MessageCircle, ArrowRight } from 'lucide-react'
+import { Menu, X, Search, MessageCircle, ArrowRight, ShoppingBag, Heart } from 'lucide-react'
 import { NAV_LINKS, SITE } from '@/lib/constants'
 import { cn } from '@/lib/utils'
 import { LUXE } from '@/lib/motion'
+import { useStore } from '@/lib/store/StoreProvider'
 import Wordmark from '@/components/common/Wordmark'
 
 export default function Navbar() {
@@ -16,6 +17,7 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const pathname = usePathname()
   const lenis = useLenis()
+  const { cartCount, wishlistCount, openCart, ready } = useStore()
 
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 40)
@@ -117,6 +119,28 @@ export default function Navbar() {
               )}
             >
               <Search size={18} />
+            </button>
+            <Link
+              href="/wishlist"
+              aria-label="Wishlist"
+              className={cn(
+                'relative transition-colors p-1',
+                scrolled ? 'text-[var(--brand-charcoal)] hover:text-[var(--brand-rose)]' : 'text-white/85 hover:text-white'
+              )}
+            >
+              <Heart size={18} />
+              {ready && wishlistCount > 0 && <NavBadge n={wishlistCount} />}
+            </Link>
+            <button
+              onClick={openCart}
+              aria-label="Open cart"
+              className={cn(
+                'relative transition-colors p-1',
+                scrolled ? 'text-[var(--brand-charcoal)] hover:text-[var(--brand-rose)]' : 'text-white/85 hover:text-white'
+              )}
+            >
+              <ShoppingBag size={18} />
+              {ready && cartCount > 0 && <NavBadge n={cartCount} />}
             </button>
             <a
               href={`https://wa.me/${SITE.whatsapp}`}
@@ -350,5 +374,15 @@ function SearchOverlay({ open, onClose }: { open: boolean; onClose: () => void }
         </motion.div>
       )}
     </AnimatePresence>
+  )
+}
+
+/* ---------- Cart / wishlist count badge ---------- */
+
+function NavBadge({ n }: { n: number }) {
+  return (
+    <span className="absolute -top-1 -right-1.5 min-w-[16px] h-4 px-1 rounded-full bg-[var(--brand-rose)] text-white text-[9px] font-medium flex items-center justify-center tabular-nums">
+      {n > 9 ? '9+' : n}
+    </span>
   )
 }

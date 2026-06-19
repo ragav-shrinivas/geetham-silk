@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import { getProductBySlug, getProducts } from '@/lib/queries'
 import ProductGallery from '@/components/products/ProductGallery'
-import WhatsAppCTA from '@/components/products/WhatsAppCTA'
+import ProductActions from '@/components/products/ProductActions'
 import ProductCard from '@/components/products/ProductCard'
 import WhatsAppFloat from '@/components/common/WhatsAppFloat'
 import { Badge } from '@/components/ui/badge'
@@ -120,20 +120,6 @@ export default async function ProductPage({ params }: Props) {
                 {product.is_featured && <Badge variant="pink">Featured</Badge>}
               </div>
 
-              {/* Sizes */}
-              {product.sizes && product.sizes.length > 0 && (
-                <div className="mb-5">
-                  <p className="text-xs tracking-[0.2em] uppercase text-gray-500 mb-3 font-medium">Available Sizes</p>
-                  <div className="flex flex-wrap gap-2">
-                    {product.sizes.map((size) => (
-                      <span key={size} className="border border-[var(--brand-pink)] px-4 py-1.5 text-sm text-[var(--brand-charcoal)] hover:bg-[var(--brand-pink)]/15 hover:border-[var(--brand-rose)] transition-colors duration-300 cursor-default">
-                        {size}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              )}
-
               {/* Colors */}
               {product.colors && product.colors.length > 0 && (
                 <div className="mb-6">
@@ -148,12 +134,10 @@ export default async function ProductPage({ params }: Props) {
                 </div>
               )}
 
-              {/* WhatsApp CTA */}
-              {!product.is_out_of_stock && (
-                <div className="mb-6">
-                  <WhatsAppCTA product={product} size="lg" />
-                </div>
-              )}
+              {/* Sizes + Add to Cart / Buy Now / Wishlist / WhatsApp */}
+              <div className="mb-6">
+                <ProductActions product={product} />
+              </div>
 
               {/* Description */}
               {product.description && (

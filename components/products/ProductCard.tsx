@@ -5,6 +5,8 @@ import { motion } from 'framer-motion'
 import { MessageCircle } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { formatPrice, buildWhatsAppUrl } from '@/lib/utils'
+import WishlistButton from '@/components/common/WishlistButton'
+import AddToCartButton from '@/components/cart/AddToCartButton'
 import type { ProductWithImages } from '@/types/database'
 
 interface ProductCardProps {
@@ -58,6 +60,20 @@ export default function ProductCard({ product, animate = true }: ProductCardProp
             <span className="text-[var(--brand-charcoal)]/30 text-4xl font-serif">G</span>
           </div>
         )}
+
+        {/* Wishlist heart — top-right, always tappable */}
+        <div className="absolute top-2.5 right-2.5 z-10" onClick={(e) => e.preventDefault()}>
+          <WishlistButton
+            item={{
+              id: product.id,
+              slug: product.slug,
+              name: product.name,
+              price: product.price,
+              image: primaryImage?.url ?? null,
+              categoryName: product.categories?.name ?? null,
+            }}
+          />
+        </div>
 
         {/* Quick WhatsApp hover overlay */}
         <div className="absolute inset-0 bg-[var(--brand-charcoal)]/0 group-hover:bg-[var(--brand-charcoal)]/20 transition-all duration-300 flex items-end justify-center pb-4 opacity-0 group-hover:opacity-100">
@@ -113,6 +129,20 @@ export default function ProductCard({ product, animate = true }: ProductCardProp
             )}
           </div>
         </div>
+
+        <AddToCartButton
+          size="compact"
+          disabled={product.is_out_of_stock}
+          className="mt-3"
+          item={{
+            id: product.id,
+            slug: product.slug,
+            name: product.name,
+            price: product.price,
+            image: primaryImage?.url ?? null,
+            size: null,
+          }}
+        />
       </div>
     </motion.div>
   )

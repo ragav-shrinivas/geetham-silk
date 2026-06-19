@@ -13,7 +13,7 @@ export default function WhatsAppFloat() {
       animate={{ scale: 1 }}
       transition={{ delay: 2, type: 'spring', stiffness: 200 }}
       whileHover={{ scale: 1.1 }}
-      className="fixed bottom-6 right-6 z-50 bg-[#25D366] text-white rounded-full w-14 h-14 flex items-center justify-center shadow-2xl"
+      className="fixed bottom-[88px] lg:bottom-6 right-5 lg:right-6 z-[70] bg-[#25D366] text-white rounded-full w-14 h-14 flex items-center justify-center shadow-2xl"
       aria-label="Chat on WhatsApp"
     >
       <MessageCircle size={26} />
