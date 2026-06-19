@@ -75,18 +75,17 @@ export default function ProductCard({ product, animate = true }: ProductCardProp
           />
         </div>
 
-        {/* Quick WhatsApp hover overlay */}
+        {/* Quick WhatsApp hover overlay — button (not <a>) to avoid nesting in the card Link */}
         <div className="absolute inset-0 bg-[var(--brand-charcoal)]/0 group-hover:bg-[var(--brand-charcoal)]/20 transition-all duration-300 flex items-end justify-center pb-4 opacity-0 group-hover:opacity-100">
-          <a
-            href={whatsappUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={(e) => e.stopPropagation()}
-            className="flex items-center gap-2 bg-[#25D366] text-white text-xs tracking-widest uppercase px-4 py-2.5 hover:bg-[#128C7E] transition-colors shadow-lg"
+          <span
+            role="button"
+            tabIndex={-1}
+            onClick={(e) => { e.preventDefault(); e.stopPropagation(); window.open(whatsappUrl, '_blank', 'noopener') }}
+            className="flex items-center gap-2 bg-[#25D366] text-white text-xs tracking-widest uppercase px-4 py-2.5 hover:bg-[#128C7E] transition-colors shadow-lg cursor-pointer"
           >
             <MessageCircle size={14} />
             Enquire
-          </a>
+          </span>
         </div>
       </Link>
 
