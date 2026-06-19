@@ -12,8 +12,11 @@ export default function ProductActions({ product }: { product: ProductWithImages
   const { addToCart } = useStore()
   const router = useRouter()
   const sizes = product.sizes ?? []
-  const oos = product.is_out_of_stock
-  const [size, setSize] = useState<string | null>(sizes.length ? null : null)
+  const tracked = product.track_inventory
+  const stock = product.stock_quantity ?? 0
+  const oos = product.is_out_of_stock || (tracked && stock <= 0)
+  const lowStock = tracked && stock > 0 && stock <= (product.low_stock_threshold ?? 0)
+  const [size, setSize] = useState<string | null>(null)
   const [added, setAdded] = useState(false)
   const [error, setError] = useState('')
 
@@ -49,6 +52,16 @@ export default function ProductActions({ product }: { product: ProductWithImages
 
   return (
     <div className="space-y-5">
+      {/* Stock availability */}
+      {tracked && (
+        <p className={cn(
+          'text-xs tracking-[0.15em] uppercase',
+          oos ? 'text-gray-400' : lowStock ? 'text-amber-600' : 'text-[#1f9d57]'
+        )}>
+          {oos ? 'Out of stock' : lowStock ? `Only ${stock} left in stock` : `In stock · ${stock} available`}
+        </p>
+      )}
+
       {/* Sizes — selectable */}
       {sizes.length > 0 && (
         <div>

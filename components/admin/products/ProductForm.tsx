@@ -19,6 +19,7 @@ interface Props {
     care_instructions: string | null; is_active: boolean; is_featured: boolean
     is_trending: boolean; is_new_arrival: boolean; is_out_of_stock: boolean
     is_best_seller: boolean
+    stock_quantity?: number; low_stock_threshold?: number; track_inventory?: boolean
     meta_title: string | null; meta_description: string | null
     product_images: { id: string; url: string; is_primary: boolean; display_order: number }[]
   }
@@ -50,6 +51,9 @@ export default function ProductForm({ product, categories, collections }: Props)
     is_out_of_stock: product?.is_out_of_stock ?? false,
     is_best_seller: product?.is_best_seller ?? false,
     show_in_discovery: (product as { show_in_discovery?: boolean } | undefined)?.show_in_discovery ?? true,
+    track_inventory: product?.track_inventory ?? false,
+    stock_quantity: product?.stock_quantity?.toString() ?? '0',
+    low_stock_threshold: product?.low_stock_threshold?.toString() ?? '3',
     meta_title: product?.meta_title ?? '',
     meta_description: product?.meta_description ?? '',
   })
@@ -122,6 +126,9 @@ export default function ProductForm({ product, categories, collections }: Props)
       is_out_of_stock: form.is_out_of_stock,
       is_best_seller: form.is_best_seller,
       show_in_discovery: form.show_in_discovery,
+      track_inventory: form.track_inventory,
+      stock_quantity: parseInt(form.stock_quantity as string, 10) || 0,
+      low_stock_threshold: parseInt(form.low_stock_threshold as string, 10) || 0,
       meta_title: form.meta_title || null,
       meta_description: form.meta_description || null,
     }
@@ -310,6 +317,30 @@ export default function ProductForm({ product, categories, collections }: Props)
                 {collections.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
               </select>
             </div>
+          </div>
+
+          {/* Inventory */}
+          <div className="bg-white border border-gray-100 rounded-lg p-6 space-y-4">
+            <h2 className="font-medium text-gray-700 text-sm">Inventory</h2>
+            <label className="flex items-center gap-3 cursor-pointer">
+              <input type="checkbox" name="track_inventory" checked={form.track_inventory} onChange={handleChange} className="w-4 h-4 accent-[var(--brand-rose)]" />
+              <span className="text-sm text-gray-600">Track stock for this product</span>
+            </label>
+            {form.track_inventory && (
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <Label htmlFor="stock_quantity">Stock Quantity</Label>
+                  <Input id="stock_quantity" name="stock_quantity" type="number" min="0" value={form.stock_quantity as string} onChange={handleChange} className="mt-1.5" />
+                </div>
+                <div>
+                  <Label htmlFor="low_stock_threshold">Low-stock Alert At</Label>
+                  <Input id="low_stock_threshold" name="low_stock_threshold" type="number" min="0" value={form.low_stock_threshold as string} onChange={handleChange} className="mt-1.5" />
+                </div>
+              </div>
+            )}
+            <p className="text-xs text-gray-400">
+              When tracking is on, stock auto-deducts as orders are confirmed and the product shows as sold out at zero.
+            </p>
           </div>
 
           {/* Images */}

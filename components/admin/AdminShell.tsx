@@ -5,18 +5,21 @@ import { useState } from 'react'
 import { createAdminClient as createClient } from '@/lib/supabase/admin-client'
 import {
   LayoutDashboard, Package, Tag, BookOpen, Image, Star,
-  Settings, LogOut, Menu, ChevronRight, Film, Blocks, FolderOpen
+  Settings, LogOut, Menu, ChevronRight, Film, Blocks, FolderOpen,
+  ShoppingCart, Users
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 const NAV = [
   { label: 'Dashboard', href: '/evo9-admin', icon: LayoutDashboard },
-  { label: 'Page Builder', href: '/evo9-admin/homepage', icon: Blocks },
-  { label: 'Hero Slider', href: '/evo9-admin/hero', icon: Film },
-  { label: 'Media Library', href: '/evo9-admin/media', icon: FolderOpen },
+  { label: 'Orders', href: '/evo9-admin/orders', icon: ShoppingCart },
   { label: 'Products', href: '/evo9-admin/products', icon: Package },
   { label: 'Categories', href: '/evo9-admin/categories', icon: Tag },
   { label: 'Collections', href: '/evo9-admin/collections', icon: BookOpen },
+  { label: 'Customers', href: '/evo9-admin/customers', icon: Users },
+  { label: 'Page Builder', href: '/evo9-admin/homepage', icon: Blocks },
+  { label: 'Hero Slider', href: '/evo9-admin/hero', icon: Film },
+  { label: 'Media Library', href: '/evo9-admin/media', icon: FolderOpen },
   { label: 'Gallery', href: '/evo9-admin/gallery', icon: Image },
   { label: 'Testimonials', href: '/evo9-admin/testimonials', icon: Star },
   { label: 'Settings', href: '/evo9-admin/settings', icon: Settings },

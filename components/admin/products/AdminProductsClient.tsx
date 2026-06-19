@@ -25,22 +25,24 @@ interface Product {
   is_active: boolean; is_featured: boolean; is_out_of_stock: boolean
   is_new_arrival: boolean; is_trending: boolean; is_best_seller: boolean
   best_seller_order: number
+  track_inventory: boolean; stock_quantity: number; low_stock_threshold: number
   product_images: { url: string; is_primary: boolean }[]
   categories: { name: string } | null
 }
 
-type Filter = 'all' | 'active' | 'oos' | 'bestseller' | 'featured' | 'new'
+type Filter = 'all' | 'active' | 'oos' | 'bestseller' | 'featured' | 'new' | 'lowstock'
 
 const FILTERS: { key: Filter; label: string }[] = [
   { key: 'all', label: 'All Products' },
   { key: 'active', label: 'Active' },
   { key: 'oos', label: 'Out of Stock' },
+  { key: 'lowstock', label: 'Low Stock' },
   { key: 'bestseller', label: 'Best Selling' },
   { key: 'featured', label: 'Featured' },
   { key: 'new', label: 'New Arrivals' },
 ]
 
-const SELECT = 'id, name, product_code, price, is_active, is_featured, is_out_of_stock, is_new_arrival, is_trending, is_best_seller, best_seller_order, product_images(url, is_primary), categories(name)'
+const SELECT = 'id, name, product_code, price, is_active, is_featured, is_out_of_stock, is_new_arrival, is_trending, is_best_seller, best_seller_order, track_inventory, stock_quantity, low_stock_threshold, product_images(url, is_primary), categories(name)'
 
 export default function AdminProductsClient() {
   const params = useSearchParams()
@@ -59,6 +61,7 @@ export default function AdminProductsClient() {
     switch (filter) {
       case 'active': q = q.eq('is_active', true); break
       case 'oos': q = q.eq('is_out_of_stock', true); break
+      case 'lowstock': q = q.eq('track_inventory', true); break
       case 'bestseller': q = q.eq('is_best_seller', true); break
       case 'featured': q = q.eq('is_featured', true); break
       case 'new': q = q.eq('is_new_arrival', true); break
@@ -69,7 +72,9 @@ export default function AdminProductsClient() {
     if (search) q = q.ilike('name', `%${search}%`)
 
     const { data } = await q
-    setProducts((data ?? []) as unknown as Product[])
+    let rows = (data ?? []) as unknown as Product[]
+    if (filter === 'lowstock') rows = rows.filter((p) => p.stock_quantity <= p.low_stock_threshold)
+    setProducts(rows)
     setLoading(false)
   }, [filter, search])
 
@@ -177,6 +182,7 @@ function ProductTable({
               <th className="text-left px-4 py-3 font-medium text-gray-500 text-xs tracking-wider">Product</th>
               <th className="text-left px-4 py-3 font-medium text-gray-500 text-xs tracking-wider">Code</th>
               <th className="text-left px-4 py-3 font-medium text-gray-500 text-xs tracking-wider">Price</th>
+              <th className="text-left px-4 py-3 font-medium text-gray-500 text-xs tracking-wider">Stock</th>
               <th className="text-left px-4 py-3 font-medium text-gray-500 text-xs tracking-wider">Category</th>
               <th className="text-left px-4 py-3 font-medium text-gray-500 text-xs tracking-wider">Status</th>
               <th className="text-right px-4 py-3 font-medium text-gray-500 text-xs tracking-wider">Actions</th>
@@ -201,6 +207,18 @@ function ProductTable({
                   </td>
                   <td className="px-4 py-3 text-gray-500 font-mono text-xs">{p.product_code}</td>
                   <td className="px-4 py-3 font-medium text-[var(--brand-charcoal)]">{formatPrice(p.price)}</td>
+                  <td className="px-4 py-3">
+                    {p.track_inventory ? (
+                      <span className={cn(
+                        'tabular-nums text-sm font-medium',
+                        p.stock_quantity === 0 ? 'text-red-500' : p.stock_quantity <= p.low_stock_threshold ? 'text-amber-600' : 'text-gray-600'
+                      )}>
+                        {p.stock_quantity}
+                      </span>
+                    ) : (
+                      <span className="text-gray-300 text-xs">—</span>
+                    )}
+                  </td>
                   <td className="px-4 py-3 text-gray-500">{p.categories?.name ?? '—'}</td>
                   <td className="px-4 py-3">
                     <div className="flex flex-wrap gap-1">
