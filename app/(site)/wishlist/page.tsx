@@ -44,7 +44,7 @@ export default function WishlistPage() {
         ) : (
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
             {wishlist.map((it) => (
-              <div key={it.id} className="group relative flex flex-col bg-white">
+              <div key={it.id} className="group relative flex flex-col bg-[var(--brand-sandal-light)]">
                 <Link href={`/products/${it.slug}`} className="relative block aspect-[3/4] overflow-hidden bg-[var(--brand-cream-deep)]">
                   {it.image ? (
                     <Image src={it.image} alt={it.name} fill sizes="(max-width:1024px) 50vw, 25vw" className="object-cover transition-transform duration-700 group-hover:scale-105" />

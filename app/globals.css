@@ -46,6 +46,12 @@
     --brand-purple-deep: #3d1a5b;
     /* exact background cream of geethamlogo.jpeg — used behind the logo so it sits seamlessly */
     --logo-cream: #f5eddf;
+
+    /* Sandal tones — replace plain white sections for a warmer boutique feel */
+    --brand-sandal: #f4e7d3;
+    --brand-sandal-light: #faf2e7;
+    --brand-purple-accent: #8d5fd3;
+    --brand-gold-accent: #c8a96b;
   }
 }
 

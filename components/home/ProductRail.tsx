@@ -18,7 +18,7 @@ interface Props {
 export default function ProductRail({ products, eyebrow, title, backdropWord, viewAllHref, tone = 'white' }: Props) {
   if (!products.length) return null
   return (
-    <section className={`py-20 lg:py-28 relative overflow-hidden ${tone === 'cream' ? 'bg-[var(--brand-cream)]' : 'bg-white'}`}>
+    <section className={`py-20 lg:py-28 relative overflow-hidden ${tone === 'cream' ? 'bg-[var(--brand-cream)]' : 'bg-[var(--brand-sandal-light)]'}`}>
       {backdropWord && <span aria-hidden className="backdrop-word top-10">{backdropWord}</span>}
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeading

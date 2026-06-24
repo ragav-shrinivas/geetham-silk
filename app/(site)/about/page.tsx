@@ -44,7 +44,7 @@ export default function AboutPage() {
           </Reveal>
 
           <Reveal direction="up" delay={0.1}>
-            <div className="bg-white border border-[var(--brand-pink)]/20 p-8 lg:p-12">
+            <div className="bg-[var(--brand-sandal-light)] border border-[var(--brand-pink)]/20 p-8 lg:p-12">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div className="flex gap-4">
                   <MapPin className="text-[var(--brand-rose)] flex-shrink-0 mt-1" size={20} />

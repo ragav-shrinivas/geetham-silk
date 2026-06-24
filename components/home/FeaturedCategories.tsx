@@ -26,7 +26,7 @@ interface Props {
 
 export default function FeaturedCategories({ categories = [] }: Props) {
   return (
-    <section className="py-24 lg:py-28 bg-white relative">
+    <section className="py-24 lg:py-28 bg-[var(--brand-sandal-light)] relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeading
           eyebrow="Browse Collections"

@@ -55,7 +55,7 @@ export default function NewArrivals({ products }: Props) {
   if (products.length === 0) return null
 
   return (
-    <section ref={sectionRef} className="relative bg-white py-24 lg:py-0 lg:h-screen lg:flex lg:flex-col lg:justify-center overflow-hidden">
+    <section ref={sectionRef} className="relative bg-[var(--brand-sandal-light)] py-24 lg:py-0 lg:h-screen lg:flex lg:flex-col lg:justify-center overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         <SectionHeading
           variant="split"

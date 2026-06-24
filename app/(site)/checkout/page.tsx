@@ -74,7 +74,7 @@ export default function CheckoutPage() {
         <h1 className="font-serif text-4xl lg:text-5xl font-light text-[var(--brand-charcoal)] mb-8">Checkout</h1>
 
         {done ? (
-          <div className="bg-white border border-[var(--brand-pink)]/30 p-10 text-center max-w-lg mx-auto">
+          <div className="bg-[var(--brand-sandal-light)] border border-[var(--brand-pink)]/30 p-10 text-center max-w-lg mx-auto">
             <div className="w-14 h-14 rounded-full bg-green-50 text-green-600 flex items-center justify-center mx-auto mb-4"><Check size={28} /></div>
             <h2 className="font-serif text-2xl font-light text-[var(--brand-charcoal)] mb-2">Order placed</h2>
             <p className="text-sm text-gray-500 mb-1">Your order reference is</p>
@@ -91,7 +91,7 @@ export default function CheckoutPage() {
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
             {/* form */}
             <div className="lg:col-span-3 space-y-6">
-              <div className="bg-white border border-[var(--brand-pink)]/30 p-6">
+              <div className="bg-[var(--brand-sandal-light)] border border-[var(--brand-pink)]/30 p-6">
                 <h2 className="font-serif text-xl font-light text-[var(--brand-charcoal)] mb-4">Contact</h2>
                 <div className="space-y-3">
                   <input className={field} placeholder="Full name *" value={form.name} onChange={(e) => set('name', e.target.value)} />
@@ -101,7 +101,7 @@ export default function CheckoutPage() {
                   </div>
                 </div>
               </div>
-              <div className="bg-white border border-[var(--brand-pink)]/30 p-6">
+              <div className="bg-[var(--brand-sandal-light)] border border-[var(--brand-pink)]/30 p-6">
                 <h2 className="font-serif text-xl font-light text-[var(--brand-charcoal)] mb-4">Shipping Address</h2>
                 <div className="space-y-3">
                   <input className={field} placeholder="Address line 1 *" value={form.line1} onChange={(e) => set('line1', e.target.value)} />
@@ -118,7 +118,7 @@ export default function CheckoutPage() {
 
             {/* summary */}
             <div className="lg:col-span-2">
-              <div className="bg-white border border-[var(--brand-pink)]/30 p-6 lg:sticky lg:top-28">
+              <div className="bg-[var(--brand-sandal-light)] border border-[var(--brand-pink)]/30 p-6 lg:sticky lg:top-28">
                 <h2 className="font-serif text-xl font-light text-[var(--brand-charcoal)] mb-4">Your Order</h2>
                 <div className="divide-y divide-[var(--brand-pink)]/20 mb-3">
                   {cart.map((it) => (

@@ -19,7 +19,7 @@ export default function StoreLocation() {
           <MapCard className="h-full min-h-[260px] rounded-2xl" />
 
           {/* Store details card */}
-          <div className="bg-white rounded-2xl border border-[var(--brand-pink)]/30 p-7 lg:p-9 flex flex-col justify-center shadow-sm">
+          <div className="bg-[var(--brand-sandal-light)] rounded-2xl border border-[var(--brand-pink)]/30 p-7 lg:p-9 flex flex-col justify-center shadow-sm">
             <h3 className="font-serif text-2xl lg:text-3xl font-light text-[var(--brand-charcoal)] mb-1">Geethams Silks</h3>
             <p className="text-sm tracking-[0.18em] uppercase text-[var(--brand-darkpink)] mb-6">Palavakkam · Chennai</p>
 

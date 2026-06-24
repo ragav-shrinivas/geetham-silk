@@ -48,7 +48,7 @@ export default async function CollectionCampaignPage({ params }: Props) {
 
       {/* Collection story */}
       {collection.description && (
-        <section className="py-20 lg:py-28 bg-white relative overflow-hidden">
+        <section className="py-20 lg:py-28 bg-[var(--brand-sandal-light)] relative overflow-hidden">
           <span aria-hidden className="backdrop-word top-8">{collection.name.split(' ')[0]}</span>
           <Reveal direction="up" className="relative max-w-3xl mx-auto px-6 text-center">
             <p className="text-xs tracking-[0.35em] uppercase text-[var(--brand-rose)] mb-6">The Story</p>

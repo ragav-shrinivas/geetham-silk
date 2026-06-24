@@ -59,7 +59,7 @@ export default function CartPage() {
 
             {/* summary */}
             <div className="lg:col-span-1">
-              <div className="bg-white border border-[var(--brand-pink)]/30 p-6 lg:sticky lg:top-28">
+              <div className="bg-[var(--brand-sandal-light)] border border-[var(--brand-pink)]/30 p-6 lg:sticky lg:top-28">
                 <h2 className="font-serif text-xl font-light text-[var(--brand-charcoal)] mb-5">Order Summary</h2>
                 <div className="space-y-3 text-sm">
                   <div className="flex justify-between text-gray-600"><span>Subtotal</span><span className="tabular-nums">{formatPrice(cartTotal)}</span></div>

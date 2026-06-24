@@ -186,7 +186,7 @@ function Milestone({ title, copy, index }: { title: string; copy: string; index:
 
 export function Craftsmanship() {
   return (
-    <section className="py-24 lg:py-32 bg-white relative overflow-hidden">
+    <section className="py-24 lg:py-32 bg-[var(--brand-sandal-light)] relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
         <div className="relative order-2 lg:order-1 grid grid-cols-2 gap-4">
           <CurtainImage

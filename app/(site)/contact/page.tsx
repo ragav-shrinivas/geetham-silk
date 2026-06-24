@@ -36,7 +36,7 @@ export default function ContactPage() {
               { icon: <MapPin className="text-[var(--brand-rose)]" size={22} />, label: 'Store Address', value: SITE.address, href: null },
               { icon: <Clock className="text-[var(--brand-rose)]" size={22} />, label: 'Store Hours', value: 'Mon–Sat: 10am – 8pm\nSunday: 11am – 6pm', href: null },
             ].map((item) => (
-              <div key={item.label} className="flex gap-4 bg-white p-5 border border-[var(--brand-pink)]/20">
+              <div key={item.label} className="flex gap-4 bg-[var(--brand-sandal-light)] p-5 border border-[var(--brand-pink)]/20">
                 <div className="flex-shrink-0 mt-0.5">{item.icon}</div>
                 <div>
                   <p className="text-xs tracking-[0.15em] uppercase text-gray-400 mb-1 font-medium">{item.label}</p>
@@ -54,7 +54,7 @@ export default function ContactPage() {
           </div>
 
           {/* WhatsApp CTA */}
-          <div className="lg:col-span-3 bg-white border border-[var(--brand-pink)]/20 p-10 flex flex-col items-center justify-center text-center">
+          <div className="lg:col-span-3 bg-[var(--brand-sandal-light)] border border-[var(--brand-pink)]/20 p-10 flex flex-col items-center justify-center text-center">
             <div className="w-20 h-20 rounded-full bg-[#25D366]/10 flex items-center justify-center mb-6">
               <MessageCircle className="text-[#25D366]" size={36} />
             </div>

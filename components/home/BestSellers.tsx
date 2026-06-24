@@ -19,7 +19,7 @@ export default function BestSellers({ products }: Props) {
   if (products.length === 0) return null
 
   return (
-    <section className="py-24 lg:py-32 bg-white relative overflow-hidden">
+    <section className="py-24 lg:py-32 bg-[var(--brand-sandal-light)] relative overflow-hidden">
       <span aria-hidden className="backdrop-word top-10">Bestsellers</span>
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeading
@@ -61,7 +61,7 @@ function BestSellerCard({ product, index }: { product: ProductWithImages; index:
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-8% 0px' }}
       transition={{ duration: 0.7, ease: LUXE, delay: (index % 4) * 0.08 }}
-      className="group relative flex flex-col h-full bg-white"
+      className="group relative flex flex-col h-full bg-[var(--brand-sandal-light)]"
     >
       {/* Image */}
       <Link

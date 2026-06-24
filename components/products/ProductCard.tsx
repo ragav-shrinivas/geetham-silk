@@ -34,7 +34,7 @@ export default function ProductCard({ product, animate = true }: ProductCardProp
   return (
     <motion.div
       {...entrance}
-      className="product-card group relative bg-white flex flex-col"
+      className="product-card group relative bg-[var(--brand-sandal-light)] flex flex-col"
     >
       {/* Image container */}
       <Link href={`/products/${product.slug}`} className="block relative overflow-hidden aspect-[3/4] bg-gray-50">
