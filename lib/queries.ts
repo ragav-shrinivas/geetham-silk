@@ -1,5 +1,41 @@
 import { createClient } from '@/lib/supabase/server'
+import { createClient as createAnonClient } from '@supabase/supabase-js'
+import { unstable_cache } from 'next/cache'
 import type { ProductWithImages } from '@/types/database'
+import type { AnnouncementMessage } from '@/lib/constants'
+
+/**
+ * Active announcement-bar messages, ordered.
+ *
+ * Runs site-wide (rendered in the root layout), so it's a CACHED, cookieless
+ * public read — one shared fetch per 5-min window instead of a Supabase round
+ * trip on every request. Admin writes can `revalidateTag('announcements')`.
+ *
+ * Returns [] if the `announcements` table doesn't exist yet or on any error —
+ * the bar then falls back to DEFAULT_ANNOUNCEMENTS, so this is safe to ship
+ * before the migration lands.
+ */
+export const getAnnouncements = unstable_cache(
+  async (): Promise<AnnouncementMessage[]> => {
+    try {
+      const sb = createAnonClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+      )
+      const { data, error } = await sb
+        .from('announcements')
+        .select('id, text, icon, href')
+        .eq('is_active', true)
+        .order('display_order', { ascending: true })
+      if (error || !data) return []
+      return data as AnnouncementMessage[]
+    } catch {
+      return []
+    }
+  },
+  ['announcements'],
+  { revalidate: 300, tags: ['announcements'] }
+)
 
 export type ProductSort = 'featured' | 'newest' | 'price-asc' | 'price-desc' | 'bestselling'
 

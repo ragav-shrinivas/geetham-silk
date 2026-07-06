@@ -28,13 +28,10 @@ export default function BestSellers({ products }: Props) {
           copy="Our most loved and frequently requested collections."
         />
 
-        {/* mobile: peek carousel · desktop: grid */}
-        <div className="flex lg:grid lg:grid-cols-4 gap-5 lg:gap-7 overflow-x-auto lg:overflow-visible snap-x snap-mandatory lg:snap-none no-scrollbar -mx-4 px-4 lg:mx-0 lg:px-0 pb-2 lg:pb-0">
+        {/* Vertical responsive grid — 2-col mobile · 4-col desktop (no side-swipe) */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 lg:gap-7">
           {products.map((product, i) => (
-            <div
-              key={product.id}
-              className="snap-center shrink-0 w-[78%] sm:w-[44%] lg:w-auto"
-            >
+            <div key={product.id}>
               <BestSellerCard product={product} index={i} />
             </div>
           ))}
@@ -73,7 +70,7 @@ function BestSellerCard({ product, index }: { product: ProductWithImages; index:
             src={img.url}
             alt={img.alt_text ?? product.name}
             fill
-            sizes="(max-width: 1024px) 78vw, 25vw"
+            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 44vw, 25vw"
             className="object-cover transition-transform duration-[1.5s] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.07]"
           />
         ) : (

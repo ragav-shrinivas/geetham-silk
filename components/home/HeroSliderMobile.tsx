@@ -1,11 +1,12 @@
 'use client'
-import { useEffect, useRef, useState, useCallback } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import { ArrowRight, MessageCircle, MapPin, ArrowUpRight, ChevronLeft, ChevronRight } from 'lucide-react'
 import { SITE } from '@/lib/constants'
 import { LUXE } from '@/lib/motion'
+import { cn } from '@/lib/utils'
 import type { HeroSlide } from '@/types/database'
 
 function waHref() {
@@ -13,130 +14,77 @@ function waHref() {
 }
 
 /**
- * Mobile-only hero carousel (< md).
+ * Mobile-only hero (< md) — CROSSFADE slider (no horizontal swiping).
  *
- * Layer separation (this is deliberate — see ISSUE 1):
- *   1. Background media  — a horizontal scroll-snap track of IMAGE-ONLY cards
- *      that slide/peek. This is the only layer that moves horizontally.
- *   2. Overlay           — a fixed gradient for text legibility (no movement).
- *   3. Content           — a fixed, centered layer (eyebrow / title / subtitle /
- *      buttons) anchored to the section, NOT inside the scroll track, so the
- *      buttons never drift with the image. It's pointer-events-none so swipes
- *      pass through to the track; only the buttons themselves are interactive.
+ * The previous version was a horizontal scroll-snap track that required a
+ * sideways swipe to browse; per the storefront's "no side-swipe" rule that is
+ * gone. Slides are now absolutely stacked and crossfade in place. Navigation is
+ * via auto-advance, edge arrows and dots only — the container never scrolls
+ * horizontally, so there is no swipe gesture on the hero.
  *
- * Source images are landscape (~16:9); each card shows the FULL image
- * (object-contain over a blurred backdrop) so nothing is cropped off the sides.
+ * Portrait-friendly: the container is a tall panel and images use object-cover
+ * so uploaded portrait creatives (4:5 / 3:4) fill it cleanly without letterbox.
  * Desktop (md+) renders the original <section> instead.
  */
 export default function HeroSliderMobile({ slides, duration }: { slides: HeroSlide[]; duration: number }) {
   const count = slides.length
-  const trackRef = useRef<HTMLDivElement>(null)
   const [current, setCurrent] = useState(0)
   const reduced = useReducedMotion()
 
-  const interacting = useRef(false)
-  const resumeTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const go = useCallback((i: number) => {
+    setCurrent(((i % count) + count) % count)
+  }, [count])
 
-  const scrollToIndex = useCallback((i: number, smooth = true) => {
-    const track = trackRef.current
-    if (!track) return
-    const idx = ((i % count) + count) % count
-    const child = track.children[idx] as HTMLElement | undefined
-    if (!child) return
-    track.scrollTo({ left: child.offsetLeft, behavior: smooth && !reduced ? 'smooth' : 'auto' })
-  }, [count, reduced])
-
-  // Derive the active slide from scroll position (drives content + dots).
+  // Auto-advance — pauses on hidden tab, disabled for reduced-motion / single slide.
   useEffect(() => {
-    const track = trackRef.current
-    if (!track) return
-    let raf = 0
-    const onScroll = () => {
-      cancelAnimationFrame(raf)
-      raf = requestAnimationFrame(() => {
-        const children = Array.from(track.children) as HTMLElement[]
-        const center = track.scrollLeft + track.clientWidth / 2
-        let best = 0
-        let bestDist = Infinity
-        children.forEach((c, i) => {
-          const cc = c.offsetLeft + c.clientWidth / 2
-          const dist = Math.abs(cc - center)
-          if (dist < bestDist) { bestDist = dist; best = i }
-        })
-        setCurrent(best)
-      })
-    }
-    track.addEventListener('scroll', onScroll, { passive: true })
-    return () => { track.removeEventListener('scroll', onScroll); cancelAnimationFrame(raf) }
-  }, [])
-
-  // Autoplay — re-arms when the active slide settles; skips while interacting.
-  useEffect(() => {
-    if (count <= 1) return
-    const id = setTimeout(() => {
-      if (!interacting.current) scrollToIndex(current + 1)
-    }, duration)
-    return () => clearTimeout(id)
-  }, [current, count, duration, scrollToIndex])
-
-  const pause = () => {
-    interacting.current = true
-    if (resumeTimer.current) clearTimeout(resumeTimer.current)
-  }
-  const resume = () => {
-    if (resumeTimer.current) clearTimeout(resumeTimer.current)
-    resumeTimer.current = setTimeout(() => { interacting.current = false }, 1400)
-  }
+    if (reduced || count <= 1) return
+    let timer: ReturnType<typeof setInterval> | null = null
+    const start = () => { if (!timer) timer = setInterval(() => setCurrent((c) => (c + 1) % count), duration) }
+    const stop = () => { if (timer) { clearInterval(timer); timer = null } }
+    const onVis = () => (document.hidden ? stop() : start())
+    start()
+    document.addEventListener('visibilitychange', onVis)
+    return () => { stop(); document.removeEventListener('visibilitychange', onVis) }
+  }, [count, duration, reduced])
 
   const active = slides[current] ?? slides[0]
 
   return (
-    <section className="relative md:hidden w-full h-[46vh] min-h-[320px] max-h-[460px] overflow-hidden bg-[var(--brand-darkpink)]">
-      {/* ───────── LAYER 1 · Background media (the only thing that slides) ───────── */}
-      <div
-        ref={trackRef}
-        onPointerDown={pause}
-        onPointerUp={resume}
-        onPointerCancel={resume}
-        onTouchStart={pause}
-        onTouchEnd={resume}
-        className="no-scrollbar absolute inset-0 z-0 flex snap-x snap-mandatory overflow-x-auto overscroll-x-contain gap-3 px-[7vw]"
-        style={{ scrollPaddingInline: '7vw' }}
-      >
-        {slides.map((slide, i) => (
-          <div key={slide.id} className="snap-center shrink-0 w-[86vw] h-full py-3">
-            <div
-              className={`relative h-full w-full overflow-hidden rounded-2xl ring-1 ring-white/10 shadow-xl transition-opacity duration-700 ${
-                i === current ? 'opacity-100' : 'opacity-60'
-              }`}
-            >
-              {slide.media_url && (
-                /* compact promo banner — fills the card edge-to-edge (Flipkart-style) */
-                <Image
-                  src={slide.media_url}
-                  alt={slide.title ?? 'Geethams Silks'}
-                  fill
-                  priority={i === 0}
-                  sizes="90vw"
-                  className={`object-cover object-center ${i === current && !reduced ? 'animate-kenburns' : ''}`}
-                />
-              )}
-            </div>
-          </div>
-        ))}
-      </div>
+    <section className="relative md:hidden w-full h-[50vh] min-h-[360px] max-h-[560px] overflow-hidden bg-[var(--brand-darkpink)]">
+      {/* ───────── Slides (stacked · crossfade · no horizontal scroll) ───────── */}
+      {slides.map((slide, i) => (
+        <div
+          key={slide.id}
+          aria-hidden={i !== current}
+          className={cn(
+            'absolute inset-0 transition-opacity duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)]',
+            i === current ? 'opacity-100' : 'opacity-0 pointer-events-none'
+          )}
+        >
+          {slide.media_url && (
+            <Image
+              src={slide.media_url}
+              alt={slide.title ?? 'Geethams Silks'}
+              fill
+              priority={i === 0}
+              sizes="100vw"
+              className={`object-cover object-center ${i === current && !reduced ? 'animate-kenburns' : ''}`}
+            />
+          )}
+        </div>
+      ))}
 
-      {/* ───────── LAYER 2 · Overlay grading (fixed, non-interactive) ───────── */}
+      {/* ───────── Overlay grading (fixed, non-interactive) ───────── */}
       <div className="pointer-events-none absolute inset-0 z-10">
         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/10" />
         <div
           className="absolute inset-0 mix-blend-soft-light"
-          style={{ background: 'linear-gradient(160deg, rgba(201,116,122,0.20) 0%, transparent 45%, rgba(184,152,106,0.16) 100%)' }}
+          style={{ background: 'linear-gradient(160deg, rgba(122,36,64,0.22) 0%, transparent 45%, rgba(176,134,63,0.16) 100%)' }}
         />
       </div>
 
-      {/* ───────── LAYER 3 · Content (fixed/anchored — never drifts) ───────── */}
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 flex justify-center pb-9 pt-3">
+      {/* ───────── Content (anchored — crossfades with the active slide) ───────── */}
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 flex justify-center pb-10 pt-3">
         <div className="w-[86vw] max-w-[440px] px-2 text-center text-white">
           <AnimatePresence mode="wait">
             <motion.div
@@ -147,12 +95,12 @@ export default function HeroSliderMobile({ slides, duration }: { slides: HeroSli
               transition={{ duration: 0.55, ease: LUXE }}
             >
               <div className="mb-2 flex items-center justify-center gap-2.5">
-                <span className="h-px w-5 bg-gradient-to-r from-transparent to-[var(--brand-gold)]" />
-                <span className="text-[9px] tracking-[0.35em] uppercase text-[var(--brand-gold)] font-medium">Geethams Silks</span>
-                <span className="h-px w-5 bg-gradient-to-l from-transparent to-[var(--brand-gold)]" />
+                <span className="h-px w-5 bg-gradient-to-r from-transparent to-[var(--brand-gold-light)]" />
+                <span className="text-[9px] tracking-[0.35em] uppercase text-[var(--brand-gold-light)] font-medium">Geethams Silks</span>
+                <span className="h-px w-5 bg-gradient-to-l from-transparent to-[var(--brand-gold-light)]" />
               </div>
 
-              <h1 className="font-serif font-light leading-[1.12] tracking-tight text-[clamp(1.35rem,5.6vw,1.85rem)]">
+              <h1 className="font-serif font-light leading-[1.12] tracking-tight text-[clamp(1.4rem,5.8vw,1.9rem)]">
                 {active.title}
               </h1>
 
@@ -169,11 +117,11 @@ export default function HeroSliderMobile({ slides, duration }: { slides: HeroSli
         </div>
       </div>
 
-      {/* ───────── Controls (fixed, interactive) ───────── */}
+      {/* ───────── Controls (arrows + dots — no swipe needed) ───────── */}
       {count > 1 && (
         <>
-          <EdgeArrow side="left" onClick={() => { pause(); scrollToIndex(current - 1); resume() }} />
-          <EdgeArrow side="right" onClick={() => { pause(); scrollToIndex(current + 1); resume() }} />
+          <EdgeArrow side="left" onClick={() => go(current - 1)} />
+          <EdgeArrow side="right" onClick={() => go(current + 1)} />
         </>
       )}
 
@@ -182,16 +130,16 @@ export default function HeroSliderMobile({ slides, duration }: { slides: HeroSli
           {slides.map((s, i) => (
             <button
               key={s.id}
-              onClick={() => { pause(); scrollToIndex(i); resume() }}
+              onClick={() => go(i)}
               aria-label={`Go to slide ${i + 1}`}
               className={`relative h-[3px] overflow-hidden rounded-full bg-white/30 transition-all duration-500 ${
                 i === current ? 'w-7' : 'w-2.5'
               }`}
             >
-              {i === current && (
+              {i === current && !reduced && (
                 <motion.span
                   key={`p-${current}`}
-                  className="absolute inset-y-0 left-0 bg-[var(--brand-gold)]"
+                  className="absolute inset-y-0 left-0 bg-[var(--brand-gold-light)]"
                   initial={{ width: '0%' }}
                   animate={{ width: '100%' }}
                   transition={{ duration: duration / 1000, ease: 'linear' }}
@@ -207,14 +155,14 @@ export default function HeroSliderMobile({ slides, duration }: { slides: HeroSli
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Open the boutique location in Google Maps"
-        className="absolute bottom-4 left-5 z-30 flex items-center gap-2 text-white/80"
+        className="absolute bottom-4 left-5 z-30 flex items-center gap-2 text-white/85"
       >
         <span className="flex h-7 w-7 items-center justify-center rounded-full border border-white/25 backdrop-blur-sm">
-          <MapPin size={12} className="text-[var(--brand-gold)]" />
+          <MapPin size={12} className="text-[var(--brand-gold-light)]" />
         </span>
         <span className="flex items-center gap-1 text-[10px] tracking-[0.18em] uppercase">
           Palavakkam
-          <ArrowUpRight size={10} className="text-[var(--brand-gold)]" />
+          <ArrowUpRight size={10} className="text-[var(--brand-gold-light)]" />
         </span>
       </a>
     </section>

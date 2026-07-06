@@ -6,15 +6,16 @@ import { usePathname, useRouter } from 'next/navigation'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import { useLenis } from 'lenis/react'
 import { Menu, X, Search, MessageCircle, ArrowRight, ShoppingBag, Heart } from 'lucide-react'
-import { NAV_LINKS, SITE } from '@/lib/constants'
+import { NAV_LINKS, SITE, type AnnouncementMessage } from '@/lib/constants'
 import { cn } from '@/lib/utils'
 import { LUXE } from '@/lib/motion'
 import { useStore } from '@/lib/store/StoreProvider'
 import { createClient } from '@/lib/supabase/client'
 import { formatPrice } from '@/lib/utils'
 import Wordmark from '@/components/common/Wordmark'
+import AnnouncementBar from '@/components/layout/AnnouncementBar'
 
-export default function Navbar() {
+export default function Navbar({ announcements }: { announcements?: AnnouncementMessage[] }) {
   const [open, setOpen] = useState(false)
   const [searchOpen, setSearchOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
@@ -65,28 +66,56 @@ export default function Navbar() {
           : 'bg-transparent'
       )}
     >
-      {/* Top announcement bar */}
-      <div className="bg-[var(--brand-darkpink)] text-white text-[11px] sm:text-xs tracking-[0.15em] sm:tracking-[0.2em] text-center py-2 px-4 whitespace-nowrap overflow-hidden">
-        <span className="hidden sm:inline">Free consultation on </span>WhatsApp · +91 96770 93294
-      </div>
+      {/* Top announcement bar — dynamic, rotating, admin-managed */}
+      <AnnouncementBar messages={announcements} />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className={cn('flex items-center justify-between transition-all duration-500', scrolled ? 'h-16 lg:h-[72px]' : 'h-[72px] lg:h-24')}>
-          {/* Logo — hidden over the hero, reveals once the white bar appears on scroll */}
-          <motion.div
-            initial={false}
-            animate={{ opacity: scrolled ? 1 : 0, y: scrolled ? 0 : -8 }}
-            transition={{ duration: 0.45, ease: LUXE }}
-            className={cn('flex-shrink-0', !scrolled && 'pointer-events-none')}
-            aria-hidden={!scrolled}
-          >
-            <Link href="/" aria-label="Geethams Silks — home" tabIndex={scrolled ? 0 : -1}>
-              <Wordmark size="sm" />
-            </Link>
-          </motion.div>
+        {/* ───────── Mobile header: hamburger LEFT · brand CENTER · cart RIGHT ───────── */}
+        <div className={cn('lg:hidden grid grid-cols-[1fr_auto_1fr] items-center transition-all duration-500', scrolled ? 'h-14' : 'h-16')}>
+          <div className="flex items-center gap-0.5 justify-self-start">
+            <button
+              onClick={() => setOpen(true)}
+              aria-label="Open menu"
+              className={cn('p-2 -ml-2 transition-colors', scrolled ? 'text-[var(--brand-charcoal)]' : 'text-white')}
+            >
+              <Menu size={22} />
+            </button>
+            <button
+              onClick={() => setSearchOpen(true)}
+              aria-label="Search products"
+              className={cn('p-2 transition-colors', scrolled ? 'text-[var(--brand-charcoal)]' : 'text-white')}
+            >
+              <Search size={19} />
+            </button>
+          </div>
 
-          {/* Desktop Nav */}
-          <nav className="hidden lg:flex items-center gap-9">
+          <div className="justify-self-center">
+            <HeaderBrand scrolled={scrolled} size="mobile" />
+          </div>
+
+          <div className="flex items-center gap-0.5 justify-self-end">
+            <Link
+              href="/wishlist"
+              aria-label="Wishlist"
+              className={cn('relative p-2 transition-colors', scrolled ? 'text-[var(--brand-charcoal)]' : 'text-white')}
+            >
+              <Heart size={19} />
+              {ready && wishlistCount > 0 && <NavBadge n={wishlistCount} />}
+            </Link>
+            <button
+              onClick={openCart}
+              aria-label="Open cart"
+              className={cn('relative p-2 -mr-2 transition-colors', scrolled ? 'text-[var(--brand-charcoal)]' : 'text-white')}
+            >
+              <ShoppingBag size={20} />
+              {ready && cartCount > 0 && <NavBadge n={cartCount} />}
+            </button>
+          </div>
+        </div>
+
+        {/* ───────── Desktop header: nav LEFT · brand CENTER · actions RIGHT ───────── */}
+        <div className={cn('hidden lg:flex items-center transition-all duration-500', scrolled ? 'h-[68px]' : 'h-20')}>
+          <nav className="flex-1 flex items-center gap-7">
             {NAV_LINKS.map((link) => (
               <Link
                 key={link.href}
@@ -97,7 +126,7 @@ export default function Navbar() {
                     ? 'text-[var(--brand-rose)]'
                     : scrolled
                       ? 'text-[var(--brand-charcoal)] hover:text-[var(--brand-rose)]'
-                      : 'text-white/90 hover:text-[var(--brand-pink)]'
+                      : 'text-white/90 hover:text-white'
                 )}
               >
                 {link.label}
@@ -111,25 +140,22 @@ export default function Navbar() {
             ))}
           </nav>
 
-          {/* Desktop Actions */}
-          <div className="hidden lg:flex items-center gap-4">
+          <div className="flex-shrink-0 px-4">
+            <HeaderBrand scrolled={scrolled} size="desktop" />
+          </div>
+
+          <div className="flex-1 flex items-center justify-end gap-4">
             <button
               onClick={() => setSearchOpen(true)}
               aria-label="Search products"
-              className={cn(
-                'transition-colors p-1',
-                scrolled ? 'text-[var(--brand-charcoal)] hover:text-[var(--brand-rose)]' : 'text-white/85 hover:text-white'
-              )}
+              className={cn('transition-colors p-1', scrolled ? 'text-[var(--brand-charcoal)] hover:text-[var(--brand-rose)]' : 'text-white/85 hover:text-white')}
             >
               <Search size={18} />
             </button>
             <Link
               href="/wishlist"
               aria-label="Wishlist"
-              className={cn(
-                'relative transition-colors p-1',
-                scrolled ? 'text-[var(--brand-charcoal)] hover:text-[var(--brand-rose)]' : 'text-white/85 hover:text-white'
-              )}
+              className={cn('relative transition-colors p-1', scrolled ? 'text-[var(--brand-charcoal)] hover:text-[var(--brand-rose)]' : 'text-white/85 hover:text-white')}
             >
               <Heart size={18} />
               {ready && wishlistCount > 0 && <NavBadge n={wishlistCount} />}
@@ -137,10 +163,7 @@ export default function Navbar() {
             <button
               onClick={openCart}
               aria-label="Open cart"
-              className={cn(
-                'relative transition-colors p-1',
-                scrolled ? 'text-[var(--brand-charcoal)] hover:text-[var(--brand-rose)]' : 'text-white/85 hover:text-white'
-              )}
+              className={cn('relative transition-colors p-1', scrolled ? 'text-[var(--brand-charcoal)] hover:text-[var(--brand-rose)]' : 'text-white/85 hover:text-white')}
             >
               <ShoppingBag size={18} />
               {ready && cartCount > 0 && <NavBadge n={cartCount} />}
@@ -154,24 +177,6 @@ export default function Navbar() {
               <MessageCircle size={14} />
               WhatsApp
             </a>
-          </div>
-
-          {/* Mobile actions */}
-          <div className="lg:hidden flex items-center gap-1">
-            <button
-              onClick={() => setSearchOpen(true)}
-              aria-label="Search products"
-              className={cn('p-2 transition-colors', scrolled ? 'text-[var(--brand-charcoal)]' : 'text-white/90')}
-            >
-              <Search size={20} />
-            </button>
-            <button
-              className={cn('p-2 transition-colors', scrolled ? 'text-[var(--brand-charcoal)]' : 'text-white/90')}
-              onClick={() => setOpen(true)}
-              aria-label="Open menu"
-            >
-              <Menu size={22} />
-            </button>
           </div>
         </div>
       </div>
@@ -196,15 +201,15 @@ function MobileMenu({ open, onClose, pathname }: { open: boolean; onClose: () =>
       {open && (
         <motion.div
           key="mobile-menu"
-          initial={reduced ? { opacity: 0 } : { opacity: 0, x: '12%' }}
+          initial={reduced ? { opacity: 0 } : { opacity: 0, x: '-12%' }}
           animate={{ opacity: 1, x: 0 }}
-          exit={reduced ? { opacity: 0 } : { opacity: 0, x: '12%' }}
+          exit={reduced ? { opacity: 0 } : { opacity: 0, x: '-12%' }}
           transition={{ duration: reduced ? 0 : 0.42, ease: LUXE }}
           className="lg:hidden fixed inset-0 z-[100] flex flex-col h-[100dvh] w-screen overflow-y-auto overscroll-contain"
           style={{
             background:
-              'radial-gradient(ellipse 90% 40% at 50% 0%, rgba(232,164,184,0.20) 0%, transparent 62%),' +
-              'linear-gradient(180deg, #fdf8f3 0%, #f9efe6 100%)',
+              'radial-gradient(ellipse 90% 40% at 50% 0%, rgba(176,134,63,0.14) 0%, transparent 62%),' +
+              'linear-gradient(180deg, #faf6ef 0%, #f2eadd 100%)',
             paddingTop: 'env(safe-area-inset-top)',
             paddingBottom: 'env(safe-area-inset-bottom)',
           }}
@@ -432,6 +437,36 @@ function SearchOverlay({ open, onClose }: { open: boolean; onClose: () => void }
         </motion.div>
       )}
     </AnimatePresence>
+  )
+}
+
+/* ---------- Centered brand lockup — always visible, adaptive to scroll ----------
+   Over the hero (transparent header) it renders white + soft-gold with a legibility
+   shadow; once the solid white bar appears on scroll it switches to deep wine + gold.
+   Premium serif treatment (Cormorant), not plain text. */
+
+function HeaderBrand({ scrolled, size }: { scrolled: boolean; size: 'mobile' | 'desktop' }) {
+  const textSize = size === 'mobile' ? 'text-[1.15rem]' : 'text-2xl'
+  const shadow = scrolled ? undefined : '0 1px 10px rgba(0,0,0,0.4)'
+  return (
+    <Link
+      href="/"
+      aria-label="Geethams Silks — home"
+      className="inline-flex items-baseline gap-[0.16em] font-serif uppercase leading-none whitespace-nowrap select-none"
+    >
+      <span
+        className={cn('font-medium tracking-[0.2em] transition-colors duration-500', textSize, scrolled ? 'text-[var(--brand-darkpink)]' : 'text-white')}
+        style={{ textShadow: shadow }}
+      >
+        Geethams
+      </span>
+      <span
+        className={cn('font-medium tracking-[0.2em] transition-colors duration-500', textSize, scrolled ? 'text-[var(--brand-gold)]' : 'text-[var(--brand-gold-light)]')}
+        style={{ textShadow: shadow }}
+      >
+        Silks
+      </span>
+    </Link>
   )
 }
 

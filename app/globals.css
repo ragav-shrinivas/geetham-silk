@@ -29,29 +29,31 @@
     --ring: 346 77% 49%;
     --radius: 0.5rem;
 
-    /* Brand tokens — feminine boutique palette: dark pink + baby pink + purple + soft gold */
-    --brand-darkpink: #c85a8b;        /* PRIMARY — buttons, dark surfaces, logo, links */
-    --brand-darkpink-deep: #a83f6e;   /* hover/active for primary */
-    --brand-babypink: #fbe9f0;        /* soft tint for "white" sections */
-    --brand-pink: #e8a4b8;
-    --brand-pink-soft: #f6dde4;
-    --brand-rose: #c9747a;
-    --brand-gold: #c9a25e;            /* soft gold — premium highlight */
-    --brand-gold-light: #e8c98a;
-    --brand-cream: #fdf4f8;           /* baby-pink-tinted ivory */
-    --brand-cream-deep: #f8e6f0;
-    --brand-charcoal: #2c2c2c;        /* reserved for body text (kept dark for readability) */
-    /* luxury purple — icons / wishlist accents */
-    --brand-purple: #6b2fa0;
-    --brand-purple-deep: #3d1a5b;
+    /* Brand tokens — refined boutique palette: warm ivory + deep wine + antique gold.
+       NOTE: token NAMES are kept (used across ~40 files) but VALUES retuned away from
+       the rejected bright-pink wash toward premium ethnic-retail warmth. */
+    --brand-darkpink: #7a2440;        /* PRIMARY — deep wine; buttons, dark surfaces, logo, links (white text = ~9:1) */
+    --brand-darkpink-deep: #5f1a31;   /* hover/active for primary */
+    --brand-babypink: #f6efe4;        /* warm sand tint for "soft" sections (was baby pink) */
+    --brand-pink: #dcc3b2;            /* warm taupe — used as hairline borders */
+    --brand-pink-soft: #efe2d4;
+    --brand-rose: #a63b52;            /* muted berry — active states, accents, badges (~5.2:1 on ivory) */
+    --brand-gold: #b0863f;            /* antique gold — premium highlight */
+    --brand-gold-light: #d8b877;
+    --brand-cream: #faf6ef;           /* warm ivory — primary page background (DE-PINKED) */
+    --brand-cream-deep: #f2eadd;      /* warm deeper ivory */
+    --brand-charcoal: #2a2420;        /* warm near-black — body text (strong contrast) */
+    /* aubergine accent — icons / wishlist (restrained, distinct from primary wine) */
+    --brand-purple: #6d2b52;
+    --brand-purple-deep: #431833;
     /* exact background cream of geethamlogo.jpeg — used behind the logo so it sits seamlessly */
     --logo-cream: #f5eddf;
 
-    /* Sandal tones — replace plain white sections for a warmer boutique feel */
-    --brand-sandal: #f4e7d3;
-    --brand-sandal-light: #faf2e7;
-    --brand-purple-accent: #8d5fd3;
-    --brand-gold-accent: #c8a96b;
+    /* Sandal tones — warm off-white section surfaces */
+    --brand-sandal: #f0e3cf;
+    --brand-sandal-light: #f9f3e8;
+    --brand-purple-accent: #8a3d68;
+    --brand-gold-accent: #b0863f;
   }
 }
 
@@ -76,12 +78,12 @@
 ::-webkit-scrollbar { width: 7px; }
 ::-webkit-scrollbar-track { background: var(--brand-cream); }
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(var(--brand-pink), var(--brand-rose));
+  background: linear-gradient(var(--brand-rose), var(--brand-darkpink));
   border-radius: 4px;
 }
 
 ::selection {
-  background: rgba(232, 164, 184, 0.35);
+  background: rgba(122, 36, 64, 0.18);
   color: var(--brand-charcoal);
 }
 
@@ -143,12 +145,12 @@
   filter: drop-shadow(0 1px 12px rgba(201, 116, 122, 0.22));
 }
 
-/* ---------- Dark-pink 3D wordmark ---------- */
-/* vertical bevel: lit rose at the top falling to deep dark-pink at the base */
+/* ---------- Wine-&-gold 3D wordmark ---------- */
+/* vertical bevel: antique-gold lit top falling to deep wine at the base */
 .text-purple-3d {
   background-image: linear-gradient(
     180deg,
-    #f3a9c8 0%, #e87aa6 28%, #c85a8b 58%, #a83f6e 82%, #8a3157 100%
+    #d8b877 0%, #c0954f 24%, #a63b52 54%, #7a2440 82%, #5f1a31 100%
   );
   -webkit-background-clip: text;
   background-clip: text;
@@ -158,23 +160,23 @@
 /* layered soft glow — no solid-offset extrusion so letters stay crisp at all sizes */
 .wordmark-3d {
   filter:
-    drop-shadow(0 0 6px rgba(240, 140, 180, 0.55))
-    drop-shadow(0 0 18px rgba(200, 90, 139, 0.45))
-    drop-shadow(0 0 38px rgba(168, 63, 110, 0.28));
+    drop-shadow(0 0 6px rgba(216, 184, 119, 0.45))
+    drop-shadow(0 0 18px rgba(166, 59, 82, 0.38))
+    drop-shadow(0 0 38px rgba(122, 36, 64, 0.24));
   animation: wordmarkGlow 3.4s ease-in-out infinite;
 }
 @keyframes wordmarkGlow {
   0%, 100% {
     filter:
-      drop-shadow(0 0 5px rgba(240, 140, 180, 0.45))
-      drop-shadow(0 0 16px rgba(200, 90, 139, 0.38))
-      drop-shadow(0 0 34px rgba(168, 63, 110, 0.22));
+      drop-shadow(0 0 5px rgba(216, 184, 119, 0.38))
+      drop-shadow(0 0 16px rgba(166, 59, 82, 0.32))
+      drop-shadow(0 0 34px rgba(122, 36, 64, 0.2));
   }
   50% {
     filter:
-      drop-shadow(0 0 10px rgba(245, 170, 200, 0.85))
-      drop-shadow(0 0 28px rgba(210, 100, 150, 0.70))
-      drop-shadow(0 0 52px rgba(168, 63, 110, 0.48));
+      drop-shadow(0 0 10px rgba(224, 196, 137, 0.7))
+      drop-shadow(0 0 28px rgba(176, 69, 92, 0.55))
+      drop-shadow(0 0 52px rgba(122, 36, 64, 0.4));
   }
 }
 @media (max-width: 639px) {
@@ -182,9 +184,9 @@
   .wordmark-3d {
     animation: none;
     filter:
-      drop-shadow(0 0 5px rgba(240, 140, 180, 0.5))
-      drop-shadow(0 0 16px rgba(200, 90, 139, 0.4))
-      drop-shadow(0 0 30px rgba(168, 63, 110, 0.25));
+      drop-shadow(0 0 5px rgba(216, 184, 119, 0.42))
+      drop-shadow(0 0 16px rgba(166, 59, 82, 0.34))
+      drop-shadow(0 0 30px rgba(122, 36, 64, 0.22));
   }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -258,23 +260,25 @@
 }
 .animate-kenburns { animation: kenburns 18s ease-out infinite alternate; }
 
-/* ---------- Oversized backdrop word (editorial section anchor) ---------- */
+/* ---------- Oversized backdrop word (editorial section anchor) ----------
+   Heavily toned down per client feedback: it must never wash over content or
+   compete with readable copy. Antique-gold tint at very low opacity only. */
 .backdrop-word {
   position: absolute;
   inset-inline: 0;
   font-family: var(--font-cormorant), Georgia, serif;
   font-weight: 300;
-  font-size: clamp(3.5rem, 18vw, 16rem);
+  font-size: clamp(3rem, 14vw, 12rem);
   line-height: 1;
   letter-spacing: 0.02em;
   text-align: center;
-  color: var(--brand-charcoal);
-  opacity: 0.04;
+  color: var(--brand-gold);
+  opacity: 0.045;
   pointer-events: none;
   user-select: none;
   white-space: nowrap;
 }
-.backdrop-word--light { color: #ffffff; opacity: 0.05; }
+.backdrop-word--light { color: var(--brand-gold-light); opacity: 0.05; }
 
 /* ---------- Page-transition veil ---------- */
 .page-veil {

@@ -6,12 +6,14 @@ import PageTransition from '@/components/common/PageTransition'
 import { StoreProvider } from '@/lib/store/StoreProvider'
 import CartDrawer from '@/components/cart/CartDrawer'
 import QuickViewModal from '@/components/products/QuickViewModal'
+import { getAnnouncements } from '@/lib/queries'
 
-export default function SiteLayout({ children }: { children: React.ReactNode }) {
+export default async function SiteLayout({ children }: { children: React.ReactNode }) {
+  const announcements = await getAnnouncements()
   return (
     <SmoothScroll>
       <StoreProvider>
-        <Navbar />
+        <Navbar announcements={announcements} />
         <main className="min-h-screen overflow-x-hidden">
           <PageTransition>{children}</PageTransition>
         </main>

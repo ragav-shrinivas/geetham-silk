@@ -31,9 +31,10 @@ export default function ProductRail({ products, eyebrow, title, backdropWord, vi
             </Link>
           ) : undefined}
         />
-        <div className="flex lg:grid lg:grid-cols-4 gap-4 lg:gap-6 overflow-x-auto lg:overflow-visible snap-x snap-mandatory lg:snap-none no-scrollbar -mx-4 px-4 lg:mx-0 lg:px-0 pb-2 lg:pb-0">
+        {/* Vertical responsive grid — 2-col mobile · 4-col desktop (no side-swipe) */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
           {products.slice(0, 8).map((p) => (
-            <div key={p.id} className="snap-center shrink-0 w-[68vw] sm:w-[44%] lg:w-auto">
+            <div key={p.id}>
               <ProductCard product={p} animate={false} />
             </div>
           ))}

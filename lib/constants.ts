@@ -17,6 +17,29 @@ export const SITE = {
   googleReviews: 'https://www.google.com/search?q=Geethams+Silks+Palavakkam+Chennai+reviews',
 }
 
+/** A single rotating announcement-bar message.
+ *  `icon` is a lucide icon key resolved in AnnouncementBar (kept as a string so the
+ *  data stays serialisable from Server Components / Supabase rows). */
+export interface AnnouncementMessage {
+  id: string
+  text: string
+  icon?: 'truck' | 'sparkles' | 'shield' | 'mappin' | 'gift' | 'whatsapp' | 'star' | null
+  href?: string | null
+}
+
+/** Fallback announcements used until the admin adds rows to the `announcements` table.
+ *  Editable here, or (once live) fully manageable from the admin dashboard. */
+export const DEFAULT_ANNOUNCEMENTS: AnnouncementMessage[] = [
+  { id: 'd1', text: 'Free Shipping Across India', icon: 'truck', href: null },
+  { id: 'd2', text: 'New Arrivals Just Dropped', icon: 'sparkles', href: '/shop?sort=newest' },
+  { id: 'd3', text: 'Secure Payments with Razorpay', icon: 'shield', href: null },
+  { id: 'd4', text: 'Visit Our Palavakkam Store', icon: 'mappin', href: '/contact' },
+  { id: 'd5', text: 'Handpicked Styles for Every Occasion', icon: 'star', href: '/shop' },
+]
+
+/** Default rotation interval (ms) for the announcement bar. */
+export const ANNOUNCEMENT_INTERVAL_MS = 4000
+
 export const NAV_LINKS = [
   { label: 'Home', href: '/' },
   { label: 'Shop', href: '/shop' },

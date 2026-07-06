@@ -35,10 +35,10 @@ export default function FeaturedCategories({ categories = [] }: Props) {
           copy="Curated silk sarees, women's fashion, kids wear and timeless ethnic styles crafted with elegance."
         />
 
-        {/* Cards: 4-col desktop · 2-col tablet · swipe carousel on mobile */}
+        {/* Cards: vertical responsive grid — 2-col mobile · 2-col tablet · 4-col desktop (no side-swipe) */}
         <RevealGroup
           stagger={0.14}
-          className="flex sm:grid sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 overflow-x-auto sm:overflow-visible snap-x snap-mandatory sm:snap-none no-scrollbar -mx-4 px-4 sm:mx-0 sm:px-0 pb-2 sm:pb-0"
+          className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6"
         >
           {categories.map((cat, i) => {
             const img = cat.image_url ?? FALLBACK_IMAGE[cat.slug] ?? '/saree.png'
@@ -48,7 +48,6 @@ export default function FeaturedCategories({ categories = [] }: Props) {
                 key={cat.id}
                 direction="up"
                 distance={60}
-                className="snap-center shrink-0 w-[80%] sm:w-auto"
               >
                 <CategoryCard
                   image={img}
