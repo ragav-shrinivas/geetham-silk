@@ -29,6 +29,7 @@ export const revalidate = 60
 /** Default registry — used when the page_sections table is empty/unreachable. */
 const DEFAULT_SECTIONS: Array<Pick<PageSection, 'section_key' | 'is_visible' | 'settings'>> = [
   { section_key: 'hero', is_visible: true, settings: { duration_ms: 7000 } },
+  { section_key: 'store', is_visible: true, settings: {} },
   { section_key: 'marquee', is_visible: true, settings: {} },
   { section_key: 'categories', is_visible: true, settings: {} },
   { section_key: 'featured', is_visible: true, settings: { limit: 8 } },
@@ -40,7 +41,6 @@ const DEFAULT_SECTIONS: Array<Pick<PageSection, 'section_key' | 'is_visible' | '
   { section_key: 'testimonials', is_visible: true, settings: {} },
   { section_key: 'discovery', is_visible: true, settings: {} },
   { section_key: 'recently', is_visible: true, settings: {} },
-  { section_key: 'store', is_visible: true, settings: {} },
 ]
 
 function setting<T>(settings: Json, key: string, fallback: T): T {
