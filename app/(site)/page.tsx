@@ -74,7 +74,9 @@ export default async function HomePage() {
   ])
 
   return (
-    <>
+    // pt-24 offsets the fixed, always-solid header (announcement + nav ≈ 92px) so the
+    // hero begins cleanly below the navigation — same offset the rest of the app uses.
+    <div className="pt-24 bg-[var(--brand-cream)]">
       {sections.map((section) => {
         const s = section.settings
         switch (section.section_key) {
@@ -118,6 +120,6 @@ export default async function HomePage() {
         }
       })}
       <WhatsAppFloat />
-    </>
+    </div>
   )
 }

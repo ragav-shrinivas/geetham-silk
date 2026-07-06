@@ -18,17 +18,9 @@ import AnnouncementBar from '@/components/layout/AnnouncementBar'
 export default function Navbar({ announcements }: { announcements?: AnnouncementMessage[] }) {
   const [open, setOpen] = useState(false)
   const [searchOpen, setSearchOpen] = useState(false)
-  const [scrolled, setScrolled] = useState(false)
   const pathname = usePathname()
   const lenis = useLenis()
   const { cartCount, wishlistCount, openCart, ready } = useStore()
-
-  useEffect(() => {
-    const handler = () => setScrolled(window.scrollY > 40)
-    handler()
-    window.addEventListener('scroll', handler, { passive: true })
-    return () => window.removeEventListener('scroll', handler)
-  }, [])
 
   // close overlays on navigation (router is the external system we sync with)
   useEffect(() => {
@@ -58,46 +50,41 @@ export default function Navbar({ announcements }: { announcements?: Announcement
     href === '/' ? pathname === '/' : pathname.startsWith(href)
 
   return (
-    <header
-      className={cn(
-        'fixed top-0 left-0 right-0 z-50 transition-all duration-500',
-        scrolled
-          ? 'bg-white/95 backdrop-blur-md shadow-sm border-b border-[var(--brand-pink)]/30'
-          : 'bg-transparent'
-      )}
-    >
+    <header className="fixed top-0 left-0 right-0 z-50 bg-[var(--brand-cream)]/95 backdrop-blur-md border-b border-[var(--brand-pink)]/50 shadow-[0_2px_16px_-10px_rgba(42,36,32,0.4)]">
       {/* Top announcement bar — dynamic, rotating, admin-managed */}
       <AnnouncementBar messages={announcements} />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* ───────── Mobile header: hamburger LEFT · brand CENTER · cart RIGHT ───────── */}
-        <div className={cn('lg:hidden grid grid-cols-[1fr_auto_1fr] items-center transition-all duration-500', scrolled ? 'h-14' : 'h-16')}>
+        {/* ───────── Mobile header: hamburger LEFT · brand CENTER · cart RIGHT ─────────
+            Solid ivory from the first frame — dark icons, always readable. Constant
+            height (no scroll switch) so there's no style flip or layout jump. */}
+        <div className="lg:hidden grid grid-cols-[1fr_auto_1fr] items-center h-14">
           <div className="flex items-center gap-0.5 justify-self-start">
             <button
               onClick={() => setOpen(true)}
               aria-label="Open menu"
-              className={cn('p-2 -ml-2 transition-colors', scrolled ? 'text-[var(--brand-charcoal)]' : 'text-white')}
+              className="p-2 -ml-2 text-[var(--brand-charcoal)] active:scale-90 transition-transform"
             >
               <Menu size={22} />
             </button>
             <button
               onClick={() => setSearchOpen(true)}
               aria-label="Search products"
-              className={cn('p-2 transition-colors', scrolled ? 'text-[var(--brand-charcoal)]' : 'text-white')}
+              className="p-2 text-[var(--brand-charcoal)] active:scale-90 transition-transform"
             >
               <Search size={19} />
             </button>
           </div>
 
-          <div className="justify-self-center">
-            <HeaderBrand scrolled={scrolled} size="mobile" />
+          <div className="justify-self-center min-w-0 px-1">
+            <HeaderBrand size="mobile" />
           </div>
 
           <div className="flex items-center gap-0.5 justify-self-end">
             <Link
               href="/wishlist"
               aria-label="Wishlist"
-              className={cn('relative p-2 transition-colors', scrolled ? 'text-[var(--brand-charcoal)]' : 'text-white')}
+              className="relative p-2 text-[var(--brand-charcoal)] active:scale-90 transition-transform"
             >
               <Heart size={19} />
               {ready && wishlistCount > 0 && <NavBadge n={wishlistCount} />}
@@ -105,7 +92,7 @@ export default function Navbar({ announcements }: { announcements?: Announcement
             <button
               onClick={openCart}
               aria-label="Open cart"
-              className={cn('relative p-2 -mr-2 transition-colors', scrolled ? 'text-[var(--brand-charcoal)]' : 'text-white')}
+              className="relative p-2 -mr-2 text-[var(--brand-charcoal)] active:scale-90 transition-transform"
             >
               <ShoppingBag size={20} />
               {ready && cartCount > 0 && <NavBadge n={cartCount} />}
@@ -114,7 +101,7 @@ export default function Navbar({ announcements }: { announcements?: Announcement
         </div>
 
         {/* ───────── Desktop header: nav LEFT · brand CENTER · actions RIGHT ───────── */}
-        <div className={cn('hidden lg:flex items-center transition-all duration-500', scrolled ? 'h-[68px]' : 'h-20')}>
+        <div className="hidden lg:flex items-center h-14">
           <nav className="flex-1 flex items-center gap-7">
             {NAV_LINKS.map((link) => (
               <Link
@@ -124,9 +111,7 @@ export default function Navbar({ announcements }: { announcements?: Announcement
                   'relative text-xs tracking-[0.15em] uppercase font-medium py-1 transition-colors duration-300',
                   isActive(link.href)
                     ? 'text-[var(--brand-rose)]'
-                    : scrolled
-                      ? 'text-[var(--brand-charcoal)] hover:text-[var(--brand-rose)]'
-                      : 'text-white/90 hover:text-white'
+                    : 'text-[var(--brand-charcoal)] hover:text-[var(--brand-rose)]'
                 )}
               >
                 {link.label}
@@ -141,21 +126,21 @@ export default function Navbar({ announcements }: { announcements?: Announcement
           </nav>
 
           <div className="flex-shrink-0 px-4">
-            <HeaderBrand scrolled={scrolled} size="desktop" />
+            <HeaderBrand size="desktop" />
           </div>
 
           <div className="flex-1 flex items-center justify-end gap-4">
             <button
               onClick={() => setSearchOpen(true)}
               aria-label="Search products"
-              className={cn('transition-colors p-1', scrolled ? 'text-[var(--brand-charcoal)] hover:text-[var(--brand-rose)]' : 'text-white/85 hover:text-white')}
+              className="transition-colors p-1 text-[var(--brand-charcoal)] hover:text-[var(--brand-rose)]"
             >
               <Search size={18} />
             </button>
             <Link
               href="/wishlist"
               aria-label="Wishlist"
-              className={cn('relative transition-colors p-1', scrolled ? 'text-[var(--brand-charcoal)] hover:text-[var(--brand-rose)]' : 'text-white/85 hover:text-white')}
+              className="relative transition-colors p-1 text-[var(--brand-charcoal)] hover:text-[var(--brand-rose)]"
             >
               <Heart size={18} />
               {ready && wishlistCount > 0 && <NavBadge n={wishlistCount} />}
@@ -163,7 +148,7 @@ export default function Navbar({ announcements }: { announcements?: Announcement
             <button
               onClick={openCart}
               aria-label="Open cart"
-              className={cn('relative transition-colors p-1', scrolled ? 'text-[var(--brand-charcoal)] hover:text-[var(--brand-rose)]' : 'text-white/85 hover:text-white')}
+              className="relative transition-colors p-1 text-[var(--brand-charcoal)] hover:text-[var(--brand-rose)]"
             >
               <ShoppingBag size={18} />
               {ready && cartCount > 0 && <NavBadge n={cartCount} />}
@@ -445,27 +430,21 @@ function SearchOverlay({ open, onClose }: { open: boolean; onClose: () => void }
    shadow; once the solid white bar appears on scroll it switches to deep wine + gold.
    Premium serif treatment (Cormorant), not plain text. */
 
-function HeaderBrand({ scrolled, size }: { scrolled: boolean; size: 'mobile' | 'desktop' }) {
-  const textSize = size === 'mobile' ? 'text-[1.15rem]' : 'text-2xl'
-  const shadow = scrolled ? undefined : '0 1px 10px rgba(0,0,0,0.4)'
+function HeaderBrand({ size }: { size: 'mobile' | 'desktop' }) {
+  // Responsive sizing + tracking so the wordmark never clips or collides with the
+  // side icon groups down to 320px (scales up from ~15px at 320 to ~19px at ≥400).
+  const sizeCls =
+    size === 'mobile'
+      ? 'text-[0.95rem] tracking-[0.11em] min-[360px]:text-[1.05rem] min-[360px]:tracking-[0.14em] min-[400px]:text-[1.18rem] min-[400px]:tracking-[0.18em]'
+      : 'text-2xl tracking-[0.18em]'
   return (
     <Link
       href="/"
       aria-label="Geethams Silks — home"
-      className="inline-flex items-baseline gap-[0.16em] font-serif uppercase leading-none whitespace-nowrap select-none"
+      className={cn('inline-flex items-baseline gap-[0.14em] font-serif font-semibold uppercase leading-none whitespace-nowrap select-none', sizeCls)}
     >
-      <span
-        className={cn('font-medium tracking-[0.2em] transition-colors duration-500', textSize, scrolled ? 'text-[var(--brand-darkpink)]' : 'text-white')}
-        style={{ textShadow: shadow }}
-      >
-        Geethams
-      </span>
-      <span
-        className={cn('font-medium tracking-[0.2em] transition-colors duration-500', textSize, scrolled ? 'text-[var(--brand-gold)]' : 'text-[var(--brand-gold-light)]')}
-        style={{ textShadow: shadow }}
-      >
-        Silks
-      </span>
+      <span className="text-[var(--brand-darkpink)]">Geethams</span>
+      <span className="text-[var(--brand-gold)]">Silks</span>
     </Link>
   )
 }
