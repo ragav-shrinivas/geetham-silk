@@ -77,7 +77,7 @@ export default function ShopFilters({ categories, collections }: Props) {
     <div className="border-y border-[var(--brand-pink)]/25 bg-[var(--brand-cream)]/95 backdrop-blur-sm">
       {/* row 1 — scrollable pills + sort pinned to the right edge */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center gap-4 py-4">
-        <div className="flex items-center gap-7 overflow-x-auto no-scrollbar flex-1 min-w-0">
+        <div className="flex flex-wrap items-center gap-x-6 gap-y-2.5 flex-1 min-w-0">
           {QUICK.map((q) => (
             <button key={q.label} onClick={() => setQuick(q.param, q.value)} className={pill(activeQuick === q.label)}>
               {q.label}
@@ -123,7 +123,7 @@ export default function ShopFilters({ categories, collections }: Props) {
         const activeParent = categories.find((p) => p.slug === activeCategory || p.children.some((ch) => ch.slug === activeCategory))
         if (!activeParent || activeParent.children.length === 0) return null
         return (
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center gap-3 overflow-x-auto no-scrollbar pb-3 -mt-1">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-wrap items-center gap-2 pb-3 -mt-1">
             <button
               onClick={() => setParam('category', activeParent.slug)}
               className={cn(
@@ -155,7 +155,7 @@ export default function ShopFilters({ categories, collections }: Props) {
 
       {/* row 2 — collections + active search chip (only when relevant) */}
       {(collections.length > 0 || search) && (
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center gap-4 overflow-x-auto no-scrollbar pb-4 -mt-1">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-wrap items-center gap-2 pb-4 -mt-1">
           {search && (
             <button
               onClick={() => setParam('search', null)}

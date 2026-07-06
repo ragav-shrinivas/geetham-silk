@@ -152,6 +152,12 @@ const SECTION_META: Record<string, SectionMeta> = {
     icon: ImageIcon,
     fields: [],
   },
+  trust: {
+    label: 'Trust & Service Strip',
+    desc: 'Free shipping · secure payments · quality · support',
+    icon: Star,
+    fields: [],
+  },
 }
 
 /* ---------- Builder ---------- */

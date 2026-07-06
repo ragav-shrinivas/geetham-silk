@@ -49,16 +49,16 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
   const title = params.search
     ? `Results for “${params.search}”`
     : params.category
-    ? categories.find((c) => c.slug === params.category)?.name ?? 'The Boutique'
+    ? categories.find((c) => c.slug === params.category)?.name ?? 'Shop All'
     : params.collection
-    ? collections.find((c) => c.slug === params.collection)?.name ?? 'The Boutique'
+    ? collections.find((c) => c.slug === params.collection)?.name ?? 'Shop All'
     : params.new === 'true'
     ? 'New Arrivals'
     : params.featured === 'true'
     ? 'Featured Picks'
     : params.trending === 'true'
     ? 'Trending Now'
-    : 'The Boutique'
+    : 'Shop All'
 
   const filterKey = JSON.stringify(params)
 
@@ -70,19 +70,18 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
 
   return (
     <div className="pt-24 min-h-screen bg-[var(--brand-cream)]">
-      {/* Editorial header */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-8 relative overflow-hidden">
-        <PageNav fallback="/" backLabel="Home" crumbs={crumbs} className="mb-8" />
-        <span aria-hidden className="backdrop-word -top-4 text-left">Boutique</span>
-        <div className="relative flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+      {/* Page header — readable, no washed-out backdrop word */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-7 relative">
+        <PageNav fallback="/" backLabel="Home" crumbs={crumbs} className="mb-6" />
+        <div className="relative flex flex-col sm:flex-row sm:items-end justify-between gap-3">
           <div>
-            <p className="text-xs tracking-[0.35em] uppercase text-[var(--brand-rose)] mb-3">Geethams Silks</p>
-            <h1 className="font-serif text-4xl lg:text-6xl font-light text-[var(--brand-charcoal)] leading-[1.05]">
+            <p className="text-[11px] tracking-[0.32em] uppercase text-[var(--brand-gold)] font-medium mb-2.5">Geethams Silks</p>
+            <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-light text-[var(--brand-charcoal)] leading-[1.08]">
               {title}
             </h1>
           </div>
-          <p className="text-xs tracking-[0.25em] uppercase text-gray-400 shrink-0 pb-2 tabular-nums">
-            {products.length} — {products.length === 1 ? 'Piece' : 'Pieces'}
+          <p className="text-xs tracking-[0.2em] uppercase text-[var(--brand-charcoal)]/55 shrink-0 pb-2 tabular-nums">
+            {products.length} {products.length === 1 ? 'Piece' : 'Pieces'}
           </p>
         </div>
       </div>

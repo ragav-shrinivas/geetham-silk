@@ -39,7 +39,7 @@ const DEFAULT_SLIDES: HeroSlide[] = HERO_IMAGES.map((src, i) => ({
   media_type: 'image', media_url: src, poster_url: null,
   cta_primary_label: 'Explore Collections', cta_primary_link: '/collections',
   cta_secondary_label: 'Enquire on WhatsApp', cta_secondary_link: '',
-  overlay_opacity: 0.45, is_active: true, display_order: i, created_at: '', updated_at: '',
+  overlay_opacity: 0.45, is_active: true, display_order: i, focal_x: 50, focal_y: 50, created_at: '', updated_at: '',
 }))
 
 function waHref() {
@@ -141,6 +141,7 @@ export default function HeroSlider({ slides, durationMs }: { slides: HeroSlide[]
                   fill
                   priority={current === 0}
                   sizes="100vw"
+                  style={{ objectPosition: `${slide.focal_x ?? 50}% ${slide.focal_y ?? 50}%` }}
                   className="object-cover animate-kenburns"
                 />
               ) : (
@@ -286,9 +287,9 @@ export default function HeroSlider({ slides, durationMs }: { slides: HeroSlide[]
                 initial={{ y: '115%' }}
                 animate={{ y: 0 }}
                 transition={{ delay: 1.55, duration: 0.8, ease: LUXE }}
-                className="block text-[9px] tracking-[0.32em] uppercase text-white/45 mb-1.5"
+                className="block text-[9px] tracking-[0.32em] uppercase text-white/55 mb-1.5"
               >
-                The Boutique
+                Geethams Silks
               </motion.span>
             </span>
             <span className="line-mask">

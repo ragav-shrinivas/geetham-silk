@@ -68,7 +68,9 @@ export default function HeroSliderMobile({ slides, duration }: { slides: HeroSli
               fill
               priority={i === 0}
               sizes="100vw"
-              className={`object-cover object-center ${i === current && !reduced ? 'animate-kenburns' : ''}`}
+              // admin-controlled focal point keeps portrait creatives (faces, motifs) in frame
+              style={{ objectPosition: `${slide.focal_x ?? 50}% ${slide.focal_y ?? 50}%` }}
+              className={`object-cover ${i === current && !reduced ? 'animate-kenburns' : ''}`}
             />
           )}
         </div>

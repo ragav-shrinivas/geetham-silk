@@ -178,11 +178,28 @@ export interface Database {
           overlay_opacity: number
           is_active: boolean
           display_order: number
+          /** object-position X/Y as 0–100 percentages — portrait focal control */
+          focal_x: number
+          focal_y: number
           created_at: string
           updated_at: string
         }
         Insert: Omit<Database['public']['Tables']['hero_slides']['Row'], 'id' | 'created_at' | 'updated_at'> & { id?: string; created_at?: string; updated_at?: string }
         Update: Partial<Database['public']['Tables']['hero_slides']['Insert']>
+      }
+      announcements: {
+        Row: {
+          id: string
+          text: string
+          icon: string | null
+          href: string | null
+          is_active: boolean
+          display_order: number
+          created_at: string
+          updated_at: string
+        }
+        Insert: Omit<Database['public']['Tables']['announcements']['Row'], 'id' | 'created_at' | 'updated_at'> & { id?: string; created_at?: string; updated_at?: string }
+        Update: Partial<Database['public']['Tables']['announcements']['Insert']>
       }
     }
   }
@@ -200,6 +217,7 @@ export type Setting = Database['public']['Tables']['settings']['Row']
 export type HeroSlide = Database['public']['Tables']['hero_slides']['Row']
 export type PageSection = Database['public']['Tables']['page_sections']['Row']
 export type MediaAsset = Database['public']['Tables']['media']['Row']
+export type Announcement = Database['public']['Tables']['announcements']['Row']
 
 export type ProductWithImages = Product & {
   product_images: ProductImage[]

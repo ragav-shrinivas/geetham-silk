@@ -9,6 +9,7 @@ import PromoBanners from '@/components/home/PromoBanners'
 import ProductRail from '@/components/home/ProductRail'
 import RecentlyViewed from '@/components/home/RecentlyViewed'
 import StoreLocation from '@/components/home/StoreLocation'
+import TrustStrip from '@/components/home/TrustStrip'
 import NewArrivals from '@/components/home/NewArrivals'
 import TestimonialsSection from '@/components/home/TestimonialsSection'
 import AboutStrip from '@/components/home/AboutStrip'
@@ -30,6 +31,7 @@ export const revalidate = 60
 const DEFAULT_SECTIONS: Array<Pick<PageSection, 'section_key' | 'is_visible' | 'settings'>> = [
   { section_key: 'hero', is_visible: true, settings: { duration_ms: 7000 } },
   { section_key: 'store', is_visible: true, settings: {} },
+  { section_key: 'trust', is_visible: true, settings: {} },
   { section_key: 'marquee', is_visible: true, settings: {} },
   { section_key: 'categories', is_visible: true, settings: {} },
   { section_key: 'featured', is_visible: true, settings: { limit: 8 } },
@@ -109,6 +111,8 @@ export default async function HomePage() {
             return <RecentlyViewed key="recently" tone="cream" />
           case 'store':
             return <StoreLocation key="store" />
+          case 'trust':
+            return <TrustStrip key="trust" />
           default:
             return null
         }
