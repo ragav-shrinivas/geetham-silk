@@ -83,31 +83,28 @@ export default function CategoryMarquee({ categories = [] }: Props) {
   )
 }
 
-function CategoryTile({ name, href, image, count }: { name: string; href: string; image: string; count: number }) {
+function CategoryTile({ name, href, image }: { name: string; href: string; image: string; count?: number }) {
   return (
     <Link
       href={href}
-      className="group/tile block w-[140px] sm:w-[168px] shrink-0"
+      className="group/tile block w-[150px] sm:w-[178px] shrink-0"
       aria-label={`Shop ${name}`}
     >
-      {/* Arched tile — warm gradient behind the subject, gold ring on hover */}
-      <div className="relative h-[196px] sm:h-[232px] w-full overflow-hidden rounded-t-[999px] rounded-b-2xl bg-gradient-to-b from-[var(--brand-cream-deep)] to-[var(--brand-sandal)] ring-1 ring-[var(--brand-pink)]/40 transition-all duration-500 group-hover/tile:ring-2 group-hover/tile:ring-[var(--brand-gold)]/70 group-hover/tile:-translate-y-1 group-hover/tile:shadow-[0_20px_40px_-24px_rgba(122,36,64,0.5)]">
+      {/* Arched tile — warm cream arch behind the subject, gold name overlaid at the
+          bottom (matches the reference). Gold ring + lift on hover. */}
+      <div className="relative h-[210px] sm:h-[248px] w-full overflow-hidden rounded-t-[999px] rounded-b-2xl bg-gradient-to-b from-[var(--brand-cream-deep)] to-[var(--brand-sandal)] ring-1 ring-[var(--brand-pink)]/40 transition-all duration-500 group-hover/tile:ring-2 group-hover/tile:ring-[var(--brand-gold)]/70 group-hover/tile:-translate-y-1 group-hover/tile:shadow-[0_20px_40px_-24px_rgba(122,36,64,0.5)]">
         <Image
           src={image}
           alt={name}
           fill
-          sizes="168px"
+          sizes="178px"
           className="object-cover object-top transition-transform duration-700 group-hover/tile:scale-105"
         />
-        <span className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/55 to-transparent" />
-      </div>
-      <div className="mt-3 text-center">
-        <p className="font-serif text-base sm:text-lg font-medium text-[var(--brand-charcoal)] leading-tight">{name}</p>
-        {count > 0 && (
-          <p className="text-[10px] tracking-[0.2em] uppercase text-[var(--brand-charcoal)]/50 mt-0.5">
-            {count} {count === 1 ? 'piece' : 'pieces'}
-          </p>
-        )}
+        {/* scrim so the gold name stays legible over any photo */}
+        <span className="pointer-events-none absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-black/75 via-black/30 to-transparent" />
+        <p className="absolute inset-x-0 bottom-0 px-2 pb-3.5 text-center font-serif text-lg sm:text-xl font-medium text-[var(--brand-gold-light)] leading-tight drop-shadow-[0_1px_6px_rgba(0,0,0,0.6)]">
+          {name}
+        </p>
       </div>
     </Link>
   )

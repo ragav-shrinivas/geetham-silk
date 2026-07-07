@@ -253,9 +253,10 @@
   white-space: nowrap;
 }
 /* Category rail — translate a duplicated flex track by exactly one half for a
-   seamless loop. GPU transform only. Paused on hover via a utility class. */
+   seamless loop. `reverse` makes the cards drift LEFT→RIGHT (matches the client's
+   reference video). GPU transform only. Paused on hover via a utility class. */
 .animate-marquee-x {
-  animation: marquee 44s linear infinite;
+  animation: marquee 44s linear infinite reverse;
   will-change: transform;
 }
 
