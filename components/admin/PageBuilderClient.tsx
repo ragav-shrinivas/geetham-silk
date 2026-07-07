@@ -158,6 +158,14 @@ const SECTION_META: Record<string, SectionMeta> = {
     icon: Star,
     fields: [],
   },
+  price: {
+    label: 'Shop by Price',
+    desc: 'Price-band discovery tiles → filtered shop results',
+    icon: Star,
+    fields: [],
+    manageHref: '/evo9-admin/products',
+    manageLabel: 'Manage products',
+  },
 }
 
 /* ---------- Builder ---------- */

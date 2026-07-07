@@ -12,7 +12,7 @@ export default function CartPage() {
   const router = useRouter()
 
   return (
-    <div className="pt-24 min-h-screen bg-[var(--brand-cream)] pb-24 lg:pb-0">
+    <div className="min-h-screen bg-[var(--brand-cream)] pb-24 lg:pb-0">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <PageNav fallback="/shop" backLabel="Shop" crumbs={[{ label: 'Shopping Bag' }]} className="mb-8" />
 

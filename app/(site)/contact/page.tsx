@@ -15,7 +15,7 @@ export default function ContactPage() {
   const waMsg = encodeURIComponent('Hi Geethams Silks, I would like to enquire about your collection.')
 
   return (
-    <div className="pt-24 min-h-screen bg-[var(--brand-cream)]">
+    <div className="min-h-screen bg-[var(--brand-cream)]">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <PageNav fallback="/" backLabel="Home" crumbs={[{ label: 'Contact' }]} className="mb-12" />
         <div className="text-center mb-16">

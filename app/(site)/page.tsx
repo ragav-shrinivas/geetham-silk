@@ -1,7 +1,8 @@
 import { Suspense } from 'react'
 import HeroSection from '@/components/home/HeroSection'
 import BrandMarquee from '@/components/home/BrandMarquee'
-import FeaturedCategories from '@/components/home/FeaturedCategories'
+import CategoryMarquee from '@/components/home/CategoryMarquee'
+import ShopByPrice from '@/components/home/ShopByPrice'
 import FeaturedProducts from '@/components/home/FeaturedProducts'
 import BestSellers from '@/components/home/BestSellers'
 import ProductDiscovery from '@/components/home/ProductDiscovery'
@@ -34,6 +35,7 @@ const DEFAULT_SECTIONS: Array<Pick<PageSection, 'section_key' | 'is_visible' | '
   { section_key: 'hero', is_visible: true, settings: { duration_ms: 7000 } },
   { section_key: 'store', is_visible: true, settings: {} },
   { section_key: 'categories', is_visible: true, settings: {} },
+  { section_key: 'price', is_visible: true, settings: {} },
   { section_key: 'featured', is_visible: true, settings: { limit: 8 } },
   { section_key: 'bestsellers', is_visible: true, settings: { limit: 12 } },
   { section_key: 'arrivals', is_visible: true, settings: { limit: 8 } },
@@ -76,9 +78,8 @@ export default async function HomePage() {
   ])
 
   return (
-    // pt-24 offsets the fixed, always-solid header (announcement + nav ≈ 92px) so the
-    // hero begins cleanly below the navigation — same offset the rest of the app uses.
-    <div className="pt-24 bg-[var(--brand-cream)]">
+    // Header is sticky/in-flow now, so the hero starts below it naturally — no top offset.
+    <div className="bg-[var(--brand-cream)]">
       {sections.map((section) => {
         const s = section.settings
         switch (section.section_key) {
@@ -87,7 +88,9 @@ export default async function HomePage() {
           case 'marquee':
             return <BrandMarquee key="marquee" items={setting<string[] | undefined>(s, 'items', undefined)} />
           case 'categories':
-            return <FeaturedCategories key="categories" categories={categories} />
+            return <CategoryMarquee key="categories" categories={categories} />
+          case 'price':
+            return <ShopByPrice key="price" />
           case 'featured':
             return <FeaturedProducts key="featured" products={featuredProducts} />
           case 'bestsellers':

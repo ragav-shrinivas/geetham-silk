@@ -5,7 +5,7 @@ import { useState, useEffect, useRef, type FormEvent } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import { useLenis } from 'lenis/react'
-import { Menu, X, Search, MessageCircle, ArrowRight, ShoppingBag, Heart } from 'lucide-react'
+import { Menu, X, Search, MessageCircle, ArrowRight, ShoppingBag, Heart, User } from 'lucide-react'
 import { NAV_LINKS, SITE, type AnnouncementMessage } from '@/lib/constants'
 import { cn } from '@/lib/utils'
 import { LUXE } from '@/lib/motion'
@@ -50,125 +50,143 @@ export default function Navbar({ announcements }: { announcements?: Announcement
     href === '/' ? pathname === '/' : pathname.startsWith(href)
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-[var(--brand-cream)]/95 backdrop-blur-md border-b border-[var(--brand-pink)]/50 shadow-[0_2px_16px_-10px_rgba(42,36,32,0.4)]">
-      {/* Top announcement bar — dynamic, rotating, admin-managed */}
+    // Sticky (in-flow) so the whole header stack takes real layout space and the
+    // hero/content always begins BELOW it — no fixed-overlay, no per-page pt-* math,
+    // works at any header height across breakpoints.
+    <header className="sticky top-0 z-50 bg-[var(--brand-cream)]/95 backdrop-blur-md shadow-[0_2px_16px_-10px_rgba(42,36,32,0.4)]">
+      {/* ── LAYER A · dynamic rotating announcement bar ── */}
       <AnnouncementBar messages={announcements} />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* ───────── Mobile header: hamburger LEFT · brand CENTER · cart RIGHT ─────────
-            Solid ivory from the first frame — dark icons, always readable. Constant
-            height (no scroll switch) so there's no style flip or layout jump. */}
-        <div className="lg:hidden grid grid-cols-[1fr_auto_1fr] items-center h-14">
-          <div className="flex items-center gap-0.5 justify-self-start">
-            <button
-              onClick={() => setOpen(true)}
-              aria-label="Open menu"
-              className="p-2 -ml-2 text-[var(--brand-charcoal)] active:scale-90 transition-transform"
-            >
-              <Menu size={22} />
-            </button>
-            <button
-              onClick={() => setSearchOpen(true)}
-              aria-label="Search products"
-              className="p-2 text-[var(--brand-charcoal)] active:scale-90 transition-transform"
-            >
-              <Search size={19} />
-            </button>
+      {/* ── LAYER B · brand / search / utility ── */}
+      <div className="border-b border-[var(--brand-pink)]/40">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Mobile: hamburger LEFT · brand CENTER · utility RIGHT (nav lives in the drawer) */}
+          <div className="lg:hidden grid grid-cols-[1fr_auto_1fr] items-center h-14">
+            <div className="flex items-center gap-0.5 justify-self-start">
+              <button onClick={() => setOpen(true)} aria-label="Open menu" className="p-2 -ml-2 text-[var(--brand-charcoal)] active:scale-90 transition-transform">
+                <Menu size={22} />
+              </button>
+              <button onClick={() => setSearchOpen(true)} aria-label="Search products" className="p-2 text-[var(--brand-charcoal)] active:scale-90 transition-transform">
+                <Search size={19} />
+              </button>
+            </div>
+            <div className="justify-self-center min-w-0 px-1">
+              <HeaderBrand size="mobile" />
+            </div>
+            <div className="flex items-center gap-0.5 justify-self-end">
+              <Link href="/wishlist" aria-label="Wishlist" className="relative p-2 text-[var(--brand-charcoal)] active:scale-90 transition-transform">
+                <Heart size={19} />
+                {ready && wishlistCount > 0 && <NavBadge n={wishlistCount} />}
+              </Link>
+              <button onClick={openCart} aria-label="Open cart" className="relative p-2 -mr-2 text-[var(--brand-charcoal)] active:scale-90 transition-transform">
+                <ShoppingBag size={20} />
+                {ready && cartCount > 0 && <NavBadge n={cartCount} />}
+              </button>
+            </div>
           </div>
 
-          <div className="justify-self-center min-w-0 px-1">
-            <HeaderBrand size="mobile" />
-          </div>
-
-          <div className="flex items-center gap-0.5 justify-self-end">
-            <Link
-              href="/wishlist"
-              aria-label="Wishlist"
-              className="relative p-2 text-[var(--brand-charcoal)] active:scale-90 transition-transform"
-            >
-              <Heart size={19} />
-              {ready && wishlistCount > 0 && <NavBadge n={wishlistCount} />}
-            </Link>
-            <button
-              onClick={openCart}
-              aria-label="Open cart"
-              className="relative p-2 -mr-2 text-[var(--brand-charcoal)] active:scale-90 transition-transform"
-            >
-              <ShoppingBag size={20} />
-              {ready && cartCount > 0 && <NavBadge n={cartCount} />}
-            </button>
+          {/* Desktop: large SEARCH left · GEETHAMS SILKS viewport-centered · utility right.
+              3-col grid with equal 1fr sides keeps the brand mathematically centered
+              regardless of search width or icon count. */}
+          <div className="hidden lg:grid grid-cols-[1fr_auto_1fr] items-center gap-4 h-[68px]">
+            <div className="justify-self-start w-full max-w-[420px]">
+              <HeaderSearch />
+            </div>
+            <div className="justify-self-center px-2">
+              <HeaderBrand size="desktop" />
+            </div>
+            <div className="justify-self-end flex items-center gap-1.5">
+              <Link href="/wishlist" aria-label="Wishlist" className="relative p-2 text-[var(--brand-charcoal)] hover:text-[var(--brand-darkpink)] transition-colors">
+                <Heart size={19} />
+                {ready && wishlistCount > 0 && <NavBadge n={wishlistCount} />}
+              </Link>
+              <button onClick={openCart} aria-label="Open cart" className="relative p-2 text-[var(--brand-charcoal)] hover:text-[var(--brand-darkpink)] transition-colors">
+                <ShoppingBag size={19} />
+                {ready && cartCount > 0 && <NavBadge n={cartCount} />}
+              </button>
+              <Link href="/account" aria-label="Account" className="p-2 text-[var(--brand-charcoal)] hover:text-[var(--brand-darkpink)] transition-colors">
+                <User size={19} />
+              </Link>
+              <a
+                href={`https://wa.me/${SITE.whatsapp}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Chat on WhatsApp"
+                className="ml-1 flex h-9 w-9 items-center justify-center rounded-full bg-[#25D366] text-white hover:bg-[#128C7E] transition-colors"
+              >
+                <MessageCircle size={16} />
+              </a>
+            </div>
           </div>
         </div>
+      </div>
 
-        {/* ───────── Desktop header: nav LEFT · brand CENTER · actions RIGHT ───────── */}
-        <div className="hidden lg:flex items-center h-14">
-          <nav className="flex-1 flex items-center gap-7">
-            {NAV_LINKS.map((link) => (
+      {/* ── LAYER C · dedicated navigation strip (desktop/tablet) — soft champagne wash ── */}
+      <nav
+        aria-label="Primary"
+        className="hidden lg:block border-b border-[var(--brand-pink)]/40 bg-gradient-to-r from-[var(--brand-cream-deep)] via-[var(--brand-pink-soft)] to-[var(--brand-cream-deep)]"
+      >
+        <ul className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-center gap-10 xl:gap-14 h-11">
+          {NAV_LINKS.map((link) => (
+            <li key={link.href}>
               <Link
-                key={link.href}
                 href={link.href}
                 className={cn(
-                  'relative text-xs tracking-[0.15em] uppercase font-medium py-1 transition-colors duration-300',
-                  isActive(link.href)
-                    ? 'text-[var(--brand-rose)]'
-                    : 'text-[var(--brand-charcoal)] hover:text-[var(--brand-rose)]'
+                  'relative block text-[11px] tracking-[0.2em] uppercase font-medium py-1 transition-colors duration-300',
+                  isActive(link.href) ? 'text-[var(--brand-darkpink)]' : 'text-[var(--brand-charcoal)] hover:text-[var(--brand-darkpink)]'
                 )}
               >
                 {link.label}
                 <span
                   className={cn(
-                    'absolute left-0 -bottom-0.5 h-px w-full origin-left transition-transform duration-400 ease-[cubic-bezier(0.16,1,0.3,1)]',
-                    isActive(link.href) ? 'scale-x-100 bg-[var(--brand-rose)]' : 'scale-x-0 bg-[var(--brand-rose)]'
+                    'absolute left-0 -bottom-1 h-px w-full origin-center transition-transform duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] bg-[var(--brand-darkpink)]',
+                    isActive(link.href) ? 'scale-x-100' : 'scale-x-0'
                   )}
                 />
               </Link>
-            ))}
-          </nav>
-
-          <div className="flex-shrink-0 px-4">
-            <HeaderBrand size="desktop" />
-          </div>
-
-          <div className="flex-1 flex items-center justify-end gap-4">
-            <button
-              onClick={() => setSearchOpen(true)}
-              aria-label="Search products"
-              className="transition-colors p-1 text-[var(--brand-charcoal)] hover:text-[var(--brand-rose)]"
-            >
-              <Search size={18} />
-            </button>
-            <Link
-              href="/wishlist"
-              aria-label="Wishlist"
-              className="relative transition-colors p-1 text-[var(--brand-charcoal)] hover:text-[var(--brand-rose)]"
-            >
-              <Heart size={18} />
-              {ready && wishlistCount > 0 && <NavBadge n={wishlistCount} />}
-            </Link>
-            <button
-              onClick={openCart}
-              aria-label="Open cart"
-              className="relative transition-colors p-1 text-[var(--brand-charcoal)] hover:text-[var(--brand-rose)]"
-            >
-              <ShoppingBag size={18} />
-              {ready && cartCount > 0 && <NavBadge n={cartCount} />}
-            </button>
-            <a
-              href={`https://wa.me/${SITE.whatsapp}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 bg-[#25D366] text-white text-xs tracking-widest uppercase px-4 py-2 hover:bg-[#128C7E] transition-colors"
-            >
-              <MessageCircle size={14} />
-              WhatsApp
-            </a>
-          </div>
-        </div>
-      </div>
+            </li>
+          ))}
+        </ul>
+      </nav>
 
       <MobileMenu open={open} onClose={() => setOpen(false)} pathname={pathname} />
       <SearchOverlay open={searchOpen} onClose={() => setSearchOpen(false)} />
     </header>
+  )
+}
+
+/* ---------- Large header search — real product search (submits to /shop) ---------- */
+
+function HeaderSearch() {
+  const router = useRouter()
+  const [q, setQ] = useState('')
+  function submit(e: FormEvent) {
+    e.preventDefault()
+    const term = q.trim()
+    if (term) router.push(`/shop?search=${encodeURIComponent(term)}`)
+  }
+  return (
+    <form onSubmit={submit} role="search" className="relative w-full">
+      <Search size={17} className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-[var(--brand-charcoal)]/45" />
+      <input
+        type="search"
+        value={q}
+        onChange={(e) => setQ(e.target.value)}
+        placeholder="Search the store..."
+        aria-label="Search the store"
+        className="w-full rounded-full border border-[var(--brand-pink)] bg-white pl-10 pr-9 py-2.5 text-sm text-[var(--brand-charcoal)] placeholder:text-[var(--brand-charcoal)]/40 focus:outline-none focus:border-[var(--brand-darkpink)] focus:ring-2 focus:ring-[var(--brand-darkpink)]/20 transition-colors"
+      />
+      {q && (
+        <button
+          type="button"
+          onClick={() => setQ('')}
+          aria-label="Clear search"
+          className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--brand-charcoal)]/40 hover:text-[var(--brand-charcoal)] transition-colors"
+        >
+          <X size={15} />
+        </button>
+      )}
+    </form>
   )
 }
 

@@ -80,7 +80,7 @@ export default async function ProductPage({ params }: Props) {
       />
       <RecordView slug={product.slug} />
 
-      <div className="pt-24 min-h-screen bg-[var(--brand-cream)]">
+      <div className="min-h-screen bg-[var(--brand-cream)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
           {/* Back + breadcrumbs */}
           <PageNav

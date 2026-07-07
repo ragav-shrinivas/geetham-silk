@@ -1,6 +1,7 @@
 import { Suspense } from 'react'
 import type { Metadata } from 'next'
 import { getProducts, getCategories, getCategoryTree, getCollections, type ProductSort } from '@/lib/queries'
+import { formatPrice } from '@/lib/utils'
 import ShopFilters from '@/components/shop/ShopFilters'
 import ShopGrid from '@/components/shop/ShopGrid'
 import LuxButton from '@/components/ui/lux-button'
@@ -23,13 +24,23 @@ interface SearchParams {
   trending?: string
   search?: string
   sort?: string
+  minPrice?: string
+  maxPrice?: string
 }
 
 const VALID_SORTS: ProductSort[] = ['featured', 'newest', 'price-asc', 'price-desc', 'bestselling']
 
+/** parse a positive number from a query param, else undefined */
+function num(v?: string) {
+  const n = v != null ? Number(v) : NaN
+  return Number.isFinite(n) && n >= 0 ? n : undefined
+}
+
 export default async function ShopPage({ searchParams }: { searchParams: Promise<SearchParams> }) {
   const params = await searchParams
   const sort = VALID_SORTS.includes(params.sort as ProductSort) ? (params.sort as ProductSort) : undefined
+  const minPrice = num(params.minPrice)
+  const maxPrice = num(params.maxPrice)
 
   const [products, categories, categoryTree, collections] = await Promise.all([
     getProducts({
@@ -40,11 +51,21 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
       newArrival: params.new === 'true',
       search: params.search,
       sort,
+      minPrice,
+      maxPrice,
     }),
     getCategories(),
     getCategoryTree(),
     getCollections(),
   ])
+
+  const priceLabel = (minPrice != null || maxPrice != null)
+    ? (maxPrice != null && minPrice == null
+        ? `Under ${formatPrice(maxPrice)}`
+        : minPrice != null && maxPrice == null
+          ? `${formatPrice(minPrice)} & Above`
+          : `${formatPrice(minPrice!)} – ${formatPrice(maxPrice!)}`)
+    : null
 
   const title = params.search
     ? `Results for “${params.search}”`
@@ -58,18 +79,20 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
     ? 'Featured Picks'
     : params.trending === 'true'
     ? 'Trending Now'
+    : priceLabel
+    ? priceLabel
     : 'Shop All'
 
   const filterKey = JSON.stringify(params)
 
   // Breadcrumb trail — Home > Shop, plus the active filter as the leaf when present.
-  const isFiltered = !!(params.search || params.category || params.collection || params.new === 'true' || params.featured === 'true' || params.trending === 'true')
+  const isFiltered = !!(params.search || params.category || params.collection || params.new === 'true' || params.featured === 'true' || params.trending === 'true' || priceLabel)
   const crumbs: Crumb[] = isFiltered
     ? [{ label: 'Shop', href: '/shop' }, { label: title }]
     : [{ label: 'Shop' }]
 
   return (
-    <div className="pt-24 min-h-screen bg-[var(--brand-cream)]">
+    <div className="min-h-screen bg-[var(--brand-cream)]">
       {/* Page header — readable, no washed-out backdrop word */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-7 relative">
         <PageNav fallback="/" backLabel="Home" crumbs={crumbs} className="mb-6" />
@@ -86,8 +109,8 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
         </div>
       </div>
 
-      {/* Filter bar — sticky beneath the fixed navbar (announcement bar + nav ≈ 96px when condensed) */}
-      <div className="sticky top-[96px] z-40">
+      {/* Filter bar — sticks just beneath the sticky header stack (mobile ≈93px; desktop ≈150px with the nav strip) */}
+      <div className="sticky top-[93px] lg:top-[150px] z-40">
         <Suspense>
           <ShopFilters categories={categoryTree} collections={collections} />
         </Suspense>

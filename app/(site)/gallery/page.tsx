@@ -18,7 +18,7 @@ export default async function GalleryPage() {
   const items = await getGallery()
 
   return (
-    <div className="pt-24 min-h-screen bg-[var(--brand-cream)]">
+    <div className="min-h-screen bg-[var(--brand-cream)]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <PageNav fallback="/" backLabel="Home" crumbs={[{ label: 'Gallery' }]} className="mb-10" />
         {/* Heading */}

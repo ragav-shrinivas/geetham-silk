@@ -24,11 +24,11 @@ export default function AccountPage() {
   const waMsg = encodeURIComponent('Hi Geethams Silks, I need help with my order.')
 
   if (loading) {
-    return <div className="pt-24 min-h-screen bg-[var(--brand-cream)] flex items-center justify-center"><Loader2 className="animate-spin text-[var(--brand-rose)]" /></div>
+    return <div className="min-h-screen bg-[var(--brand-cream)] flex items-center justify-center"><Loader2 className="animate-spin text-[var(--brand-rose)]" /></div>
   }
 
   return (
-    <div className="pt-24 min-h-screen bg-[var(--brand-cream)] pb-24 lg:pb-0">
+    <div className="min-h-screen bg-[var(--brand-cream)] pb-24 lg:pb-0">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <PageNav fallback="/" backLabel="Home" crumbs={[{ label: 'Account' }]} className="mb-10" />
         {user ? <SignedIn user={user} onSignOut={async () => { await createClient().auth.signOut(); router.refresh() }} /> : <SignedOut waMsg={waMsg} />}

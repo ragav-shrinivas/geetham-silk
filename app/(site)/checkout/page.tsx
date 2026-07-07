@@ -221,7 +221,7 @@ export default function CheckoutPage() {
     'w-full border border-[var(--brand-pink)] bg-white px-3 py-2.5 text-sm text-[var(--brand-charcoal)] focus:outline-none focus:border-[var(--brand-rose)] rounded-none'
 
   return (
-    <div className="pt-24 min-h-screen bg-[var(--brand-cream)] pb-24 lg:pb-0">
+    <div className="min-h-screen bg-[var(--brand-cream)] pb-24 lg:pb-0">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <PageNav
           fallback="/cart" backLabel="Bag"

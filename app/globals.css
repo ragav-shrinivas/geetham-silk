@@ -252,6 +252,12 @@
   animation: marquee 32s linear infinite;
   white-space: nowrap;
 }
+/* Category rail — translate a duplicated flex track by exactly one half for a
+   seamless loop. GPU transform only. Paused on hover via a utility class. */
+.animate-marquee-x {
+  animation: marquee 44s linear infinite;
+  will-change: transform;
+}
 
 /* Ken Burns for hero / banners */
 @keyframes kenburns {
@@ -315,5 +321,5 @@
 
 @media (prefers-reduced-motion: reduce) {
   .text-shimmer, .animate-float, .animate-float-slow,
-  .animate-marquee, .animate-kenburns, .text-rosegold-shine { animation: none; }
+  .animate-marquee, .animate-marquee-x, .animate-kenburns, .text-rosegold-shine { animation: none; }
 }

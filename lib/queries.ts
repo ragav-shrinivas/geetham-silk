@@ -48,6 +48,10 @@ export async function getProducts(opts?: {
   bestSeller?: boolean
   search?: string
   sort?: ProductSort
+  /** inclusive lower price bound (INR) */
+  minPrice?: number
+  /** exclusive upper price bound (INR) — half-open bands keep each product in one band */
+  maxPrice?: number
   limit?: number
   offset?: number
 }) {
@@ -92,6 +96,8 @@ export async function getProducts(opts?: {
   if (opts?.newArrival) query = query.eq('is_new_arrival', true)
   if (opts?.bestSeller) query = query.eq('is_best_seller', true)
   if (opts?.search) query = query.ilike('name', `%${opts.search}%`)
+  if (typeof opts?.minPrice === 'number') query = query.gte('price', opts.minPrice)
+  if (typeof opts?.maxPrice === 'number') query = query.lt('price', opts.maxPrice)
   if (opts?.categorySlug) {
     const { data: cat } = await supabase
       .from('categories')
