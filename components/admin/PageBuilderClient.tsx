@@ -166,6 +166,14 @@ const SECTION_META: Record<string, SectionMeta> = {
     manageHref: '/evo9-admin/products',
     manageLabel: 'Manage products',
   },
+  catrail: {
+    label: 'Category Ribbon (moving)',
+    desc: 'Auto-scrolling category cards — usually placed above the hero',
+    icon: ImageIcon,
+    fields: [],
+    manageHref: '/evo9-admin/categories',
+    manageLabel: 'Manage categories',
+  },
 }
 
 /* ---------- Builder ---------- */

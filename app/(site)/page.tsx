@@ -32,6 +32,7 @@ export const revalidate = 60
 const DEFAULT_SECTIONS: Array<Pick<PageSection, 'section_key' | 'is_visible' | 'settings'>> = [
   // Order informed by the Madras Sarees IA: discovery + products surface high,
   // editorial/trust/story sit lower. Store stays at #2 per the client's directive.
+  { section_key: 'catrail', is_visible: true, settings: {} },
   { section_key: 'hero', is_visible: true, settings: { duration_ms: 7000 } },
   { section_key: 'store', is_visible: true, settings: {} },
   { section_key: 'categories', is_visible: true, settings: {} },
@@ -87,8 +88,10 @@ export default async function HomePage() {
             return <HeroSection key="hero" durationMs={setting(s, 'duration_ms', 7000)} />
           case 'marquee':
             return <BrandMarquee key="marquee" items={setting<string[] | undefined>(s, 'items', undefined)} />
+          case 'catrail':
+            return <CategoryMarquee key="catrail" categories={categories} variant="marquee" heading={false} />
           case 'categories':
-            return <CategoryMarquee key="categories" categories={categories} />
+            return <CategoryMarquee key="categories" categories={categories} variant="grid" heading />
           case 'price':
             return <ShopByPrice key="price" />
           case 'featured':
