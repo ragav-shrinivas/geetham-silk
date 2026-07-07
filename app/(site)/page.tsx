@@ -29,18 +29,20 @@ export const revalidate = 60
 
 /** Default registry — used when the page_sections table is empty/unreachable. */
 const DEFAULT_SECTIONS: Array<Pick<PageSection, 'section_key' | 'is_visible' | 'settings'>> = [
+  // Order informed by the Madras Sarees IA: discovery + products surface high,
+  // editorial/trust/story sit lower. Store stays at #2 per the client's directive.
   { section_key: 'hero', is_visible: true, settings: { duration_ms: 7000 } },
   { section_key: 'store', is_visible: true, settings: {} },
-  { section_key: 'trust', is_visible: true, settings: {} },
-  { section_key: 'marquee', is_visible: true, settings: {} },
   { section_key: 'categories', is_visible: true, settings: {} },
   { section_key: 'featured', is_visible: true, settings: { limit: 8 } },
   { section_key: 'bestsellers', is_visible: true, settings: { limit: 12 } },
-  { section_key: 'story', is_visible: true, settings: {} },
-  { section_key: 'banners', is_visible: true, settings: {} },
   { section_key: 'arrivals', is_visible: true, settings: { limit: 8 } },
+  { section_key: 'banners', is_visible: true, settings: {} },
   { section_key: 'trending', is_visible: true, settings: { limit: 8 } },
+  { section_key: 'trust', is_visible: true, settings: {} },
   { section_key: 'testimonials', is_visible: true, settings: {} },
+  { section_key: 'story', is_visible: true, settings: {} },
+  { section_key: 'marquee', is_visible: true, settings: {} },
   { section_key: 'discovery', is_visible: true, settings: {} },
   { section_key: 'recently', is_visible: true, settings: {} },
 ]

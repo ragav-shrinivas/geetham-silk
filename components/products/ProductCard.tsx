@@ -129,7 +129,7 @@ export default function ProductCard({ product, animate = true }: ProductCardProp
           </div>
         )}
 
-        <div className="mt-auto pt-3 flex items-center justify-between">
+        <div className="mt-auto pt-3">
           <div className="flex items-baseline gap-2">
             <span className="font-serif text-xl font-semibold text-[var(--brand-charcoal)]">
               {formatPrice(product.price)}
@@ -138,6 +138,11 @@ export default function ProductCard({ product, animate = true }: ProductCardProp
               <span className="text-sm text-gray-400 line-through">{formatPrice(product.original_price)}</span>
             )}
           </div>
+          {product.original_price && product.original_price > product.price && (
+            <span className="mt-1 inline-block text-[11px] font-semibold tracking-wide text-[#1f7a4d]">
+              Save {formatPrice(product.original_price - product.price)}
+            </span>
+          )}
         </div>
 
         <AddToCartButton

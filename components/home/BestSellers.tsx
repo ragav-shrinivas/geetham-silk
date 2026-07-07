@@ -133,6 +133,11 @@ function BestSellerCard({ product, index }: { product: ProductWithImages; index:
             <span className="text-sm text-gray-400 line-through">{formatPrice(product.original_price)}</span>
           )}
         </div>
+        {product.original_price && product.original_price > product.price && (
+          <span className="mt-1 inline-block text-[11px] font-semibold tracking-wide text-[#1f7a4d]">
+            Save {formatPrice(product.original_price - product.price)}
+          </span>
+        )}
 
         {/* availability status line */}
         <span className={`mt-2 inline-flex items-center gap-1.5 text-[11px] tracking-[0.12em] uppercase ${oos ? 'text-gray-400' : 'text-[#1f9d57]'}`}>
