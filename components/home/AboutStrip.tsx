@@ -93,7 +93,7 @@ export default function AboutStrip() {
                   </span>
                   <div>
                     <h3 className="font-serif text-lg font-medium tracking-wide leading-tight">{title}</h3>
-                    <p className="text-gray-400 text-sm leading-relaxed">{desc}</p>
+                    <p className="text-[var(--brand-charcoal)]/75 text-sm leading-relaxed">{desc}</p>
                   </div>
                 </motion.div>
               ))}

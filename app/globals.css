@@ -64,6 +64,9 @@
   body {
     background-color: hsl(var(--background));
     color: hsl(var(--foreground));
+    /* stronger default weight for readability — explicit font-* utilities still win,
+       so elegant light serif headings are unaffected */
+    font-weight: 500;
     font-feature-settings: "rlig" 1, "calt" 1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;

@@ -51,7 +51,7 @@ export default function SectionHeading({
   const shown = reduced || inView
 
   const titleColor = dark ? 'text-white' : 'text-[var(--brand-charcoal)]'
-  const copyColor = dark ? 'text-white/60' : 'text-gray-500'
+  const copyColor = dark ? 'text-white/60' : 'text-[var(--brand-charcoal)]/85'
 
   const rise = (delay: number) => ({
     initial: false as const,

@@ -80,7 +80,7 @@ export default function TestimonialsSection({ testimonials }: Props) {
             <button
               onClick={() => go(index - 1)}
               aria-label="Previous review"
-              className="w-10 h-10 inline-flex items-center justify-center border border-[var(--brand-charcoal)]/15 text-[var(--brand-charcoal)]/60 hover:border-[var(--brand-rose)] hover:text-[var(--brand-rose)] transition-colors duration-300"
+              className="w-10 h-10 inline-flex items-center justify-center border border-[var(--brand-charcoal)]/15 text-[var(--brand-charcoal)]/80 hover:border-[var(--brand-rose)] hover:text-[var(--brand-rose)] transition-colors duration-300"
             >
               <ChevronLeft size={16} />
             </button>
@@ -99,7 +99,7 @@ export default function TestimonialsSection({ testimonials }: Props) {
             <button
               onClick={() => go(index + 1)}
               aria-label="Next review"
-              className="w-10 h-10 inline-flex items-center justify-center border border-[var(--brand-charcoal)]/15 text-[var(--brand-charcoal)]/60 hover:border-[var(--brand-rose)] hover:text-[var(--brand-rose)] transition-colors duration-300"
+              className="w-10 h-10 inline-flex items-center justify-center border border-[var(--brand-charcoal)]/15 text-[var(--brand-charcoal)]/80 hover:border-[var(--brand-rose)] hover:text-[var(--brand-rose)] transition-colors duration-300"
             >
               <ChevronRight size={16} />
             </button>

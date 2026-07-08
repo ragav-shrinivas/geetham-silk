@@ -59,7 +59,7 @@ export default function ProductCard({ product, animate = true }: ProductCardProp
           </>
         ) : (
           <div className="w-full h-full bg-gradient-to-br from-[var(--brand-cream)] to-[var(--brand-pink)]/20 flex items-center justify-center">
-            <span className="text-[var(--brand-charcoal)]/30 text-4xl font-serif">G</span>
+            <span className="text-[var(--brand-charcoal)]/70 text-4xl font-serif">G</span>
           </div>
         )}
 
@@ -112,7 +112,7 @@ export default function ProductCard({ product, animate = true }: ProductCardProp
             {product.name}
           </h3>
         </Link>
-        <p className="text-xs text-gray-400 tracking-wider mt-0.5">#{product.product_code}</p>
+        <p className="text-xs text-[var(--brand-charcoal)]/75 tracking-wider mt-0.5">#{product.product_code}</p>
 
         {/* Status badges — kept off the photo so the product is never obscured */}
         {(product.is_new_arrival || product.is_trending || product.is_out_of_stock ||
@@ -135,7 +135,7 @@ export default function ProductCard({ product, animate = true }: ProductCardProp
               {formatPrice(product.price)}
             </span>
             {product.original_price && product.original_price > product.price && (
-              <span className="text-sm text-gray-400 line-through">{formatPrice(product.original_price)}</span>
+              <span className="text-sm text-[var(--brand-charcoal)]/75 line-through">{formatPrice(product.original_price)}</span>
             )}
           </div>
           {product.original_price && product.original_price > product.price && (

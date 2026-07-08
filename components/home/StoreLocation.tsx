@@ -27,7 +27,7 @@ export default function StoreLocation() {
             <h3 className="font-serif text-xl sm:text-2xl font-light text-[var(--brand-charcoal)] mb-0.5">Geethams Silks</h3>
             <p className="text-[11px] tracking-[0.18em] uppercase text-[var(--brand-darkpink)] mb-5">Palavakkam · Chennai</p>
 
-            <ul className="space-y-3 text-sm text-gray-600 mb-6">
+            <ul className="space-y-3 text-sm text-[var(--brand-charcoal)] mb-6">
               <li className="flex items-start gap-3">
                 <MapPin size={16} className="text-[var(--brand-purple)] shrink-0 mt-0.5" />
                 <span>388, Periyar Salai, Krishna Nagar, Palavakkam, Chennai 600041</span>

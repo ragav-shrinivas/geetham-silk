@@ -116,7 +116,7 @@ export default async function ProductPage({ params }: Props) {
               </h1>
 
               <div className="flex items-center justify-between gap-4 mb-5">
-                <p className="text-xs text-gray-400 tracking-wider">Product Code: #{product.product_code}</p>
+                <p className="text-xs text-[var(--brand-charcoal)]/75 tracking-wider">Product Code: #{product.product_code}</p>
                 <ShareButton title={product.name} />
               </div>
 
@@ -126,7 +126,7 @@ export default async function ProductPage({ params }: Props) {
                   {formatPrice(product.price)}
                 </span>
                 {product.original_price && product.original_price > product.price && (
-                  <span className="text-lg text-gray-400 line-through">{formatPrice(product.original_price)}</span>
+                  <span className="text-lg text-[var(--brand-charcoal)]/75 line-through">{formatPrice(product.original_price)}</span>
                 )}
               </div>
 
@@ -141,7 +141,7 @@ export default async function ProductPage({ params }: Props) {
               {/* Colors */}
               {product.colors && product.colors.length > 0 && (
                 <div className="mb-6">
-                  <p className="text-xs tracking-[0.2em] uppercase text-gray-500 mb-3 font-medium">Available Colors</p>
+                  <p className="text-xs tracking-[0.2em] uppercase text-[var(--brand-charcoal)]/85 mb-3 font-medium">Available Colors</p>
                   <div className="flex flex-wrap gap-2">
                     {product.colors.map((color) => (
                       <span key={color} className="border border-[var(--brand-pink)] px-4 py-1.5 text-sm text-[var(--brand-charcoal)] hover:bg-[var(--brand-pink)]/15 hover:border-[var(--brand-rose)] transition-colors duration-300 cursor-default">
@@ -160,24 +160,24 @@ export default async function ProductPage({ params }: Props) {
               {/* Description */}
               {product.description && (
                 <div className="border-t border-[var(--brand-pink)]/30 pt-6 mb-5">
-                  <h2 className="text-xs tracking-[0.2em] uppercase text-gray-500 mb-3 font-medium">Description</h2>
-                  <p className="text-sm text-gray-600 leading-relaxed">{product.description}</p>
+                  <h2 className="text-xs tracking-[0.2em] uppercase text-[var(--brand-charcoal)]/85 mb-3 font-medium">Description</h2>
+                  <p className="text-sm text-[var(--brand-charcoal)] leading-relaxed">{product.description}</p>
                 </div>
               )}
 
               {/* Material */}
               {product.material && (
                 <div className="border-t border-[var(--brand-pink)]/30 pt-5 mb-5">
-                  <h2 className="text-xs tracking-[0.2em] uppercase text-gray-500 mb-2 font-medium">Material</h2>
-                  <p className="text-sm text-gray-600">{product.material}</p>
+                  <h2 className="text-xs tracking-[0.2em] uppercase text-[var(--brand-charcoal)]/85 mb-2 font-medium">Material</h2>
+                  <p className="text-sm text-[var(--brand-charcoal)]">{product.material}</p>
                 </div>
               )}
 
               {/* Care */}
               {product.care_instructions && (
                 <div className="border-t border-[var(--brand-pink)]/30 pt-5">
-                  <h2 className="text-xs tracking-[0.2em] uppercase text-gray-500 mb-2 font-medium">Care Instructions</h2>
-                  <p className="text-sm text-gray-600">{product.care_instructions}</p>
+                  <h2 className="text-xs tracking-[0.2em] uppercase text-[var(--brand-charcoal)]/85 mb-2 font-medium">Care Instructions</h2>
+                  <p className="text-sm text-[var(--brand-charcoal)]">{product.care_instructions}</p>
                 </div>
               )}
             </div>

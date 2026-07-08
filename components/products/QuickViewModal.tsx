@@ -61,7 +61,7 @@ export default function QuickViewModal() {
                 <h2 className="font-serif text-2xl lg:text-3xl font-light text-[var(--brand-charcoal)] leading-tight mb-2">{p.name}</h2>
                 <div className="flex items-baseline gap-2 mb-5">
                   <span className="font-serif text-2xl font-semibold text-[var(--brand-charcoal)]">{formatPrice(p.price)}</span>
-                  {p.original_price && p.original_price > p.price && <span className="text-sm text-gray-400 line-through">{formatPrice(p.original_price)}</span>}
+                  {p.original_price && p.original_price > p.price && <span className="text-sm text-[var(--brand-charcoal)]/75 line-through">{formatPrice(p.original_price)}</span>}
                 </div>
                 <ProductActions product={p} />
                 <Link href={`/products/${p.slug}`} onClick={closeQuickView} className="mt-5 inline-flex items-center gap-2 text-[11px] tracking-[0.22em] uppercase text-[var(--brand-charcoal)] border-b border-[var(--brand-charcoal)]/20 hover:border-[var(--brand-rose)] hover:text-[var(--brand-rose)] pb-1 w-fit transition-colors">

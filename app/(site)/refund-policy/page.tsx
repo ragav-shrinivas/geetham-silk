@@ -10,7 +10,7 @@ export default function RefundPolicyPage() {
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-20 prose prose-sm prose-gray">
         <PageNav fallback="/" backLabel="Home" crumbs={[{ label: 'Refund Policy' }]} className="not-prose mb-10" />
         <h1 className="font-serif text-4xl font-light text-[var(--brand-charcoal)] not-prose mb-8">Refund Policy</h1>
-        <p className="text-gray-500 text-sm not-prose mb-8">Last updated: June 2026</p>
+        <p className="text-[var(--brand-charcoal)]/85 text-sm not-prose mb-8">Last updated: June 2026</p>
 
         <h2>WhatsApp Commerce Model</h2>
         <p>Geethams Silks operates exclusively through WhatsApp-based enquiry and in-store purchase. All purchases are finalized in-store or via direct WhatsApp arrangement.</p>

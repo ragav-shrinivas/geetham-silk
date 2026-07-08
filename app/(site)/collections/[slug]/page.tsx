@@ -65,7 +65,7 @@ export default async function CollectionCampaignPage({ params }: Props) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {products.length === 0 ? (
             <div className="text-center py-20">
-              <p className="font-serif text-3xl text-gray-300 mb-8">Pieces arriving soon</p>
+              <p className="font-serif text-3xl text-[var(--brand-charcoal)]/70 mb-8">Pieces arriving soon</p>
               <LuxButton href="/shop" variant="outline-charcoal" arrow>
                 Browse All Products
               </LuxButton>
@@ -76,7 +76,7 @@ export default async function CollectionCampaignPage({ params }: Props) {
                 <h2 className="font-serif text-3xl lg:text-5xl font-light text-[var(--brand-charcoal)]">
                   The <em className="italic text-[var(--brand-rose)]">Pieces</em>
                 </h2>
-                <p className="text-xs tracking-[0.25em] uppercase text-gray-400">
+                <p className="text-xs tracking-[0.25em] uppercase text-[var(--brand-charcoal)]/75">
                   {products.length} — {products.length === 1 ? 'Piece' : 'Pieces'}
                 </p>
               </Reveal>

@@ -37,7 +37,7 @@ export const getAnnouncements = unstable_cache(
   { revalidate: 300, tags: ['announcements'] }
 )
 
-export type ProductSort = 'featured' | 'newest' | 'price-asc' | 'price-desc' | 'bestselling'
+export type ProductSort = 'featured' | 'newest' | 'price-asc' | 'price-desc' | 'bestselling' | 'name-asc' | 'name-desc'
 
 export async function getProducts(opts?: {
   categorySlug?: string
@@ -52,6 +52,12 @@ export async function getProducts(opts?: {
   minPrice?: number
   /** exclusive upper price bound (INR) — half-open bands keep each product in one band */
   maxPrice?: number
+  /** fabric/material facet — match any of these */
+  materials?: string[]
+  /** colour facet — product matches if it has any of these colours */
+  colors?: string[]
+  /** availability facet */
+  availability?: 'in' | 'out'
   limit?: number
   offset?: number
 }) {
@@ -86,6 +92,12 @@ export async function getProducts(opts?: {
       case 'featured':
         query = query.order('is_featured', { ascending: false }).order('display_order', { ascending: true })
         break
+      case 'name-asc':
+        query = query.order('name', { ascending: true })
+        break
+      case 'name-desc':
+        query = query.order('name', { ascending: false })
+        break
       default:
         query = query.order('display_order', { ascending: true }).order('created_at', { ascending: false })
     }
@@ -98,6 +110,10 @@ export async function getProducts(opts?: {
   if (opts?.search) query = query.ilike('name', `%${opts.search}%`)
   if (typeof opts?.minPrice === 'number') query = query.gte('price', opts.minPrice)
   if (typeof opts?.maxPrice === 'number') query = query.lt('price', opts.maxPrice)
+  if (opts?.materials?.length) query = query.in('material', opts.materials)
+  if (opts?.colors?.length) query = query.overlaps('colors', opts.colors)
+  if (opts?.availability === 'in') query = query.eq('is_out_of_stock', false)
+  if (opts?.availability === 'out') query = query.eq('is_out_of_stock', true)
   if (opts?.categorySlug) {
     const { data: cat } = await supabase
       .from('categories')
@@ -154,6 +170,55 @@ export async function getProductBySlug(slug: string) {
     .single()
   if (error) return null
   return data as ProductWithImages
+}
+
+export interface NavCategory { name: string; slug: string; children: { name: string; slug: string }[] }
+
+/** Cached, cookieless category tree for the nav drawer — keeps pages static. */
+export const getNavCategories = unstable_cache(
+  async (): Promise<NavCategory[]> => {
+    try {
+      const sb = createAnonClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!)
+      const { data } = await sb.from('categories').select('id, name, slug, parent_id, is_active, display_order').eq('is_active', true).order('display_order')
+      const all = (data ?? []) as { id: string; name: string; slug: string; parent_id: string | null }[]
+      return all.filter((c) => !c.parent_id).map((p) => ({
+        name: p.name, slug: p.slug,
+        children: all.filter((c) => c.parent_id === p.id).map((c) => ({ name: c.name, slug: c.slug })),
+      }))
+    } catch {
+      return []
+    }
+  },
+  ['nav-categories'],
+  { revalidate: 300, tags: ['nav-categories'] }
+)
+
+export interface ShopFacet { value: string; count: number }
+export interface ShopFacets { materials: ShopFacet[]; colors: ShopFacet[]; outOfStock: number; inStock: number }
+
+/** Real fabric/colour/availability facets built from the active catalogue. */
+export async function getShopFacets(): Promise<ShopFacets> {
+  const supabase = await createClient()
+  const { data } = await supabase
+    .from('products')
+    .select('material, colors, is_out_of_stock')
+    .eq('is_active', true)
+  const mats = new Map<string, number>()
+  const cols = new Map<string, number>()
+  let outOfStock = 0
+  let inStock = 0
+  for (const p of (data ?? []) as { material: string | null; colors: string[] | null; is_out_of_stock: boolean }[]) {
+    const m = p.material?.trim()
+    if (m) mats.set(m, (mats.get(m) ?? 0) + 1)
+    for (const c of p.colors ?? []) {
+      const cc = c?.trim()
+      if (cc) cols.set(cc, (cols.get(cc) ?? 0) + 1)
+    }
+    if (p.is_out_of_stock) outOfStock++; else inStock++
+  }
+  const toSorted = (m: Map<string, number>): ShopFacet[] =>
+    [...m.entries()].map(([value, count]) => ({ value, count })).sort((a, b) => b.count - a.count || a.value.localeCompare(b.value))
+  return { materials: toSorted(mats), colors: toSorted(cols), outOfStock, inStock }
 }
 
 export async function getCategories(): Promise<import('@/types/database').Category[]> {

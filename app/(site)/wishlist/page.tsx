@@ -20,7 +20,7 @@ export default function WishlistPage() {
             <h1 className="font-serif text-4xl lg:text-5xl font-light text-[var(--brand-charcoal)]">Wishlist</h1>
           </div>
           {ready && wishlist.length > 0 && (
-            <p className="text-xs tracking-[0.25em] uppercase text-gray-400 pb-2 tabular-nums">
+            <p className="text-xs tracking-[0.25em] uppercase text-[var(--brand-charcoal)]/75 pb-2 tabular-nums">
               {wishlist.length} {wishlist.length === 1 ? 'Item' : 'Items'}
             </p>
           )}
@@ -35,8 +35,8 @@ export default function WishlistPage() {
         ) : wishlist.length === 0 ? (
           <div className="text-center py-24">
             <Heart size={44} strokeWidth={1} className="mx-auto text-[var(--brand-charcoal)]/20 mb-5" />
-            <p className="font-serif text-3xl text-[var(--brand-charcoal)]/60 mb-3">Your wishlist is empty</p>
-            <p className="text-sm text-gray-400 mb-8">Tap the heart on any piece to save it here.</p>
+            <p className="font-serif text-3xl text-[var(--brand-charcoal)]/80 mb-3">Your wishlist is empty</p>
+            <p className="text-sm text-[var(--brand-charcoal)]/75 mb-8">Tap the heart on any piece to save it here.</p>
             <Link href="/shop" className="inline-flex items-center gap-2 bg-[var(--brand-darkpink)] text-white text-[11px] tracking-[0.22em] uppercase px-8 py-4 hover:bg-[var(--brand-rose)] transition-colors">
               Explore the Boutique
             </Link>

@@ -23,7 +23,7 @@ export default function TrustStrip() {
               </span>
               <div>
                 <p className="font-serif text-base text-[var(--brand-charcoal)] leading-tight">{title}</p>
-                <p className="text-xs text-[var(--brand-charcoal)]/60 mt-1 leading-snug">{copy}</p>
+                <p className="text-xs text-[var(--brand-charcoal)]/80 mt-1 leading-snug">{copy}</p>
               </div>
             </li>
           ))}

@@ -56,7 +56,7 @@ export default function ProductActions({ product }: { product: ProductWithImages
       {tracked && (
         <p className={cn(
           'text-xs tracking-[0.15em] uppercase',
-          oos ? 'text-gray-400' : lowStock ? 'text-amber-600' : 'text-[#1f9d57]'
+          oos ? 'text-[var(--brand-charcoal)]/75' : lowStock ? 'text-amber-600' : 'text-[#1f9d57]'
         )}>
           {oos ? 'Out of stock' : lowStock ? `Only ${stock} left in stock` : `In stock · ${stock} available`}
         </p>
@@ -65,7 +65,7 @@ export default function ProductActions({ product }: { product: ProductWithImages
       {/* Sizes — selectable */}
       {sizes.length > 0 && (
         <div>
-          <p className="text-xs tracking-[0.2em] uppercase text-gray-500 mb-3 font-medium">Select Size</p>
+          <p className="text-xs tracking-[0.2em] uppercase text-[var(--brand-charcoal)]/85 mb-3 font-medium">Select Size</p>
           <div className="flex flex-wrap gap-2">
             {sizes.map((s) => (
               <button
@@ -91,7 +91,7 @@ export default function ProductActions({ product }: { product: ProductWithImages
       {/* Primary actions */}
       {oos ? (
         <div className="space-y-3">
-          <div className="w-full min-h-[52px] flex items-center justify-center border border-[var(--brand-charcoal)]/20 text-[var(--brand-charcoal)]/50 text-xs tracking-[0.2em] uppercase">
+          <div className="w-full min-h-[52px] flex items-center justify-center border border-[var(--brand-charcoal)]/20 text-[var(--brand-charcoal)]/78 text-xs tracking-[0.2em] uppercase">
             Currently Unavailable
           </div>
           <div className="flex gap-3">

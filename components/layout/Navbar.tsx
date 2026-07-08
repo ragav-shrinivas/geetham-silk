@@ -5,8 +5,9 @@ import { useState, useEffect, useRef, type FormEvent } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import { useLenis } from 'lenis/react'
-import { Menu, X, Search, MessageCircle, ArrowRight, ShoppingBag, Heart, User } from 'lucide-react'
+import { Menu, X, Search, MessageCircle, ArrowRight, ShoppingBag, Heart, User, ChevronDown } from 'lucide-react'
 import { NAV_LINKS, SITE, type AnnouncementMessage } from '@/lib/constants'
+import type { NavCategory } from '@/lib/queries'
 import { cn } from '@/lib/utils'
 import { LUXE } from '@/lib/motion'
 import { useStore } from '@/lib/store/StoreProvider'
@@ -15,7 +16,7 @@ import { formatPrice } from '@/lib/utils'
 import Wordmark from '@/components/common/Wordmark'
 import AnnouncementBar from '@/components/layout/AnnouncementBar'
 
-export default function Navbar({ announcements }: { announcements?: AnnouncementMessage[] }) {
+export default function Navbar({ announcements, categories = [] }: { announcements?: AnnouncementMessage[]; categories?: NavCategory[] }) {
   const [open, setOpen] = useState(false)
   const [searchOpen, setSearchOpen] = useState(false)
   const pathname = usePathname()
@@ -149,7 +150,7 @@ export default function Navbar({ announcements }: { announcements?: Announcement
         </ul>
       </nav>
 
-      <MobileMenu open={open} onClose={() => setOpen(false)} pathname={pathname} />
+      <MobileMenu open={open} onClose={() => setOpen(false)} pathname={pathname} categories={categories} />
       <SearchOverlay open={searchOpen} onClose={() => setSearchOpen(false)} />
     </header>
   )
@@ -167,21 +168,21 @@ function HeaderSearch() {
   }
   return (
     <form onSubmit={submit} role="search" className="relative w-full">
-      <Search size={17} className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-[var(--brand-charcoal)]/45" />
+      <Search size={17} className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-[var(--brand-charcoal)]/75" />
       <input
         type="search"
         value={q}
         onChange={(e) => setQ(e.target.value)}
         placeholder="Search the store..."
         aria-label="Search the store"
-        className="w-full rounded-full border border-[var(--brand-pink)] bg-white pl-10 pr-9 py-2.5 text-sm text-[var(--brand-charcoal)] placeholder:text-[var(--brand-charcoal)]/40 focus:outline-none focus:border-[var(--brand-darkpink)] focus:ring-2 focus:ring-[var(--brand-darkpink)]/20 transition-colors"
+        className="w-full rounded-full border border-[var(--brand-pink)] bg-white pl-10 pr-9 py-2.5 text-sm text-[var(--brand-charcoal)] placeholder:text-[var(--brand-charcoal)]/75 focus:outline-none focus:border-[var(--brand-darkpink)] focus:ring-2 focus:ring-[var(--brand-darkpink)]/20 transition-colors"
       />
       {q && (
         <button
           type="button"
           onClick={() => setQ('')}
           aria-label="Clear search"
-          className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--brand-charcoal)]/40 hover:text-[var(--brand-charcoal)] transition-colors"
+          className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--brand-charcoal)]/75 hover:text-[var(--brand-charcoal)] transition-colors"
         >
           <X size={15} />
         </button>
@@ -197,7 +198,7 @@ function HeaderSearch() {
    - Safe-area insets so the header/footer never tuck under notches or home bars.
    - Inner column scrolls if the links don't fit a short viewport — never clipped. */
 
-function MobileMenu({ open, onClose, pathname }: { open: boolean; onClose: () => void; pathname: string }) {
+function MobileMenu({ open, onClose, pathname, categories }: { open: boolean; onClose: () => void; pathname: string; categories: NavCategory[] }) {
   const reduced = useReducedMotion()
   return (
     <AnimatePresence>
@@ -229,61 +230,115 @@ function MobileMenu({ open, onClose, pathname }: { open: boolean; onClose: () =>
             </button>
           </div>
 
-          {/* Links — large touch targets, centered, scroll if they overflow */}
-          <nav className="flex-1 min-h-0 flex flex-col justify-center px-9 py-6 gap-1">
-            {NAV_LINKS.map((link, i) => {
-              const active = link.href === '/' ? pathname === '/' : pathname.startsWith(link.href)
-              return (
-                <span key={link.href} className="line-mask">
-                  <motion.span
-                    initial={{ y: '110%' }}
-                    animate={{ y: 0 }}
-                    transition={{ duration: reduced ? 0 : 0.6, ease: LUXE, delay: 0.12 + i * 0.06 }}
-                    className="block"
-                  >
+          {/* Scrollable list — primary links, then real categories, then account */}
+          <nav className="flex-1 min-h-0 overflow-y-auto overscroll-contain px-6 py-2">
+            <ul>
+              {NAV_LINKS.map((link) => {
+                const active = link.href === '/' ? pathname === '/' : pathname.startsWith(link.href)
+                return (
+                  <li key={link.href}>
                     <Link
                       href={link.href}
                       onClick={onClose}
                       className={cn(
-                        'group flex items-baseline gap-4 font-serif text-[2.3rem] sm:text-[2.6rem] leading-[1.35] font-light py-1.5 transition-colors duration-300',
-                        active ? 'text-[var(--brand-rose)] italic' : 'text-[var(--brand-charcoal)]'
+                        'block py-3.5 border-b-2 border-[var(--brand-pink)]/30 text-[15px] font-bold tracking-[0.12em] uppercase transition-colors',
+                        active ? 'text-[var(--brand-darkpink)]' : 'text-[var(--brand-charcoal)]'
                       )}
                     >
-                      <span className="text-xs tracking-[0.3em] text-[var(--brand-gold)] tabular-nums">
-                        {String(i + 1).padStart(2, '0')}
-                      </span>
                       {link.label}
                     </Link>
-                  </motion.span>
-                </span>
-              )
-            })}
+                  </li>
+                )
+              })}
+            </ul>
+
+            {categories.length > 0 && (
+              <>
+                <p className="pt-5 pb-2 text-[12px] font-bold tracking-[0.2em] uppercase text-[var(--brand-gold)]">Shop by Category</p>
+                <ul>
+                  {categories.map((cat) => (
+                    <li key={cat.slug}>
+                      <MenuCategory category={cat} onClose={onClose} />
+                    </li>
+                  ))}
+                </ul>
+              </>
+            )}
+
+            <p className="pt-5 pb-2 text-[12px] font-bold tracking-[0.2em] uppercase text-[var(--brand-gold)]">Account</p>
+            <ul>
+              {[{ label: 'My Account', href: '/account' }, { label: 'My Wishlist', href: '/wishlist' }].map((l) => (
+                <li key={l.href}>
+                  <Link href={l.href} onClick={onClose} className="block py-3.5 border-b-2 border-[var(--brand-pink)]/30 text-[15px] font-bold tracking-[0.12em] uppercase text-[var(--brand-charcoal)]">
+                    {l.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </nav>
 
           {/* Footer CTA */}
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: reduced ? 0 : 0.6, ease: LUXE, delay: 0.32 }}
-            className="px-9 pb-10 pt-2 space-y-5 shrink-0"
-          >
-            <div className="hairline" />
+          <div className="px-6 pb-8 pt-3 space-y-3 shrink-0 border-t-2 border-[var(--brand-pink)]/40">
             <a
               href={`https://wa.me/${SITE.whatsapp}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center gap-2 bg-[#25D366] text-white text-sm tracking-widest uppercase px-6 py-4 w-full active:scale-[0.98] transition-transform"
+              className="flex items-center justify-center gap-2 bg-[#25D366] text-white text-sm font-bold tracking-widest uppercase px-6 py-4 w-full active:scale-[0.98] transition-transform"
             >
               <MessageCircle size={16} />
               Enquire on WhatsApp
             </a>
-            <p className="text-center text-[11px] tracking-[0.25em] uppercase text-[var(--brand-gold)]">
+            <p className="text-center text-[12px] font-bold tracking-[0.25em] uppercase text-[var(--brand-gold)]">
               Palavakkam · Chennai
             </p>
-          </motion.div>
+          </div>
         </motion.div>
       )}
     </AnimatePresence>
+  )
+}
+
+/* ---------- Expandable category row in the mobile drawer ---------- */
+
+function MenuCategory({ category, onClose }: { category: NavCategory; onClose: () => void }) {
+  const [open, setOpen] = useState(false)
+  const hasChildren = category.children.length > 0
+  return (
+    <div className="border-b-2 border-[var(--brand-pink)]/30">
+      <div className="flex items-center justify-between">
+        <Link
+          href={`/shop?category=${category.slug}`}
+          onClick={onClose}
+          className="flex-1 py-3.5 text-[15px] font-bold tracking-[0.12em] uppercase text-[var(--brand-charcoal)]"
+        >
+          {category.name}
+        </Link>
+        {hasChildren && (
+          <button
+            onClick={() => setOpen((o) => !o)}
+            aria-label={open ? `Collapse ${category.name}` : `Expand ${category.name}`}
+            className="p-2 text-[var(--brand-charcoal)]"
+          >
+            <ChevronDown size={20} strokeWidth={2.6} className={cn('transition-transform duration-300', open && 'rotate-180')} />
+          </button>
+        )}
+      </div>
+      {hasChildren && open && (
+        <ul className="pb-2 pl-3 ml-1 border-l-2 border-[var(--brand-pink)]/40 space-y-0.5">
+          {category.children.map((ch) => (
+            <li key={ch.slug}>
+              <Link
+                href={`/shop?category=${ch.slug}`}
+                onClick={onClose}
+                className="block py-2 pl-3 text-[14px] font-semibold text-[var(--brand-charcoal)]"
+              >
+                {ch.name}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
   )
 }
 
@@ -394,9 +449,9 @@ function SearchOverlay({ open, onClose }: { open: boolean; onClose: () => void }
             {q.trim().length >= 2 ? (
               <div className="mt-6">
                 {searching && results.length === 0 ? (
-                  <p className="text-sm text-[var(--brand-charcoal)]/40">Searching…</p>
+                  <p className="text-sm text-[var(--brand-charcoal)]/75">Searching…</p>
                 ) : results.length === 0 ? (
-                  <p className="text-sm text-[var(--brand-charcoal)]/40">No matches. Press enter to search all.</p>
+                  <p className="text-sm text-[var(--brand-charcoal)]/75">No matches. Press enter to search all.</p>
                 ) : (
                   <div className="divide-y divide-[var(--brand-charcoal)]/10 max-h-[50vh] overflow-y-auto">
                     {results.map((p) => {

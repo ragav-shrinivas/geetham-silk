@@ -42,8 +42,8 @@ export default function LoginPage() {
             {busy ? <><Loader2 size={16} className="animate-spin" /> Signing in…</> : 'Sign In'}
           </button>
           <div className="flex items-center justify-between text-xs">
-            <Link href="/account/forgot-password" className="text-[var(--brand-charcoal)]/60 hover:text-[var(--brand-rose)]">Forgot password?</Link>
-            <Link href="/account/register" className="text-[var(--brand-charcoal)]/60 hover:text-[var(--brand-rose)]">Create account</Link>
+            <Link href="/account/forgot-password" className="text-[var(--brand-charcoal)]/80 hover:text-[var(--brand-rose)]">Forgot password?</Link>
+            <Link href="/account/register" className="text-[var(--brand-charcoal)]/80 hover:text-[var(--brand-rose)]">Create account</Link>
           </div>
         </form>
       </div>

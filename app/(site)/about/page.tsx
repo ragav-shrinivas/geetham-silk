@@ -50,21 +50,21 @@ export default function AboutPage() {
                   <MapPin className="text-[var(--brand-rose)] flex-shrink-0 mt-1" size={20} />
                   <div>
                     <p className="font-medium text-[var(--brand-charcoal)] mb-1">Address</p>
-                    <p className="text-gray-500 text-sm leading-relaxed">{SITE.address}</p>
+                    <p className="text-[var(--brand-charcoal)]/85 text-sm leading-relaxed">{SITE.address}</p>
                   </div>
                 </div>
                 <div className="flex gap-4">
                   <Phone className="text-[var(--brand-rose)] flex-shrink-0 mt-1" size={20} />
                   <div>
                     <p className="font-medium text-[var(--brand-charcoal)] mb-1">Phone</p>
-                    <a href={`tel:${SITE.phone}`} className="text-gray-500 text-sm hover:text-[var(--brand-rose)]">{SITE.phone}</a>
+                    <a href={`tel:${SITE.phone}`} className="text-[var(--brand-charcoal)]/85 text-sm hover:text-[var(--brand-rose)]">{SITE.phone}</a>
                   </div>
                 </div>
                 <div className="flex gap-4">
                   <Mail className="text-[var(--brand-rose)] flex-shrink-0 mt-1" size={20} />
                   <div>
                     <p className="font-medium text-[var(--brand-charcoal)] mb-1">Email</p>
-                    <a href={`mailto:${SITE.email}`} className="text-gray-500 text-sm hover:text-[var(--brand-rose)]">{SITE.email}</a>
+                    <a href={`mailto:${SITE.email}`} className="text-[var(--brand-charcoal)]/85 text-sm hover:text-[var(--brand-rose)]">{SITE.email}</a>
                   </div>
                 </div>
                 <div className="flex gap-4">
@@ -72,18 +72,18 @@ export default function AboutPage() {
                   <div>
                     <p className="font-medium text-[var(--brand-charcoal)] mb-1">WhatsApp</p>
                     <a href={`https://wa.me/${SITE.whatsapp}`} target="_blank" rel="noopener noreferrer"
-                      className="text-gray-500 text-sm hover:text-[#25D366]">{SITE.phone}</a>
+                      className="text-[var(--brand-charcoal)]/85 text-sm hover:text-[#25D366]">{SITE.phone}</a>
                   </div>
                 </div>
               </div>
 
               <div className="flex gap-4 justify-center mt-8 pt-8 border-t border-[var(--brand-pink)]/20">
                 <a href={SITE.instagram} target="_blank" rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-sm text-gray-500 hover:text-[var(--brand-rose)] transition-colors">
+                  className="flex items-center gap-2 text-sm text-[var(--brand-charcoal)]/85 hover:text-[var(--brand-rose)] transition-colors">
                   <InstagramIcon /> Instagram
                 </a>
                 <a href={SITE.facebook} target="_blank" rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-sm text-gray-500 hover:text-[var(--brand-rose)] transition-colors">
+                  className="flex items-center gap-2 text-sm text-[var(--brand-charcoal)]/85 hover:text-[var(--brand-rose)] transition-colors">
                   <FacebookIcon /> Facebook
                 </a>
               </div>

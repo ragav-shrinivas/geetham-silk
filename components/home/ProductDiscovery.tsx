@@ -191,11 +191,11 @@ function DiscoveryCard({ product, index, reduced }: { product: ProductWithImages
             {formatPrice(product.price)}
           </span>
           {product.original_price && product.original_price > product.price && (
-            <span className="text-sm text-gray-400 line-through">{formatPrice(product.original_price)}</span>
+            <span className="text-sm text-[var(--brand-charcoal)]/75 line-through">{formatPrice(product.original_price)}</span>
           )}
         </div>
 
-        <span className={`mt-1.5 inline-flex items-center gap-1.5 text-[11px] tracking-[0.12em] uppercase ${oos ? 'text-gray-400' : 'text-[#1f9d57]'}`}>
+        <span className={`mt-1.5 inline-flex items-center gap-1.5 text-[11px] tracking-[0.12em] uppercase ${oos ? 'text-[var(--brand-charcoal)]/75' : 'text-[#1f9d57]'}`}>
           {oos ? 'Unavailable' : <><Check size={11} /> In Stock</>}
         </span>
 

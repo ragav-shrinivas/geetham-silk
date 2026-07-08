@@ -6,14 +6,14 @@ import PageTransition from '@/components/common/PageTransition'
 import { StoreProvider } from '@/lib/store/StoreProvider'
 import CartDrawer from '@/components/cart/CartDrawer'
 import QuickViewModal from '@/components/products/QuickViewModal'
-import { getAnnouncements } from '@/lib/queries'
+import { getAnnouncements, getNavCategories } from '@/lib/queries'
 
 export default async function SiteLayout({ children }: { children: React.ReactNode }) {
-  const announcements = await getAnnouncements()
+  const [announcements, navCategories] = await Promise.all([getAnnouncements(), getNavCategories()])
   return (
     <SmoothScroll>
       <StoreProvider>
-        <Navbar announcements={announcements} />
+        <Navbar announcements={announcements} categories={navCategories} />
         <main className="min-h-screen overflow-x-hidden">
           <PageTransition>{children}</PageTransition>
         </main>

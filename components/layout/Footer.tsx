@@ -24,21 +24,21 @@ export default function Footer() {
           {/* Brand */}
           <div className="lg:col-span-1">
             <Wordmark as="h3" size="sm" tagline className="items-start mb-5" />
-            <p className="text-gray-400 text-sm leading-relaxed mb-6">
+            <p className="text-[var(--brand-charcoal)]/75 text-sm leading-relaxed mb-6">
               Premium sarees, kurtas & ethnic wear for the modern Indian woman.
               Elegance woven in every thread.
             </p>
             <div className="flex gap-4">
               <a href={SITE.instagram} target="_blank" rel="noopener noreferrer"
-                className="text-gray-400 hover:text-[var(--brand-pink)] transition-colors">
+                className="text-[var(--brand-charcoal)]/75 hover:text-[var(--brand-pink)] transition-colors">
                 <InstagramIcon />
               </a>
               <a href={SITE.facebook} target="_blank" rel="noopener noreferrer"
-                className="text-gray-400 hover:text-[var(--brand-pink)] transition-colors">
+                className="text-[var(--brand-charcoal)]/75 hover:text-[var(--brand-pink)] transition-colors">
                 <FacebookIcon />
               </a>
               <a href={`https://wa.me/${SITE.whatsapp}`} target="_blank" rel="noopener noreferrer"
-                className="text-gray-400 hover:text-[#25D366] transition-colors">
+                className="text-[var(--brand-charcoal)]/75 hover:text-[#25D366] transition-colors">
                 <MessageCircle size={20} />
               </a>
             </div>
@@ -51,7 +51,7 @@ export default function Footer() {
               {NAV_LINKS.map((link) => (
                 <li key={link.href}>
                   <Link href={link.href}
-                    className="text-gray-400 hover:text-white text-sm transition-colors tracking-wide">
+                    className="text-[var(--brand-charcoal)]/75 hover:text-white text-sm transition-colors tracking-wide">
                     {link.label}
                   </Link>
                 </li>
@@ -70,7 +70,7 @@ export default function Footer() {
               ].map((link) => (
                 <li key={link.href}>
                   <Link href={link.href}
-                    className="text-gray-400 hover:text-white text-sm transition-colors tracking-wide">
+                    className="text-[var(--brand-charcoal)]/75 hover:text-white text-sm transition-colors tracking-wide">
                     {link.label}
                   </Link>
                 </li>
@@ -82,20 +82,20 @@ export default function Footer() {
           <div>
             <h4 className="text-xs tracking-[0.2em] uppercase text-[var(--brand-pink)] mb-5 font-medium">Contact Us</h4>
             <ul className="space-y-4">
-              <li className="flex gap-3 text-sm text-gray-400">
+              <li className="flex gap-3 text-sm text-[var(--brand-charcoal)]/75">
                 <MapPin size={16} className="flex-shrink-0 mt-0.5 text-[var(--brand-pink)]" />
                 <span className="leading-relaxed">{SITE.address}</span>
               </li>
               <li>
                 <a href={`tel:${SITE.phone}`}
-                  className="flex gap-3 text-sm text-gray-400 hover:text-white transition-colors">
+                  className="flex gap-3 text-sm text-[var(--brand-charcoal)]/75 hover:text-white transition-colors">
                   <Phone size={16} className="flex-shrink-0 mt-0.5 text-[var(--brand-pink)]" />
                   {SITE.phone}
                 </a>
               </li>
               <li>
                 <a href={`mailto:${SITE.email}`}
-                  className="flex gap-3 text-sm text-gray-400 hover:text-white transition-colors">
+                  className="flex gap-3 text-sm text-[var(--brand-charcoal)]/75 hover:text-white transition-colors">
                   <Mail size={16} className="flex-shrink-0 mt-0.5 text-[var(--brand-pink)]" />
                   {SITE.email}
                 </a>
@@ -114,7 +114,7 @@ export default function Footer() {
 
       {/* Bottom bar */}
       <div className="border-t border-white/10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 flex flex-col sm:flex-row justify-between items-center gap-3 text-xs text-gray-500 tracking-wide">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 flex flex-col sm:flex-row justify-between items-center gap-3 text-xs text-[var(--brand-charcoal)]/85 tracking-wide">
           <p className="flex items-center gap-2">
             © {new Date().getFullYear()} Geethams Silks. All rights reserved.
             <Link

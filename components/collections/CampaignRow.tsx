@@ -79,7 +79,7 @@ export default function CampaignRow({ collection, index }: CampaignRowProps) {
             initial={false}
             animate={{ opacity: shown ? 1 : 0, y: shown ? 0 : 20 }}
             transition={{ duration: 0.9, ease: LUXE, delay: 0.28 }}
-            className={cn('mt-5 text-sm sm:text-base text-gray-500 leading-relaxed max-w-md', reversed && 'lg:ml-auto')}
+            className={cn('mt-5 text-sm sm:text-base text-[var(--brand-charcoal)]/85 leading-relaxed max-w-md', reversed && 'lg:ml-auto')}
           >
             {collection.description}
           </motion.p>

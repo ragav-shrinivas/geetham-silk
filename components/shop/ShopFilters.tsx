@@ -64,7 +64,7 @@ export default function ShopFilters({ categories, collections }: Props) {
   const pill = (active: boolean) =>
     cn(
       'group relative shrink-0 pb-1.5 text-[11px] tracking-[0.22em] uppercase transition-colors duration-300 whitespace-nowrap',
-      active ? 'text-[var(--brand-rose)]' : 'text-[var(--brand-charcoal)]/60 hover:text-[var(--brand-charcoal)]'
+      active ? 'text-[var(--brand-rose)]' : 'text-[var(--brand-charcoal)]/80 hover:text-[var(--brand-charcoal)]'
     )
 
   const underline = (active: boolean) =>
@@ -114,7 +114,7 @@ export default function ShopFilters({ categories, collections }: Props) {
               <option key={s.value} value={s.value}>{s.label}</option>
             ))}
           </select>
-          <ChevronDown size={12} className="absolute right-0 top-1/2 -translate-y-1/2 pointer-events-none text-[var(--brand-charcoal)]/50" />
+          <ChevronDown size={12} className="absolute right-0 top-1/2 -translate-y-1/2 pointer-events-none text-[var(--brand-charcoal)]/78" />
         </div>
       </div>
 
@@ -130,7 +130,7 @@ export default function ShopFilters({ categories, collections }: Props) {
                 'shrink-0 border px-3.5 py-1.5 text-[10px] tracking-[0.2em] uppercase transition-all duration-300',
                 activeCategory === activeParent.slug
                   ? 'border-[var(--brand-rose)] bg-[var(--brand-rose)] text-white'
-                  : 'border-[var(--brand-charcoal)]/15 text-[var(--brand-charcoal)]/60 hover:border-[var(--brand-rose)]/60 hover:text-[var(--brand-rose)]'
+                  : 'border-[var(--brand-charcoal)]/15 text-[var(--brand-charcoal)]/80 hover:border-[var(--brand-rose)]/60 hover:text-[var(--brand-rose)]'
               )}
             >
               All {activeParent.name}
@@ -143,7 +143,7 @@ export default function ShopFilters({ categories, collections }: Props) {
                   'shrink-0 border px-3.5 py-1.5 text-[10px] tracking-[0.2em] uppercase transition-all duration-300',
                   activeCategory === ch.slug
                     ? 'border-[var(--brand-rose)] bg-[var(--brand-rose)] text-white'
-                    : 'border-[var(--brand-charcoal)]/15 text-[var(--brand-charcoal)]/60 hover:border-[var(--brand-rose)]/60 hover:text-[var(--brand-rose)]'
+                    : 'border-[var(--brand-charcoal)]/15 text-[var(--brand-charcoal)]/80 hover:border-[var(--brand-rose)]/60 hover:text-[var(--brand-rose)]'
                 )}
               >
                 {ch.name}
@@ -173,7 +173,7 @@ export default function ShopFilters({ categories, collections }: Props) {
                 'shrink-0 border px-3.5 py-1.5 text-[10px] tracking-[0.2em] uppercase transition-all duration-300',
                 activeCollection === col.slug
                   ? 'border-[var(--brand-rose)] bg-[var(--brand-rose)] text-white'
-                  : 'border-[var(--brand-charcoal)]/15 text-[var(--brand-charcoal)]/60 hover:border-[var(--brand-rose)]/60 hover:text-[var(--brand-rose)]'
+                  : 'border-[var(--brand-charcoal)]/15 text-[var(--brand-charcoal)]/80 hover:border-[var(--brand-rose)]/60 hover:text-[var(--brand-rose)]'
               )}
             >
               {col.name}

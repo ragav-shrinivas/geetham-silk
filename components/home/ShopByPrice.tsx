@@ -47,7 +47,7 @@ export default function ShopByPrice() {
                 <p className="font-serif text-lg sm:text-2xl font-light text-[var(--brand-charcoal)] leading-tight">
                   {b.label}
                 </p>
-                <span className="mt-2 inline-flex items-center gap-1.5 text-[11px] tracking-[0.18em] uppercase text-[var(--brand-charcoal)]/60 group-hover:text-[var(--brand-darkpink)] transition-colors">
+                <span className="mt-2 inline-flex items-center gap-1.5 text-[11px] tracking-[0.18em] uppercase text-[var(--brand-charcoal)]/80 group-hover:text-[var(--brand-darkpink)] transition-colors">
                   Shop now
                   <ArrowRight size={13} className="transition-transform duration-300 group-hover:translate-x-1" />
                 </span>

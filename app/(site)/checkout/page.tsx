@@ -238,14 +238,14 @@ export default function CheckoutPage() {
             <h2 className="font-serif text-2xl font-light text-[var(--brand-charcoal)] mb-2">
               {done.paid ? 'Payment confirmed!' : 'Order placed'}
             </h2>
-            <p className="text-sm text-gray-500 mb-1">Your order reference is</p>
+            <p className="text-sm text-[var(--brand-charcoal)]/85 mb-1">Your order reference is</p>
             <p className="font-mono text-lg font-semibold text-[var(--brand-rose)] mb-5">{done.number}</p>
             {done.paid ? (
-              <p className="text-sm text-gray-500 mb-6">
+              <p className="text-sm text-[var(--brand-charcoal)]/85 mb-6">
                 Your payment was successful. We'll confirm your order and share shipping updates shortly.
               </p>
             ) : (
-              <p className="text-sm text-gray-500 mb-6">
+              <p className="text-sm text-[var(--brand-charcoal)]/85 mb-6">
                 We've opened WhatsApp so you can confirm with us and share payment details.
               </p>
             )}
@@ -258,7 +258,7 @@ export default function CheckoutPage() {
           </div>
         ) : !ready ? null : cartCount === 0 ? (
           <div className="text-center py-20">
-            <p className="font-serif text-2xl text-[var(--brand-charcoal)]/60 mb-6">Your bag is empty</p>
+            <p className="font-serif text-2xl text-[var(--brand-charcoal)]/80 mb-6">Your bag is empty</p>
             <Link href="/shop" className="inline-flex bg-[var(--brand-darkpink)] text-white text-[11px] tracking-[0.22em] uppercase px-8 py-4 hover:bg-[var(--brand-rose)] transition-colors">
               Start Shopping
             </Link>
@@ -307,7 +307,7 @@ export default function CheckoutPage() {
                     <div key={`${it.id}-${it.size ?? ''}`} className="flex justify-between items-start py-2.5 text-sm">
                       <span className="text-[var(--brand-charcoal)] pr-3">
                         {it.name}{it.size ? ` · ${it.size}` : ''}{' '}
-                        <span className="text-gray-400">× {it.qty}</span>
+                        <span className="text-[var(--brand-charcoal)]/75">× {it.qty}</span>
                       </span>
                       <span className="font-medium tabular-nums shrink-0">{formatPrice(it.price * it.qty)}</span>
                     </div>
@@ -315,7 +315,7 @@ export default function CheckoutPage() {
                 </div>
 
                 <div className="border-t border-[var(--brand-pink)]/30 pt-3 flex justify-between items-baseline mb-4">
-                  <span className="text-[11px] tracking-[0.2em] uppercase text-gray-500">Total</span>
+                  <span className="text-[11px] tracking-[0.2em] uppercase text-[var(--brand-charcoal)]/85">Total</span>
                   <span className="font-serif text-2xl font-semibold text-[var(--brand-charcoal)] tabular-nums">
                     {formatPrice(cartTotal)}
                   </span>
@@ -332,11 +332,11 @@ export default function CheckoutPage() {
                   }
                 </button>
 
-                <div className="mt-4 flex items-start gap-2 text-[11px] text-gray-400 leading-relaxed">
+                <div className="mt-4 flex items-start gap-2 text-[11px] text-[var(--brand-charcoal)]/75 leading-relaxed">
                   <ShieldCheck size={14} className="text-[var(--brand-rose)] shrink-0 mt-0.5" />
                   Secured by Razorpay · Cards, UPI, NetBanking &amp; Wallets accepted
                 </div>
-                <div className="mt-2 flex items-start gap-2 text-[11px] text-gray-400 leading-relaxed">
+                <div className="mt-2 flex items-start gap-2 text-[11px] text-[var(--brand-charcoal)]/75 leading-relaxed">
                   <MessageCircle size={14} className="text-green-500 shrink-0 mt-0.5" />
                   WhatsApp confirmation available if payment window is dismissed
                 </div>

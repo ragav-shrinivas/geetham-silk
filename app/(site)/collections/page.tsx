@@ -30,7 +30,7 @@ export default async function CollectionsPage() {
 
         {collections.length === 0 ? (
           <div className="text-center py-24">
-            <p className="font-serif text-3xl text-gray-300 mb-8">Collections coming soon</p>
+            <p className="font-serif text-3xl text-[var(--brand-charcoal)]/70 mb-8">Collections coming soon</p>
             <LuxButton href="/shop" variant="outline-charcoal" arrow>
               Shop All Products
             </LuxButton>

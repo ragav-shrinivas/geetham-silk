@@ -80,7 +80,7 @@ export default function FeedbackForm() {
             <h3 className="font-serif text-2xl sm:text-3xl font-light text-[var(--brand-charcoal)] mb-3">
               Thank you for your <em className="italic text-[var(--brand-rose)]">kind words</em>
             </h3>
-            <p className="text-sm text-gray-500 max-w-sm mx-auto leading-relaxed">
+            <p className="text-sm text-[var(--brand-charcoal)]/85 max-w-sm mx-auto leading-relaxed">
               Your feedback has been received and will appear on our site once it&apos;s reviewed.
             </p>
           </motion.div>
@@ -123,7 +123,7 @@ export default function FeedbackForm() {
                       className={
                         n <= (hoverRating || rating)
                           ? 'fill-[var(--brand-gold)] text-[var(--brand-gold)]'
-                          : 'text-gray-300'
+                          : 'text-[var(--brand-charcoal)]/70'
                       }
                     />
                   </button>

@@ -24,8 +24,8 @@ interface BreadcrumbsProps {
 export default function Breadcrumbs({ items, variant = 'default', className }: BreadcrumbsProps) {
   const trail: Crumb[] = [{ label: 'Home', href: '/' }, ...items]
 
-  const muted = variant === 'overlay' ? 'text-white/55' : 'text-[var(--brand-charcoal)]/45'
-  const link = variant === 'overlay' ? 'text-white/75 hover:text-white' : 'text-[var(--brand-charcoal)]/60 hover:text-[var(--brand-rose)]'
+  const muted = variant === 'overlay' ? 'text-white/55' : 'text-[var(--brand-charcoal)]/75'
+  const link = variant === 'overlay' ? 'text-white/75 hover:text-white' : 'text-[var(--brand-charcoal)]/80 hover:text-[var(--brand-rose)]'
   const current = variant === 'overlay' ? 'text-white' : 'text-[var(--brand-charcoal)]'
 
   const jsonLd = {

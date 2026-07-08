@@ -25,8 +25,8 @@ export default function CartPage() {
         ) : cart.length === 0 ? (
           <div className="text-center py-24">
             <ShoppingBag size={44} strokeWidth={1} className="mx-auto text-[var(--brand-charcoal)]/20 mb-5" />
-            <p className="font-serif text-3xl text-[var(--brand-charcoal)]/60 mb-3">Your bag is empty</p>
-            <p className="text-sm text-gray-400 mb-8">Discover something beautiful to add.</p>
+            <p className="font-serif text-3xl text-[var(--brand-charcoal)]/80 mb-3">Your bag is empty</p>
+            <p className="text-sm text-[var(--brand-charcoal)]/75 mb-8">Discover something beautiful to add.</p>
             <Link href="/shop" className="inline-flex items-center gap-2 bg-[var(--brand-darkpink)] text-white text-[11px] tracking-[0.22em] uppercase px-8 py-4 hover:bg-[var(--brand-rose)] transition-colors">
               Start Shopping
             </Link>
@@ -42,7 +42,7 @@ export default function CartPage() {
                   </Link>
                   <div className="flex-1 min-w-0 flex flex-col">
                     <Link href={`/products/${it.slug}`} className="font-serif text-lg font-light text-[var(--brand-charcoal)] leading-snug hover:text-[var(--brand-rose)] transition-colors line-clamp-2">{it.name}</Link>
-                    {it.size && <span className="text-[11px] tracking-[0.15em] uppercase text-gray-400 mt-1">Size: {it.size}</span>}
+                    {it.size && <span className="text-[11px] tracking-[0.15em] uppercase text-[var(--brand-charcoal)]/75 mt-1">Size: {it.size}</span>}
                     <span className="font-serif text-lg font-semibold text-[var(--brand-charcoal)] mt-1">{formatPrice(it.price)}</span>
                     <div className="mt-auto flex items-center justify-between pt-3">
                       <div className="flex items-center border border-[var(--brand-charcoal)]/15">
@@ -50,7 +50,7 @@ export default function CartPage() {
                         <span className="w-9 text-center text-sm tabular-nums">{it.qty}</span>
                         <button onClick={() => setQty(it.id, it.size, it.qty + 1)} aria-label="Increase" className="w-9 h-9 flex items-center justify-center hover:bg-[var(--brand-pink)]/15 active:scale-90 transition"><Plus size={14} /></button>
                       </div>
-                      <button onClick={() => removeFromCart(it.id, it.size)} aria-label="Remove" className="inline-flex items-center gap-1.5 text-xs text-gray-400 hover:text-red-500 transition-colors"><Trash2 size={14} /> Remove</button>
+                      <button onClick={() => removeFromCart(it.id, it.size)} aria-label="Remove" className="inline-flex items-center gap-1.5 text-xs text-[var(--brand-charcoal)]/75 hover:text-red-500 transition-colors"><Trash2 size={14} /> Remove</button>
                     </div>
                   </div>
                 </div>
@@ -62,18 +62,18 @@ export default function CartPage() {
               <div className="bg-[var(--brand-sandal-light)] border border-[var(--brand-pink)]/30 p-6 lg:sticky lg:top-28">
                 <h2 className="font-serif text-xl font-light text-[var(--brand-charcoal)] mb-5">Order Summary</h2>
                 <div className="space-y-3 text-sm">
-                  <div className="flex justify-between text-gray-600"><span>Subtotal</span><span className="tabular-nums">{formatPrice(cartTotal)}</span></div>
-                  <div className="flex justify-between text-gray-600"><span>Shipping</span><span className="text-gray-400">Calculated at checkout</span></div>
-                  <div className="flex justify-between text-gray-600"><span>Tax (GST)</span><span className="text-gray-400">Calculated at checkout</span></div>
+                  <div className="flex justify-between text-[var(--brand-charcoal)]"><span>Subtotal</span><span className="tabular-nums">{formatPrice(cartTotal)}</span></div>
+                  <div className="flex justify-between text-[var(--brand-charcoal)]"><span>Shipping</span><span className="text-[var(--brand-charcoal)]/75">Calculated at checkout</span></div>
+                  <div className="flex justify-between text-[var(--brand-charcoal)]"><span>Tax (GST)</span><span className="text-[var(--brand-charcoal)]/75">Calculated at checkout</span></div>
                 </div>
                 <div className="border-t border-[var(--brand-pink)]/30 mt-4 pt-4 flex justify-between items-baseline">
-                  <span className="text-[11px] tracking-[0.2em] uppercase text-gray-500">Total</span>
+                  <span className="text-[11px] tracking-[0.2em] uppercase text-[var(--brand-charcoal)]/85">Total</span>
                   <span className="font-serif text-2xl font-semibold text-[var(--brand-charcoal)] tabular-nums">{formatPrice(cartTotal)}</span>
                 </div>
                 <button onClick={() => router.push('/checkout')} className="w-full min-h-[52px] mt-5 bg-[var(--brand-darkpink)] text-white text-xs tracking-[0.2em] uppercase hover:bg-[var(--brand-rose)] transition-colors active:scale-[0.99]">
                   Proceed to Checkout
                 </button>
-                <Link href="/shop" className="block text-center mt-3 text-[11px] tracking-[0.2em] uppercase text-[var(--brand-charcoal)]/60 hover:text-[var(--brand-rose)] transition-colors">Continue Shopping</Link>
+                <Link href="/shop" className="block text-center mt-3 text-[11px] tracking-[0.2em] uppercase text-[var(--brand-charcoal)]/80 hover:text-[var(--brand-rose)] transition-colors">Continue Shopping</Link>
               </div>
             </div>
           </div>

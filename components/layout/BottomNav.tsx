@@ -18,7 +18,7 @@ export default function BottomNav() {
   const tabClass = (active: boolean) =>
     cn(
       'relative flex flex-col items-center justify-center gap-1 flex-1 min-h-[56px] text-[10px] tracking-[0.08em] uppercase transition-colors duration-200',
-      active ? 'text-[var(--brand-rose)]' : 'text-[var(--brand-charcoal)]/55'
+      active ? 'text-[var(--brand-rose)]' : 'text-[var(--brand-charcoal)]/80'
     )
 
   return (

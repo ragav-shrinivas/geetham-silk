@@ -33,12 +33,12 @@ export default function ForgotPasswordPage() {
         {sent ? (
           <div className="bg-white border border-[var(--brand-pink)]/30 p-8 text-center">
             <div className="w-12 h-12 rounded-full bg-green-50 text-green-600 flex items-center justify-center mx-auto mb-4"><Check size={24} /></div>
-            <p className="text-sm text-gray-500">If an account exists for <strong>{email}</strong>, a reset link is on its way.</p>
+            <p className="text-sm text-[var(--brand-charcoal)]/85">If an account exists for <strong>{email}</strong>, a reset link is on its way.</p>
             <Link href="/account/login" className="inline-flex mt-6 text-[11px] tracking-[0.2em] uppercase border-b border-[var(--brand-charcoal)]/30 pb-1 hover:text-[var(--brand-rose)] hover:border-[var(--brand-rose)] transition-colors">Back to Sign In</Link>
           </div>
         ) : (
           <form onSubmit={submit} className="bg-white border border-[var(--brand-pink)]/30 p-6 space-y-4">
-            <p className="text-sm text-gray-500">Enter your email and we’ll send you a link to reset your password.</p>
+            <p className="text-sm text-[var(--brand-charcoal)]/85">Enter your email and we’ll send you a link to reset your password.</p>
             <input type="email" required placeholder="Email" className={field} value={email} onChange={(e) => setEmail(e.target.value)} />
             {error && <p className="text-sm text-red-500">{error}</p>}
             <button type="submit" disabled={busy} className="w-full min-h-[52px] bg-[var(--brand-darkpink)] text-white text-xs tracking-[0.2em] uppercase hover:bg-[var(--brand-rose)] transition-colors disabled:opacity-60 inline-flex items-center justify-center gap-2">

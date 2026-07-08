@@ -15,7 +15,7 @@ interface Address { id: string; full_name: string; phone: string; line1: string;
 
 const STATUS_STYLE: Record<string, string> = {
   pending: 'text-amber-600', confirmed: 'text-blue-600', processing: 'text-indigo-600',
-  shipped: 'text-purple-600', delivered: 'text-green-600', cancelled: 'text-gray-400', returned: 'text-red-500',
+  shipped: 'text-purple-600', delivered: 'text-green-600', cancelled: 'text-[var(--brand-charcoal)]/75', returned: 'text-red-500',
 }
 
 export default function AccountPage() {
@@ -44,7 +44,7 @@ function SignedOut({ waMsg }: { waMsg: string }) {
       <div className="text-center mb-10">
         <UserCircle size={48} strokeWidth={1} className="mx-auto text-[var(--brand-rose)] mb-4" />
         <h1 className="font-serif text-4xl lg:text-5xl font-light text-[var(--brand-charcoal)]">My Account</h1>
-        <p className="text-gray-500 mt-3 max-w-md mx-auto text-sm">Sign in to track orders, save addresses and check out faster.</p>
+        <p className="text-[var(--brand-charcoal)]/85 mt-3 max-w-md mx-auto text-sm">Sign in to track orders, save addresses and check out faster.</p>
       </div>
       <div className="flex flex-col sm:flex-row gap-3 justify-center mb-10">
         <Link href="/account/login" className="inline-flex items-center justify-center bg-[var(--brand-darkpink)] text-white text-[11px] tracking-[0.22em] uppercase px-8 py-4 hover:bg-[var(--brand-rose)] transition-colors">Sign In</Link>
@@ -58,7 +58,7 @@ function SignedOut({ waMsg }: { waMsg: string }) {
           </Link>
         ))}
       </div>
-      <p className="text-center text-xs text-gray-400 mt-8">
+      <p className="text-center text-xs text-[var(--brand-charcoal)]/75 mt-8">
         Need help? <a href={`https://wa.me/${SITE.whatsapp}?text=${waMsg}`} target="_blank" rel="noopener noreferrer" className="text-[var(--brand-rose)] hover:underline inline-flex items-center gap-1"><MessageCircle size={12} /> Chat on WhatsApp</a>
       </p>
     </>
@@ -91,16 +91,16 @@ function SignedIn({ user, onSignOut }: { user: { id: string; email?: string }; o
       <div className="flex items-center justify-between mb-8">
         <div>
           <h1 className="font-serif text-3xl lg:text-4xl font-light text-[var(--brand-charcoal)]">Hello{name ? `, ${name.split(' ')[0]}` : ''}</h1>
-          <p className="text-sm text-gray-500 mt-1">{user.email}</p>
+          <p className="text-sm text-[var(--brand-charcoal)]/85 mt-1">{user.email}</p>
         </div>
-        <button onClick={onSignOut} className="inline-flex items-center gap-2 text-[11px] tracking-[0.18em] uppercase text-gray-500 hover:text-red-500 transition-colors"><LogOut size={14} /> Sign Out</button>
+        <button onClick={onSignOut} className="inline-flex items-center gap-2 text-[11px] tracking-[0.18em] uppercase text-[var(--brand-charcoal)]/85 hover:text-red-500 transition-colors"><LogOut size={14} /> Sign Out</button>
       </div>
 
       {/* Orders */}
       <section className="mb-10">
         <h2 className="font-serif text-xl font-light text-[var(--brand-charcoal)] mb-4 flex items-center gap-2"><Package size={18} className="text-[var(--brand-rose)]" /> Order History</h2>
         {orders.length === 0 ? (
-          <div className="bg-white border border-[var(--brand-pink)]/30 p-8 text-center text-sm text-gray-400">
+          <div className="bg-white border border-[var(--brand-pink)]/30 p-8 text-center text-sm text-[var(--brand-charcoal)]/75">
             No orders yet. <Link href="/shop" className="text-[var(--brand-rose)] hover:underline">Start shopping</Link>.
           </div>
         ) : (
@@ -111,8 +111,8 @@ function SignedIn({ user, onSignOut }: { user: { id: string; email?: string }; o
                   <span className="font-mono text-sm font-medium text-[var(--brand-charcoal)]">{o.order_number}</span>
                   <span className={`text-[11px] uppercase tracking-wide font-medium ${STATUS_STYLE[o.status] ?? ''}`}>{o.status}</span>
                 </div>
-                <p className="text-xs text-gray-500 mt-1">{new Date(o.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })} · {o.order_items.length} item(s)</p>
-                <p className="text-xs text-gray-500 mt-1 line-clamp-1">{o.order_items.map((it) => `${it.product_name} ×${it.quantity}`).join(', ')}</p>
+                <p className="text-xs text-[var(--brand-charcoal)]/85 mt-1">{new Date(o.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })} · {o.order_items.length} item(s)</p>
+                <p className="text-xs text-[var(--brand-charcoal)]/85 mt-1 line-clamp-1">{o.order_items.map((it) => `${it.product_name} ×${it.quantity}`).join(', ')}</p>
                 <p className="font-serif text-lg font-semibold text-[var(--brand-charcoal)] mt-2">{formatPrice(o.total)}</p>
               </div>
             ))}
@@ -172,22 +172,22 @@ function AddressBook({ userId, addresses, reload }: { userId: string; addresses:
           </div>
           <div className="flex gap-2">
             <button onClick={save} disabled={busy} className="bg-[var(--brand-darkpink)] text-white text-[11px] tracking-[0.18em] uppercase px-6 py-2.5 hover:bg-[var(--brand-rose)] transition-colors disabled:opacity-60">{busy ? 'Saving…' : 'Save'}</button>
-            <button onClick={() => setAdding(false)} className="text-[11px] tracking-[0.18em] uppercase text-gray-500 px-4">Cancel</button>
+            <button onClick={() => setAdding(false)} className="text-[11px] tracking-[0.18em] uppercase text-[var(--brand-charcoal)]/85 px-4">Cancel</button>
           </div>
         </div>
       )}
 
       {addresses.length === 0 && !adding ? (
-        <div className="bg-white border border-[var(--brand-pink)]/30 p-8 text-center text-sm text-gray-400">No saved addresses yet.</div>
+        <div className="bg-white border border-[var(--brand-pink)]/30 p-8 text-center text-sm text-[var(--brand-charcoal)]/75">No saved addresses yet.</div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {addresses.map((a) => (
             <div key={a.id} className="bg-white border border-[var(--brand-pink)]/30 p-4 relative">
               {a.is_default && <span className="absolute top-3 right-3 text-[9px] tracking-wide uppercase bg-[var(--brand-rose)]/10 text-[var(--brand-rose)] px-2 py-0.5">Default</span>}
               <p className="font-medium text-sm text-[var(--brand-charcoal)]">{a.full_name}</p>
-              <p className="text-xs text-gray-500 mt-1">{[a.line1, a.line2, a.city, a.state, a.pincode].filter(Boolean).join(', ')}</p>
-              <p className="text-xs text-gray-400 mt-1">{a.phone}</p>
-              <button onClick={() => remove(a.id)} className="mt-3 inline-flex items-center gap-1 text-[10px] tracking-wide uppercase text-gray-400 hover:text-red-500"><Trash2 size={12} /> Remove</button>
+              <p className="text-xs text-[var(--brand-charcoal)]/85 mt-1">{[a.line1, a.line2, a.city, a.state, a.pincode].filter(Boolean).join(', ')}</p>
+              <p className="text-xs text-[var(--brand-charcoal)]/75 mt-1">{a.phone}</p>
+              <button onClick={() => remove(a.id)} className="mt-3 inline-flex items-center gap-1 text-[10px] tracking-wide uppercase text-[var(--brand-charcoal)]/75 hover:text-red-500"><Trash2 size={12} /> Remove</button>
             </div>
           ))}
         </div>

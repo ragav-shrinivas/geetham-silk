@@ -85,7 +85,7 @@ export default function CartDrawer() {
                       <Link href={`/products/${it.slug}`} onClick={closeCart} className="font-serif text-sm text-[var(--brand-charcoal)] leading-snug line-clamp-2 hover:text-[var(--brand-rose)] transition-colors">
                         {it.name}
                       </Link>
-                      {it.size && <span className="text-[10px] tracking-[0.15em] uppercase text-gray-400 mt-0.5">Size: {it.size}</span>}
+                      {it.size && <span className="text-[10px] tracking-[0.15em] uppercase text-[var(--brand-charcoal)]/75 mt-0.5">Size: {it.size}</span>}
                       <span className="font-serif text-sm font-semibold text-[var(--brand-charcoal)] mt-1">{formatPrice(it.price)}</span>
 
                       <div className="mt-auto flex items-center justify-between pt-2">
@@ -98,7 +98,7 @@ export default function CartDrawer() {
                             <Plus size={13} />
                           </button>
                         </div>
-                        <button onClick={() => removeFromCart(it.id, it.size)} aria-label="Remove item" className="p-2 text-gray-400 hover:text-red-500 transition-colors">
+                        <button onClick={() => removeFromCart(it.id, it.size)} aria-label="Remove item" className="p-2 text-[var(--brand-charcoal)]/75 hover:text-red-500 transition-colors">
                           <Trash2 size={15} />
                         </button>
                       </div>
@@ -112,17 +112,17 @@ export default function CartDrawer() {
             {cart.length > 0 && (
               <div className="border-t border-[var(--brand-pink)]/30 px-5 py-4 space-y-3 shrink-0 bg-white">
                 <div className="flex items-center justify-between">
-                  <span className="text-[11px] tracking-[0.2em] uppercase text-gray-500">Subtotal</span>
+                  <span className="text-[11px] tracking-[0.2em] uppercase text-[var(--brand-charcoal)]/85">Subtotal</span>
                   <span className="font-serif text-xl font-semibold text-[var(--brand-charcoal)]">{formatPrice(cartTotal)}</span>
                 </div>
-                <p className="text-[10px] text-gray-400">Shipping & taxes calculated at checkout.</p>
+                <p className="text-[10px] text-[var(--brand-charcoal)]/75">Shipping & taxes calculated at checkout.</p>
                 <button
                   onClick={goCheckout}
                   className="w-full min-h-[52px] bg-[var(--brand-darkpink)] text-white text-xs tracking-[0.2em] uppercase hover:bg-[var(--brand-rose)] transition-colors active:scale-[0.99]"
                 >
                   Proceed to Checkout
                 </button>
-                <Link href="/cart" onClick={closeCart} className="block text-center text-[11px] tracking-[0.2em] uppercase text-[var(--brand-charcoal)]/60 hover:text-[var(--brand-rose)] transition-colors">
+                <Link href="/cart" onClick={closeCart} className="block text-center text-[11px] tracking-[0.2em] uppercase text-[var(--brand-charcoal)]/80 hover:text-[var(--brand-rose)] transition-colors">
                   View Full Bag
                 </Link>
               </div>

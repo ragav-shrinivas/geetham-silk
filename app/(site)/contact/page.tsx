@@ -21,7 +21,7 @@ export default function ContactPage() {
         <div className="text-center mb-16">
           <p className="text-xs tracking-[0.3em] uppercase text-[var(--brand-rose)] mb-3">Get In Touch</p>
           <h1 className="font-serif text-5xl font-light text-[var(--brand-charcoal)]">Contact Us</h1>
-          <p className="text-gray-500 mt-4 max-w-lg mx-auto">
+          <p className="text-[var(--brand-charcoal)]/85 mt-4 max-w-lg mx-auto">
             Have a question? We&apos;d love to hear from you. The fastest way to reach us is via WhatsApp.
           </p>
         </div>
@@ -39,7 +39,7 @@ export default function ContactPage() {
               <div key={item.label} className="flex gap-4 bg-[var(--brand-sandal-light)] p-5 border border-[var(--brand-pink)]/20">
                 <div className="flex-shrink-0 mt-0.5">{item.icon}</div>
                 <div>
-                  <p className="text-xs tracking-[0.15em] uppercase text-gray-400 mb-1 font-medium">{item.label}</p>
+                  <p className="text-xs tracking-[0.15em] uppercase text-[var(--brand-charcoal)]/75 mb-1 font-medium">{item.label}</p>
                   {item.href ? (
                     <a href={item.href} target={item.external ? '_blank' : undefined} rel={item.external ? 'noopener noreferrer' : undefined}
                       className="text-sm text-[var(--brand-charcoal)] hover:text-[var(--brand-rose)] transition-colors whitespace-pre-line">
@@ -61,7 +61,7 @@ export default function ContactPage() {
             <h2 className="font-serif text-3xl font-light text-[var(--brand-charcoal)] mb-3">
               Chat on WhatsApp
             </h2>
-            <p className="text-gray-500 text-sm mb-8 max-w-sm leading-relaxed">
+            <p className="text-[var(--brand-charcoal)]/85 text-sm mb-8 max-w-sm leading-relaxed">
               The quickest way to enquire about products, check availability, or get styling advice. We typically respond within minutes.
             </p>
             <a
@@ -94,7 +94,7 @@ export default function ContactPage() {
             <h2 className="font-serif text-3xl lg:text-4xl font-light text-[var(--brand-charcoal)]">
               Share your <em className="italic text-[var(--brand-rose)]">experience</em>
             </h2>
-            <p className="text-gray-500 text-sm mt-4 max-w-md mx-auto">
+            <p className="text-[var(--brand-charcoal)]/85 text-sm mt-4 max-w-md mx-auto">
               Loved your saree? Tell us — approved reviews appear on our homepage.
             </p>
             <a

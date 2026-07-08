@@ -46,7 +46,7 @@ export default async function GalleryPage() {
         {/* Lookbook grid */}
         {items.length === 0 ? (
           <Reveal direction="up" className="text-center py-16">
-            <p className="font-serif text-3xl text-gray-300">More moments coming soon</p>
+            <p className="font-serif text-3xl text-[var(--brand-charcoal)]/70">More moments coming soon</p>
           </Reveal>
         ) : (
           <>

@@ -47,7 +47,7 @@ export function AboutHero() {
             initial={reduced ? false : { opacity: 0, y: 22 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, ease: LUXE, delay: 0.6 }}
-            className="mt-8 text-base sm:text-lg text-gray-500 leading-relaxed max-w-xl"
+            className="mt-8 text-base sm:text-lg text-[var(--brand-charcoal)]/85 leading-relaxed max-w-xl"
           >
             Geethams Silks is a premium boutique in Palavakkam, Chennai — dedicated to the finest
             sarees, kurtas, and ethnic wear for women and children. Clothing, to us, is an expression
@@ -174,7 +174,7 @@ function Milestone({ title, copy, index }: { title: string; copy: string; index:
         initial={false}
         animate={{ opacity: shown ? 1 : 0, y: shown ? 0 : 16 }}
         transition={{ duration: 0.8, ease: LUXE, delay: 0.22 }}
-        className="mt-3 text-gray-400 leading-relaxed max-w-lg"
+        className="mt-3 text-[var(--brand-charcoal)]/75 leading-relaxed max-w-lg"
       >
         {copy}
       </motion.p>
@@ -212,7 +212,7 @@ export function Craftsmanship() {
           <h2 className="font-serif text-4xl lg:text-5xl font-light text-[var(--brand-charcoal)] leading-[1.12] mb-7">
             Selected with love, <em className="italic text-[var(--brand-rose)]">and an eye for quality</em>
           </h2>
-          <div className="space-y-5 text-gray-500 leading-relaxed">
+          <div className="space-y-5 text-[var(--brand-charcoal)]/85 leading-relaxed">
             <p>
               Our collection celebrates the rich textile heritage of South India while embracing
               contemporary tastes. From bridal silks to everyday kurtas, each piece earns its
@@ -290,7 +290,7 @@ function Stat({ value, suffix, label, delay }: { value: number; suffix: string; 
         <span className="text-[var(--brand-rose)]">{suffix}</span>
       </p>
       <div className="hairline w-14 mx-auto my-4" />
-      <p className="text-xs tracking-[0.25em] uppercase text-gray-500">{label}</p>
+      <p className="text-xs tracking-[0.25em] uppercase text-[var(--brand-charcoal)]/85">{label}</p>
     </div>
   )
 }

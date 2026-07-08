@@ -56,9 +56,9 @@ export default function ProductReviews({ productId }: { productId: string }) {
       {showForm && <ReviewForm productId={productId} onDone={() => setShowForm(false)} />}
 
       {loading ? (
-        <p className="text-sm text-gray-400 py-6">Loading reviews…</p>
+        <p className="text-sm text-[var(--brand-charcoal)]/75 py-6">Loading reviews…</p>
       ) : count === 0 ? (
-        <p className="text-sm text-gray-500 py-6">No reviews yet — be the first to share your thoughts.</p>
+        <p className="text-sm text-[var(--brand-charcoal)]/85 py-6">No reviews yet — be the first to share your thoughts.</p>
       ) : (
         <div className="space-y-6 mt-8">
           {reviews.map((r) => (
@@ -67,8 +67,8 @@ export default function ProductReviews({ productId }: { productId: string }) {
                 <Stars value={r.rating} />
                 {r.title && <span className="font-medium text-[var(--brand-charcoal)]">{r.title}</span>}
               </div>
-              {r.body && <p className="text-sm text-gray-600 leading-relaxed mb-2">{r.body}</p>}
-              <p className="text-xs text-gray-400">{r.author_name} · {new Date(r.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}</p>
+              {r.body && <p className="text-sm text-[var(--brand-charcoal)] leading-relaxed mb-2">{r.body}</p>}
+              <p className="text-xs text-[var(--brand-charcoal)]/75">{r.author_name} · {new Date(r.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}</p>
             </div>
           ))}
         </div>
@@ -114,7 +114,7 @@ function ReviewForm({ productId, onDone }: { productId: string; onDone: () => vo
   return (
     <form onSubmit={submit} className="bg-white border border-[var(--brand-pink)]/30 p-6 mb-8 space-y-4">
       <div>
-        <p className="text-xs tracking-[0.2em] uppercase text-gray-500 mb-2">Your Rating *</p>
+        <p className="text-xs tracking-[0.2em] uppercase text-[var(--brand-charcoal)]/85 mb-2">Your Rating *</p>
         <div className="flex gap-1">
           {[1, 2, 3, 4, 5].map((i) => (
             <button key={i} type="button" onMouseEnter={() => setHover(i)} onMouseLeave={() => setHover(0)} onClick={() => setRating(i)} aria-label={`${i} star${i > 1 ? 's' : ''}`} className="p-0.5">
@@ -133,7 +133,7 @@ function ReviewForm({ productId, onDone }: { productId: string; onDone: () => vo
         <button type="submit" disabled={busy} className="inline-flex items-center gap-2 bg-[var(--brand-darkpink)] text-white text-[11px] tracking-[0.2em] uppercase px-7 py-3 hover:bg-[var(--brand-rose)] transition-colors disabled:opacity-60">
           {busy ? <><Loader2 size={14} className="animate-spin" /> Submitting…</> : 'Submit Review'}
         </button>
-        <button type="button" onClick={onDone} className="text-[11px] tracking-[0.2em] uppercase text-gray-500 px-4">Cancel</button>
+        <button type="button" onClick={onDone} className="text-[11px] tracking-[0.2em] uppercase text-[var(--brand-charcoal)]/85 px-4">Cancel</button>
       </div>
     </form>
   )
