@@ -141,7 +141,7 @@ export default async function ProductPage({ params }: Props) {
               {/* Colors */}
               {product.colors && product.colors.length > 0 && (
                 <div className="mb-6">
-                  <p className="text-xs tracking-[0.2em] uppercase text-[var(--brand-charcoal)]/85 mb-3 font-medium">Available Colors</p>
+                  <p className="text-[13px] tracking-[0.2em] uppercase text-[var(--brand-charcoal)] mb-3 font-bold">Available Colors</p>
                   <div className="flex flex-wrap gap-2">
                     {product.colors.map((color) => (
                       <span key={color} className="border border-[var(--brand-pink)] px-4 py-1.5 text-sm text-[var(--brand-charcoal)] hover:bg-[var(--brand-pink)]/15 hover:border-[var(--brand-rose)] transition-colors duration-300 cursor-default">
@@ -160,24 +160,24 @@ export default async function ProductPage({ params }: Props) {
               {/* Description */}
               {product.description && (
                 <div className="border-t border-[var(--brand-pink)]/30 pt-6 mb-5">
-                  <h2 className="text-xs tracking-[0.2em] uppercase text-[var(--brand-charcoal)]/85 mb-3 font-medium">Description</h2>
-                  <p className="text-sm text-[var(--brand-charcoal)] leading-relaxed">{product.description}</p>
+                  <h2 className="text-[13px] tracking-[0.2em] uppercase text-[var(--brand-charcoal)] mb-3 font-bold">Description</h2>
+                  <p className="text-[15px] font-semibold text-[var(--brand-charcoal)] leading-relaxed">{product.description}</p>
                 </div>
               )}
 
               {/* Material */}
               {product.material && (
                 <div className="border-t border-[var(--brand-pink)]/30 pt-5 mb-5">
-                  <h2 className="text-xs tracking-[0.2em] uppercase text-[var(--brand-charcoal)]/85 mb-2 font-medium">Material</h2>
-                  <p className="text-sm text-[var(--brand-charcoal)]">{product.material}</p>
+                  <h2 className="text-[13px] tracking-[0.2em] uppercase text-[var(--brand-charcoal)] mb-2 font-bold">Material</h2>
+                  <p className="text-[15px] font-semibold text-[var(--brand-charcoal)]">{product.material}</p>
                 </div>
               )}
 
               {/* Care */}
               {product.care_instructions && (
                 <div className="border-t border-[var(--brand-pink)]/30 pt-5">
-                  <h2 className="text-xs tracking-[0.2em] uppercase text-[var(--brand-charcoal)]/85 mb-2 font-medium">Care Instructions</h2>
-                  <p className="text-sm text-[var(--brand-charcoal)]">{product.care_instructions}</p>
+                  <h2 className="text-[13px] tracking-[0.2em] uppercase text-[var(--brand-charcoal)] mb-2 font-bold">Care Instructions</h2>
+                  <p className="text-[15px] font-semibold text-[var(--brand-charcoal)]">{product.care_instructions}</p>
                 </div>
               )}
             </div>

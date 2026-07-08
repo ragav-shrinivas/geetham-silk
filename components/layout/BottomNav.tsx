@@ -23,7 +23,7 @@ export default function BottomNav() {
 
   return (
     <nav
-      className="lg:hidden fixed bottom-0 inset-x-0 z-[80] bg-white/95 backdrop-blur-md border-t border-[var(--brand-pink)]/30 flex items-stretch"
+      className="lg:hidden fixed bottom-0 inset-x-0 z-[80] bg-white border-t border-[var(--brand-pink)]/30 flex items-stretch"
       style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
       aria-label="Primary"
     >

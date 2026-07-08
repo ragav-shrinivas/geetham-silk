@@ -8,6 +8,7 @@ import { useLenis } from 'lenis/react'
 import { Menu, X, Search, MessageCircle, ArrowRight, ShoppingBag, Heart, User, ChevronDown } from 'lucide-react'
 import { NAV_LINKS, SITE, type AnnouncementMessage } from '@/lib/constants'
 import type { NavCategory } from '@/lib/queries'
+import { useSwipeClose } from '@/lib/useSwipeClose'
 import { cn } from '@/lib/utils'
 import { LUXE } from '@/lib/motion'
 import { useStore } from '@/lib/store/StoreProvider'
@@ -54,7 +55,7 @@ export default function Navbar({ announcements, categories = [] }: { announcemen
     // Sticky (in-flow) so the whole header stack takes real layout space and the
     // hero/content always begins BELOW it — no fixed-overlay, no per-page pt-* math,
     // works at any header height across breakpoints.
-    <header className="sticky top-0 z-50 bg-[var(--brand-cream)]/95 backdrop-blur-md shadow-[0_2px_16px_-10px_rgba(42,36,32,0.4)]">
+    <header className="sticky top-0 z-50 bg-[var(--brand-cream)] shadow-[0_2px_16px_-10px_rgba(42,36,32,0.4)]">
       {/* ── LAYER A · dynamic rotating announcement bar ── */}
       <AnnouncementBar messages={announcements} />
 
@@ -200,6 +201,7 @@ function HeaderSearch() {
 
 function MobileMenu({ open, onClose, pathname, categories }: { open: boolean; onClose: () => void; pathname: string; categories: NavCategory[] }) {
   const reduced = useReducedMotion()
+  const swipe = useSwipeClose(onClose, 'x')
   return (
     <AnimatePresence>
       {open && (
@@ -209,6 +211,7 @@ function MobileMenu({ open, onClose, pathname, categories }: { open: boolean; on
           animate={{ opacity: 1, x: 0 }}
           exit={reduced ? { opacity: 0 } : { opacity: 0, x: '-12%' }}
           transition={{ duration: reduced ? 0 : 0.42, ease: LUXE }}
+          {...swipe}
           className="lg:hidden fixed inset-0 z-[100] flex flex-col h-[100dvh] w-screen overflow-y-auto overscroll-contain"
           style={{
             background:

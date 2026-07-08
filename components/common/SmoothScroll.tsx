@@ -24,12 +24,11 @@ export default function SmoothScroll({ children }: { children: ReactNode }) {
     <ReactLenis
       root
       options={{
-        lerp: 0.09,
-        duration: 1.3,
+        // snappier, lighter smoothing (was heavier lerp+duration which felt laggy);
+        // touch stays native (no syncTouch) so mobile scrolling is fully responsive
+        lerp: 0.13,
         smoothWheel: true,
         wheelMultiplier: 1,
-        touchMultiplier: 1.5,
-        easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       }}
     >
       <ScrollTriggerSync />

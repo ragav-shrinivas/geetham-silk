@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { useLenis } from 'lenis/react'
 import { SlidersHorizontal, ArrowDownUp, X, Check, ChevronDown, Plus, Minus } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { useSwipeClose } from '@/lib/useSwipeClose'
 import type { CategoryNode, ShopFacets } from '@/lib/queries'
 
 interface Props {
@@ -43,6 +44,8 @@ export default function ShopControls({ categories, facets }: Props) {
   const lenis = useLenis()
   const [filterOpen, setFilterOpen] = useState(false)
   const [sortOpen, setSortOpen] = useState(false)
+  const filterSwipe = useSwipeClose(() => setFilterOpen(false), 'x')
+  const sortSwipe = useSwipeClose(() => setSortOpen(false), 'y')
 
   // lock background scroll while an overlay is up (Lenis-aware)
   useEffect(() => {
@@ -131,6 +134,7 @@ export default function ShopControls({ categories, facets }: Props) {
             <motion.aside
               initial={{ x: '-100%' }} animate={{ x: 0 }} exit={{ x: '-100%' }}
               transition={{ duration: 0.4, ease: LUXE }}
+              {...filterSwipe}
               className="fixed left-0 top-0 z-[96] h-[100dvh] w-[86vw] max-w-[380px] bg-white shadow-2xl flex flex-col"
             >
               <div className="flex items-center justify-between px-5 h-16 border-b-2 border-[var(--brand-pink)]/40 shrink-0">
@@ -207,8 +211,10 @@ export default function ShopControls({ categories, facets }: Props) {
             <motion.div
               initial={{ y: '100%' }} animate={{ y: 0 }} exit={{ y: '100%' }}
               transition={{ duration: 0.38, ease: LUXE }}
+              {...sortSwipe}
               className="fixed inset-x-0 bottom-0 z-[96] bg-white rounded-t-2xl shadow-2xl max-h-[80dvh] flex flex-col"
             >
+              <div className="mx-auto mt-2.5 mb-1 h-1.5 w-11 rounded-full bg-[var(--brand-charcoal)]/25 shrink-0" aria-hidden />
               <div className="flex items-center justify-between px-5 h-14 border-b-2 border-[var(--brand-pink)]/40 shrink-0">
                 <h2 className="font-serif text-xl font-semibold text-[var(--brand-charcoal)]">Sort By</h2>
                 <button onClick={() => setSortOpen(false)} aria-label="Close sort" className="p-1.5 text-[var(--brand-charcoal)]"><X size={22} strokeWidth={2.2} /></button>
