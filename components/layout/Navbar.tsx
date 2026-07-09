@@ -8,7 +8,6 @@ import { useLenis } from 'lenis/react'
 import { Menu, X, Search, MessageCircle, ArrowRight, ShoppingBag, Heart, User, ChevronDown } from 'lucide-react'
 import { NAV_LINKS, SITE, type AnnouncementMessage } from '@/lib/constants'
 import type { NavCategory } from '@/lib/queries'
-import { useSwipeClose } from '@/lib/useSwipeClose'
 import { cn } from '@/lib/utils'
 import { LUXE } from '@/lib/motion'
 import { useStore } from '@/lib/store/StoreProvider'
@@ -97,26 +96,36 @@ export default function Navbar({ announcements, categories = [] }: { announcemen
             <div className="justify-self-center px-2">
               <HeaderBrand size="desktop" />
             </div>
-            <div className="justify-self-end flex items-center gap-1.5">
-              <Link href="/wishlist" aria-label="Wishlist" className="relative p-2 text-[var(--brand-charcoal)] hover:text-[var(--brand-darkpink)] transition-colors">
-                <Heart size={19} />
-                {ready && wishlistCount > 0 && <NavBadge n={wishlistCount} />}
+            <div className="justify-self-end flex items-center gap-0.5">
+              <Link href="/wishlist" aria-label="Wishlist" className="flex flex-col items-center gap-0.5 px-2.5 py-1 text-[var(--brand-charcoal)] hover:text-[var(--brand-darkpink)] transition-colors">
+                <span className="relative">
+                  <Heart size={19} />
+                  {ready && wishlistCount > 0 && <NavBadge n={wishlistCount} />}
+                </span>
+                <span className="text-[9px] font-bold tracking-[0.06em] uppercase leading-none whitespace-nowrap">Wishlist</span>
               </Link>
-              <button onClick={openCart} aria-label="Open cart" className="relative p-2 text-[var(--brand-charcoal)] hover:text-[var(--brand-darkpink)] transition-colors">
-                <ShoppingBag size={19} />
-                {ready && cartCount > 0 && <NavBadge n={cartCount} />}
+              <button onClick={openCart} aria-label="Open cart" className="flex flex-col items-center gap-0.5 px-2.5 py-1 text-[var(--brand-charcoal)] hover:text-[var(--brand-darkpink)] transition-colors">
+                <span className="relative">
+                  <ShoppingBag size={19} />
+                  {ready && cartCount > 0 && <NavBadge n={cartCount} />}
+                </span>
+                <span className="text-[9px] font-bold tracking-[0.06em] uppercase leading-none whitespace-nowrap">Cart</span>
               </button>
-              <Link href="/account" aria-label="Account" className="p-2 text-[var(--brand-charcoal)] hover:text-[var(--brand-darkpink)] transition-colors">
+              <Link href="/account" aria-label="Account" className="flex flex-col items-center gap-0.5 px-2.5 py-1 text-[var(--brand-charcoal)] hover:text-[var(--brand-darkpink)] transition-colors">
                 <User size={19} />
+                <span className="text-[9px] font-bold tracking-[0.06em] uppercase leading-none whitespace-nowrap">Account</span>
               </Link>
               <a
                 href={`https://wa.me/${SITE.whatsapp}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Chat on WhatsApp"
-                className="ml-1 flex h-9 w-9 items-center justify-center rounded-full bg-[#25D366] text-white hover:bg-[#128C7E] transition-colors"
+                className="flex flex-col items-center gap-0.5 px-2.5 py-1 text-[#128C7E] hover:text-[#0e6b58] transition-colors"
               >
-                <MessageCircle size={16} />
+                <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#25D366] text-white">
+                  <MessageCircle size={14} />
+                </span>
+                <span className="text-[9px] font-bold tracking-[0.06em] uppercase leading-none whitespace-nowrap">Chat</span>
               </a>
             </div>
           </div>
@@ -201,7 +210,6 @@ function HeaderSearch() {
 
 function MobileMenu({ open, onClose, pathname, categories }: { open: boolean; onClose: () => void; pathname: string; categories: NavCategory[] }) {
   const reduced = useReducedMotion()
-  const swipe = useSwipeClose(onClose, 'x')
   return (
     <AnimatePresence>
       {open && (
@@ -211,8 +219,14 @@ function MobileMenu({ open, onClose, pathname, categories }: { open: boolean; on
           animate={{ opacity: 1, x: 0 }}
           exit={reduced ? { opacity: 0 } : { opacity: 0, x: '-12%' }}
           transition={{ duration: reduced ? 0 : 0.42, ease: LUXE }}
-          {...swipe}
-          className="lg:hidden fixed inset-0 z-[100] flex flex-col h-[100dvh] w-screen overflow-y-auto overscroll-contain"
+          drag={reduced ? false : 'x'}
+          dragConstraints={{ left: -140, right: 0 }}
+          dragElastic={{ left: 0.15, right: 0 }}
+          dragSnapToOrigin
+          onDragEnd={(_, info) => {
+            if (info.offset.x < -70 || info.velocity.x < -500) onClose()
+          }}
+          className="lg:hidden fixed inset-0 z-[100] flex flex-col h-[100dvh] w-screen overflow-y-auto overscroll-contain touch-pan-y"
           style={{
             background:
               'radial-gradient(ellipse 90% 40% at 50% 0%, rgba(176,134,63,0.14) 0%, transparent 62%),' +

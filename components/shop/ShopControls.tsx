@@ -1,11 +1,10 @@
 'use client'
 import { useEffect, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion, AnimatePresence, useDragControls } from 'framer-motion'
 import { useLenis } from 'lenis/react'
 import { SlidersHorizontal, ArrowDownUp, X, Check, ChevronDown, Plus, Minus } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import { useSwipeClose } from '@/lib/useSwipeClose'
 import type { CategoryNode, ShopFacets } from '@/lib/queries'
 
 interface Props {
@@ -44,8 +43,7 @@ export default function ShopControls({ categories, facets }: Props) {
   const lenis = useLenis()
   const [filterOpen, setFilterOpen] = useState(false)
   const [sortOpen, setSortOpen] = useState(false)
-  const filterSwipe = useSwipeClose(() => setFilterOpen(false), 'x')
-  const sortSwipe = useSwipeClose(() => setSortOpen(false), 'y')
+  const sortDragControls = useDragControls()
 
   // lock background scroll while an overlay is up (Lenis-aware)
   useEffect(() => {
@@ -134,8 +132,14 @@ export default function ShopControls({ categories, facets }: Props) {
             <motion.aside
               initial={{ x: '-100%' }} animate={{ x: 0 }} exit={{ x: '-100%' }}
               transition={{ duration: 0.4, ease: LUXE }}
-              {...filterSwipe}
-              className="fixed left-0 top-0 z-[96] h-[100dvh] w-[86vw] max-w-[380px] bg-white shadow-2xl flex flex-col"
+              drag="x"
+              dragConstraints={{ left: -140, right: 0 }}
+              dragElastic={{ left: 0.15, right: 0 }}
+              dragSnapToOrigin
+              onDragEnd={(_, info) => {
+                if (info.offset.x < -70 || info.velocity.x < -500) setFilterOpen(false)
+              }}
+              className="fixed left-0 top-0 z-[96] h-[100dvh] w-[86vw] max-w-[380px] bg-white shadow-2xl flex flex-col touch-pan-y"
             >
               <div className="flex items-center justify-between px-5 h-16 border-b-2 border-[var(--brand-pink)]/40 shrink-0">
                 <h2 className="font-serif text-2xl font-semibold text-[var(--brand-charcoal)]">Filters</h2>
@@ -211,10 +215,25 @@ export default function ShopControls({ categories, facets }: Props) {
             <motion.div
               initial={{ y: '100%' }} animate={{ y: 0 }} exit={{ y: '100%' }}
               transition={{ duration: 0.38, ease: LUXE }}
-              {...sortSwipe}
+              drag="y"
+              dragControls={sortDragControls}
+              dragListener={false}
+              dragConstraints={{ top: 0, bottom: 220 }}
+              dragElastic={{ top: 0, bottom: 0.2 }}
+              dragSnapToOrigin
+              onDragEnd={(_, info) => {
+                if (info.offset.y > 80 || info.velocity.y > 500) setSortOpen(false)
+              }}
               className="fixed inset-x-0 bottom-0 z-[96] bg-white rounded-t-2xl shadow-2xl max-h-[80dvh] flex flex-col"
             >
-              <div className="mx-auto mt-2.5 mb-1 h-1.5 w-11 rounded-full bg-[var(--brand-charcoal)]/25 shrink-0" aria-hidden />
+              {/* drag handle — only the grabber bar starts the drag, so the close
+                  button's tap always registers cleanly; list below is native-scroll */}
+              <div
+                onPointerDown={(e) => sortDragControls.start(e)}
+                className="shrink-0 pt-2.5 pb-2 cursor-grab active:cursor-grabbing touch-none"
+              >
+                <div className="mx-auto h-1.5 w-11 rounded-full bg-[var(--brand-charcoal)]/25" aria-hidden />
+              </div>
               <div className="flex items-center justify-between px-5 h-14 border-b-2 border-[var(--brand-pink)]/40 shrink-0">
                 <h2 className="font-serif text-xl font-semibold text-[var(--brand-charcoal)]">Sort By</h2>
                 <button onClick={() => setSortOpen(false)} aria-label="Close sort" className="p-1.5 text-[var(--brand-charcoal)]"><X size={22} strokeWidth={2.2} /></button>
