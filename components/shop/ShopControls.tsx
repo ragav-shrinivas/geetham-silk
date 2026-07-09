@@ -132,21 +132,15 @@ export default function ShopControls({ categories, facets }: Props) {
             <motion.aside
               initial={{ x: '-100%' }} animate={{ x: 0 }} exit={{ x: '-100%' }}
               transition={{ duration: 0.4, ease: LUXE }}
-              drag="x"
-              dragConstraints={{ left: -140, right: 0 }}
-              dragElastic={{ left: 0.15, right: 0 }}
-              dragSnapToOrigin
-              onDragEnd={(_, info) => {
-                if (info.offset.x < -70 || info.velocity.x < -500) setFilterOpen(false)
-              }}
-              className="fixed left-0 top-0 z-[96] h-[100dvh] w-[86vw] max-w-[380px] bg-white shadow-2xl flex flex-col touch-pan-y"
+              className="fixed left-0 top-0 z-[96] h-[100dvh] w-[86vw] max-w-[380px] bg-white shadow-2xl flex flex-col"
             >
               <div className="flex items-center justify-between px-5 h-16 border-b-2 border-[var(--brand-pink)]/40 shrink-0">
                 <h2 className="font-serif text-2xl font-semibold text-[var(--brand-charcoal)]">Filters</h2>
                 <button onClick={() => setFilterOpen(false)} aria-label="Close filters" className="p-1.5 text-[var(--brand-charcoal)]"><X size={24} strokeWidth={2.2} /></button>
               </div>
 
-              <div className="flex-1 overflow-y-auto overscroll-contain">
+              {/* data-lenis-prevent so Lenis lets this scroll natively (finger + trackpad) */}
+              <div data-lenis-prevent className="flex-1 overflow-y-auto overscroll-contain [-webkit-overflow-scrolling:touch]">
                 <Section title="Category" defaultOpen>
                   <ul className="space-y-1">
                     {categories.map((parent) => (
@@ -238,7 +232,7 @@ export default function ShopControls({ categories, facets }: Props) {
                 <h2 className="font-serif text-xl font-semibold text-[var(--brand-charcoal)]">Sort By</h2>
                 <button onClick={() => setSortOpen(false)} aria-label="Close sort" className="p-1.5 text-[var(--brand-charcoal)]"><X size={22} strokeWidth={2.2} /></button>
               </div>
-              <ul className="overflow-y-auto py-1">
+              <ul data-lenis-prevent className="overflow-y-auto py-1 [-webkit-overflow-scrolling:touch]">
                 {SORTS.map((s) => {
                   const active = s.value === sort
                   return (

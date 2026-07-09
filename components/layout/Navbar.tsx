@@ -219,14 +219,7 @@ function MobileMenu({ open, onClose, pathname, categories }: { open: boolean; on
           animate={{ opacity: 1, x: 0 }}
           exit={reduced ? { opacity: 0 } : { opacity: 0, x: '-12%' }}
           transition={{ duration: reduced ? 0 : 0.42, ease: LUXE }}
-          drag={reduced ? false : 'x'}
-          dragConstraints={{ left: -140, right: 0 }}
-          dragElastic={{ left: 0.15, right: 0 }}
-          dragSnapToOrigin
-          onDragEnd={(_, info) => {
-            if (info.offset.x < -70 || info.velocity.x < -500) onClose()
-          }}
-          className="lg:hidden fixed inset-0 z-[100] flex flex-col h-[100dvh] w-screen overflow-y-auto overscroll-contain touch-pan-y"
+          className="lg:hidden fixed inset-0 z-[100] flex flex-col h-[100dvh] w-screen overflow-hidden"
           style={{
             background:
               'radial-gradient(ellipse 90% 40% at 50% 0%, rgba(176,134,63,0.14) 0%, transparent 62%),' +
@@ -247,8 +240,9 @@ function MobileMenu({ open, onClose, pathname, categories }: { open: boolean; on
             </button>
           </div>
 
-          {/* Scrollable list — primary links, then real categories, then account */}
-          <nav className="flex-1 min-h-0 overflow-y-auto overscroll-contain px-6 py-2">
+          {/* Scrollable list — primary links, then real categories, then account.
+              data-lenis-prevent so Lenis lets this scroll natively (finger + trackpad). */}
+          <nav data-lenis-prevent className="flex-1 min-h-0 overflow-y-auto overscroll-contain px-6 py-2 [-webkit-overflow-scrolling:touch]">
             <ul>
               {NAV_LINKS.map((link) => {
                 const active = link.href === '/' ? pathname === '/' : pathname.startsWith(link.href)
@@ -470,7 +464,7 @@ function SearchOverlay({ open, onClose }: { open: boolean; onClose: () => void }
                 ) : results.length === 0 ? (
                   <p className="text-sm text-[var(--brand-charcoal)]/75">No matches. Press enter to search all.</p>
                 ) : (
-                  <div className="divide-y divide-[var(--brand-charcoal)]/10 max-h-[50vh] overflow-y-auto">
+                  <div data-lenis-prevent className="divide-y divide-[var(--brand-charcoal)]/10 max-h-[50vh] overflow-y-auto [-webkit-overflow-scrolling:touch]">
                     {results.map((p) => {
                       const img = p.product_images?.find((i) => i.is_primary) ?? p.product_images?.[0]
                       return (

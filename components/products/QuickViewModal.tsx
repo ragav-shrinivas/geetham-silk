@@ -42,7 +42,8 @@ export default function QuickViewModal() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 24, scale: 0.98 }}
             transition={{ duration: 0.42, ease: LUXE }}
-            className="fixed inset-x-3 top-1/2 -translate-y-1/2 z-[120] mx-auto max-w-3xl max-h-[88dvh] overflow-y-auto overscroll-contain bg-[var(--brand-cream)] shadow-2xl"
+            data-lenis-prevent
+            className="fixed inset-x-3 top-1/2 -translate-y-1/2 z-[120] mx-auto max-w-3xl max-h-[88dvh] overflow-y-auto overscroll-contain bg-[var(--brand-cream)] shadow-2xl [-webkit-overflow-scrolling:touch]"
             role="dialog" aria-modal="true" aria-label={`Quick view: ${p.name}`}
           >
             <button onClick={closeQuickView} aria-label="Close quick view" className="absolute top-3 right-3 z-10 w-9 h-9 flex items-center justify-center rounded-full bg-white/90 text-[var(--brand-charcoal)] hover:text-[var(--brand-rose)] active:scale-90 transition">

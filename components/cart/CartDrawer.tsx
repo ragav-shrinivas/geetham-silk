@@ -71,7 +71,7 @@ export default function CartDrawer() {
                 </Link>
               </div>
             ) : (
-              <div className="flex-1 overflow-y-auto overscroll-contain px-5 py-4 space-y-4">
+              <div data-lenis-prevent className="flex-1 overflow-y-auto overscroll-contain px-5 py-4 space-y-4 [-webkit-overflow-scrolling:touch]">
                 {cart.map((it) => (
                   <div key={`${it.id}-${it.size ?? ''}`} className="flex gap-3">
                     <Link href={`/products/${it.slug}`} onClick={closeCart} className="relative w-20 h-24 shrink-0 bg-[var(--brand-cream-deep)] overflow-hidden">
